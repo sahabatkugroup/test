@@ -44,6 +44,194 @@
       --ongkir-brand:#2f80ed;
       --ongkir-brand-2:#5ea3ff;
       --ongkir-shadow: 0 20px 45px rgba(4,32,66,.18);
+      /* Tambahkan di style admin.html */
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 16px 20px;
+      }
+      .admin-header {
+        background: linear-gradient(90deg, #FFD700, #FFA500);
+        color: #333;
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .admin-header .flex {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+      .admin-header .badge {
+        background: rgba(255,255,255,0.3);
+        color: #663300;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .tabs {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      .tabs button {
+        flex: 1 1 150px;
+        padding: 12px 0;
+        border-radius: 14px;
+        border: 1.5px solid #c9dbf8;
+        background: #fff;
+        color: #0b3b5a;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease, color 0.3s ease;
+      }
+      .tabs button.active {
+        background: linear-gradient(90deg, #4a90e2, #6fc2ff);
+        color: #fff;
+        border-color: transparent;
+        box-shadow: 0 6px 18px rgba(74,144,226,0.3);
+      }
+      .card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 24px 28px;
+        margin-bottom: 20px;
+        box-shadow: 0 12px 30px rgba(74,144,226,0.15);
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+      .row > div {
+        flex: 1 1 200px;
+        min-width: 150px;
+      }
+      label {
+        font-weight: 600;
+        font-size: 1rem;
+        color: #506273;
+        margin-bottom: 6px;
+        display: block;
+      }
+      input[type="text"], input[type="number"], select {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 14px;
+        border: 1.5px solid #c9dbf8;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.3s ease;
+      }
+      input[type="text"]:focus, input[type="number"]:focus, select:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 8px #4a90e2;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+        color: #0b3b5a;
+      }
+      th, td {
+        padding: 12px 10px;
+        border: 1.5px solid #c9dbf8;
+        text-align: center;
+        font-weight: 600;
+      }
+      th {
+        background: linear-gradient(90deg, #4a90e2, #6fc2ff);
+        color: #fff;
+        letter-spacing: 0.03em;
+      }
+      .btn {
+        padding: 12px 18px;
+        border-radius: 14px;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .btn.danger {
+        background: #ff6b6b;
+        color: #fff;
+      }
+      .btn.danger:hover {
+        background: #e04e4e;
+      }
+      .btn.secondary {
+        background: #f5f7fa;
+        color: #0b3b5a;
+        border: 1.5px solid #c9dbf8;
+      }
+      .btn.secondary:hover {
+        background: #e1e9f8;
+        color: #4a90e2;
+        border-color: #4a90e2;
+      }
+      .btn.full {
+        width: 100%;
+      }
+      .btnbar {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .badge {
+        padding: 6px 14px;
+        border-radius: 9999px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        user-select: none;
+        white-space: nowrap;
+      }
+      .badge.on {
+        background: #e9f7ef;
+        color: #1b5e20;
+        border: 1.5px solid #cdebd6;
+      }
+      .badge.off {
+        background: #ffebee;
+        color: #b71c1c;
+        border: 1.5px solid #ffcdd2;
+      }
+      .badge.pending {
+        background: #fff8e1;
+        color: #f9a825;
+        border: 1.5px solid #ffe082;
+      }
+      
+      /* Responsive */
+      @media (max-width: 600px) {
+        .row {
+          flex-direction: column;
+        }
+        .tabs {
+          grid-template-columns: 1fr !important;
+        }
+        .tabs button {
+          flex: 1 1 100%;
+        }
+        table, th, td {
+          font-size: 0.85rem;
+        }
+        .btn {
+          font-size: 0.9rem;
+          padding: 10px 14px;
+        }
+      }
+
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; font-family: 'Inter', system-ui, Arial, Helvetica, sans-serif; background: var(--main-bg-color); color: var(--text-primary); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.6; }
