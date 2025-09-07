@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+  <title>Sahabatku Delivery - Kurir</title>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    /* Global Styles (Gabungan dari semua modul) */
+    :root {
+      --main-bg-color: #0BA6DF;
+      --card-bg: #fff;
+      --glass: rgba(255,255,255,0.85);
+      --border: #c9dbf8;
+      --shadow-light: rgba(74,144,226,0.15);
+      --shadow-strong: rgba(74,144,226,0.3);
+      --sky-light: #d0e8ff;
+      --sky: #a3c9ff;
+      --sky-strong: #4a90e2;
+      --accent: #0077c8;
+      --muted: #4a6fa5;
+      --text-primary: #0b3b5a;
+      --text-secondary: #506273;
+      --success-color: #28a745;
+      --error-color: #dc3545;
+      --info-color: #17a2b8;
+      --warning-color: #ffc107;
+      --transition-speed: 0.3s;
+      /* Absensi Colors */
+      --absensi-primary: #3a8dde;
+      --absensi-primary-dark: #1e5fa8;
+      --absensi-bg: #e8f4fd;
+      --absensi-ok: #43a047;
+      --absensi-danger: #e53935;
+      --absensi-pending: #f9a825;
+      --absensi-text: #1a2e4a;
+      --absensi-text-muted: #5a6d8c;
+      --absensi-radius: 16px;
+      --absensi-shadow-light: rgba(58,141,222,0.15);
+      --absensi-shadow-strong: rgba(58,141,222,0.25);
+      /* Cek Ongkir Specific */
+      --ongkir-brand:#2f80ed;
+      --ongkir-brand-2:#5ea3ff;
+      --ongkir-shadow: 0 20px 45px rgba(4,32,66,.18);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: 'Inter', system-ui, Arial, Helvetica, sans-serif; background: var(--main-bg-color); color: var(--text-primary); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.6; }
+    .container { max-width: 960px; margin: 0 auto; padding: 16px 20px; }
+    .card { background: var(--card-bg); border-radius: 20px; padding: 24px 28px; box-shadow: 0 12px 30px var(--shadow-light); margin-bottom: 20px; border: 1px solid var(--border); transition: box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease; }
+    .card:hover { box-shadow: 0 16px 40px var(--shadow-strong); transform: translateY(-3px); }
+    h1, h2, h3, h4 { margin: 8px 0 16px 0; color: var(--sky-strong); font-weight: 700; letter-spacing: 0.02em; }
+    h1 { font-size: clamp(24px, 4vw, 36px); text-align: center; }
+    h2 { font-size: clamp(20px, 3.5vw, 28px); }
+    h3 { font-size: clamp(18px, 3vw, 24px); }
+    h4 { font-size: clamp(16px, 2.5vw, 20px); }
+    label { display: block; margin-top: 12px; font-size: 14px; color: var(--muted); font-weight: 600; letter-spacing: 0.01em; }
+    input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select {
+      width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--border); margin-top: 8px; background: var(--glass); outline: none; font-size: 0.95rem; color: var(--text-primary); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+    input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="email"]:focus, textarea:focus, select:focus { border-color: var(--sky-strong); box-shadow: 0 0 8px var(--sky-strong); background: #f0f8ff; }
+    .btn { background: var(--sky-strong); color: #fff; border: none; padding: 10px 16px; border-radius: 14px; cursor: pointer; box-shadow: 0 6px 18px var(--shadow-light); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.02em; transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease; }
+    .btn:hover { background: #3a6fc1; box-shadow: 0 8px 24px var(--shadow-strong); transform: translateY(-2px); }
+    .btn.secondary { background: #f5f7fa; color: var(--text-primary); border: 1.5px solid var(--border); box-shadow: none; font-weight: 600; }
+    .btn.secondary:hover { background: #e1e9f8; border-color: var(--sky-strong); color: var(--sky-strong); }
+    .btn.ghost { background: transparent; color: var(--text-primary); border: 1.5px dashed var(--border); font-weight: 600; }
+    .btn.ghost:hover { border-color: var(--sky-strong); color: var(--sky-strong); }
+    .btn.danger { background: #ff6b6b; box-shadow: none; font-weight: 700; }
+    .btn.danger:hover { background: #e04e4e; }
+    .btn.full { width: 100%; }
+    .btnbar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    nav.tab { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 16px; background: var(--card-bg); padding: 10px; border-radius: 16px; box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+    nav.tab button { padding: 12px 0; border-radius: 14px; border: 1.5px solid var(--border); background: var(--card-bg); color: var(--text-primary); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.02em; transition: background var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease; cursor: pointer; }
+    nav.tab button.active { background: linear-gradient(90deg, var(--sky-strong), #6fc2ff); color: #fff; border-color: transparent; box-shadow: 0 6px 18px var(--shadow-light); }
+    .row { display: flex; gap: 12px; align-items: flex-start; }
+    .col { flex: 1; }
+    .hidden { display: none !important; }
+    .small { font-size: 12px; color: var(--muted); font-weight: 600; }
+    .stack { display: flex; flex-direction: column; gap: 10px; }
+    .grid { display: grid; gap: 12px; }
+    .grid-2 { grid-template-columns: repeat(2,1fr); }
+    .grid-3 { grid-template-columns: repeat(3,1fr); }
+    .grid-4 { grid-template-columns: repeat(4,1fr); }
+    .section-title { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-weight: 700; color: var(--sky-strong); font-size: 1rem; }
+    .list-v { display: flex; flex-direction: column; gap: 10px; }
+    .line-card { border: 1.5px solid var(--border); border-radius: 16px; background: var(--card-bg); padding: 12px 16px; display: grid; grid-template-columns: 2.5fr 80px 160px 120px 90px; gap: 10px; align-items: center; box-shadow: 0 3px 9px rgba(74,144,226,0.07); transition: box-shadow var(--transition-speed) ease; }
+    .line-card:hover { box-shadow: 0 6px 18px var(--shadow-light); }
+    .line-card .sub { font-weight: 700; text-align: center; color: var(--sky-strong); font-size: 0.9rem; }
+    .line-card .mini-btn { width: 100%; border-radius: 12px; padding: 6px 0; font-weight: 600; font-size: 0.85rem; background: var(--sky); color: var(--text-primary); border: none; cursor: pointer; transition: background var(--transition-speed) ease; }
+    .line-card .mini-btn:hover { background: var(--sky-strong); color: #fff; }
+    .line-card-tambahan { border: 1.5px solid var(--border); border-radius: 16px; background: var(--card-bg); padding: 12px 16px; display: grid; grid-template-columns: 1.8fr 1.2fr 120px; gap: 10px; align-items: center; box-shadow: 0 3px 9px rgba(74,144,226,0.07); transition: box-shadow var(--transition-speed) ease; }
+    .line-card-tambahan:hover { box-shadow: 0 6px 18px var(--shadow-light); }
+    .nota-box { white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; background: #f5faff; padding: 18px 20px; border-radius: 14px; border: 1.5px solid #c9dbf8; min-height: 140px; color: var(--text-primary); font-size: 0.9rem; box-shadow: inset 0 0 8px #dbeeff; line-height: 1.4; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; color: var(--text-primary); }
+    th, td { padding: 10px 8px; border: 1.5px solid var(--border); text-align: center; font-weight: 600; }
+    th { background: linear-gradient(90deg, var(--sky-strong), #6fc2ff); color: #fff; letter-spacing: 0.03em; }
+    /* Notification Pop-up & Overlay */
+    .notification-popup { 
+      position: fixed; 
+      top: 20px; /* Lebih ke atas */
+      left: 50%; 
+      transform: translateX(-50%) translateY(-100px); /* Start above, slide down */
+      background-color: var(--success-color); 
+      color: #fff; 
+      padding: 10px 20px; /* Lebih kecil */
+      border-radius: 10px; /* Lebih kecil */
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Shadow lebih halus */
+      z-index: 10000; 
+      opacity: 0; 
+      visibility: hidden; 
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease; 
+      font-size: 0.9rem; /* Ukuran font lebih kecil */
+      font-weight: 600; /* Lebih ringan */
+      text-align: center; 
+      min-width: 200px; /* Lebar minimum */
+    }
+    .notification-popup.show { 
+      opacity: 1; 
+      visibility: visible; 
+      transform: translateX(-50%) translateY(0); /* Animasi slide down */
+    }
+    .notification-popup.success { background-color: var(--success-color); }
+    .notification-popup.error { background-color: var(--error-color); }
+    .notification-popup.info { background-color: var(--info-color); }
+    .notification-popup.warning { background-color: var(--warning-color); }
+    .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 9999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .overlay.show { opacity: 1; visibility: visible; }
+    .overlay-content { max-width: 90%; max-height: 90%; background: #fff; padding: 15px; border-radius: 10px; position: relative; }
+    .overlay-content img { max-width: 100%; max-height: 80vh; display: block; margin: 0 auto; border-radius: 8px; }
+    .overlay-close { position: absolute; top: 10px; right: 15px; font-size: 2rem; color: #333; cursor: pointer; background: none; border: none; padding: 0; }
+    /* Autocomplete */
+    .autocomplete-suggestions { border: 1px solid #999; background: #fff; cursor: default; overflow: auto; max-height: 150px; position: absolute; z-index: 100; width: calc(100% - 28px); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .autocomplete-suggestion { padding: 8px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.9rem; display: block; }
+    .autocomplete-suggestion.selected { background: var(--sky-light); color: var(--text-primary); }
+    .autocomplete-suggestion strong { font-weight: 700; color: var(--sky-strong); }
+    /* Cek Ongkir Specific */
+    .cek-ongkir-module .hero { position: relative; background: radial-gradient(1100px 400px at 10% -10%, rgba(255,255,255,.22), rgba(255,255,255,0)), linear-gradient(135deg, var(--ongkir-brand-2), var(--ongkir-brand)); border-radius: 20px; padding: 28px clamp(16px,3vw,36px); color: #fff; box-shadow: var(--ongkir-shadow); overflow: hidden; margin-bottom: 20px; }
+    .cek-ongkir-module .hero:after { content: ""; position: absolute; right: -120px; top: -120px; width: 280px; height: 280px; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), rgba(255,255,255,0) 60%); filter: blur(2px); transform: rotate(15deg); }
+    .cek-ongkir-module .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; font-size: clamp(18px, 2.4vw, 22px); }
+    .cek-ongkir-module .brand i { background: #fff; color: var(--ongkir-brand); width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,.15), inset 0 -2px 3px rgba(0,0,0,.08); }
+    .cek-ongkir-module .headline { font-size: clamp(22px, 3.2vw, 30px); font-weight: 700; margin: 12px 0 6px; }
+    .cek-ongkir-module .sub { opacity: .95; font-weight: 500; }
+    .cek-ongkir-module .card__body { padding: clamp(16px, 2.8vw, 28px); }
+    .cek-ongkir-module .field .label { font-size: 14px; font-weight: 600; color: #2a3b58; margin: 2px 0 8px 6px; display: flex; align-items: center; gap: 8px; }
+    .cek-ongkir-module .control { position: relative; }
+    .cek-ongkir-module .control .licon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #6c84a8; }
+    .cek-ongkir-module .control .clear-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: none; background: #f1f6ff; color: #1e429f; width: 30px; height: 30px; border-radius: 9px; cursor: pointer; }
+    .cek-ongkir-module .control .clear-btn:hover { filter: brightness(0.98); }
+    .cek-ongkir-module .suggest { position: absolute; z-index: 40; left: 0; right: 0; top: calc(100% + 6px); background: #fff; border: 1px solid #e8eef8; border-radius: 14px; overflow: hidden; box-shadow: 0 14px 40px rgba(17,38,87,.15); max-height: 320px; overflow-y: auto; display: none; }
+    .cek-ongkir-module .s-item { padding: 12px 14px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+    .cek-ongkir-module .s-item:hover, .cek-ongkir-module .s-item.active { background: #f6faff; }
+    .cek-ongkir-module .s-icon { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: #eef5ff; color: #2161ff; flex: 0 0 28px; }
+    .cek-ongkir-module .s-text { line-height: 1.2; }
+    .cek-ongkir-module .s-name { font-weight: 600; }
+    .cek-ongkir-module .s-price { font-size: 12px; color: #5a6d89; margin-top: 2px; }
+    .cek-ongkir-module mark { background: #ffefb3; padding: 0 .15em; border-radius: 4px; }
+    .cek-ongkir-module .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+    .cek-ongkir-module .btn-primary { color: #fff; background: linear-gradient(180deg, #3b82f6, #1d4ed8); box-shadow: 0 12px 30px rgba(30,64,175, .35); }
+    .cek-ongkir-module .btn-primary:hover { filter: brightness(1.03); }
+    .cek-ongkir-module .btn-ghost { background: #eff5ff; color: #1d4ed8; border: 1px solid #d9e7ff; }
+    .cek-ongkir-module .btn-ghost:hover { background: #e9f1ff; }
+    .cek-ongkir-module .btn-danger { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+    .cek-ongkir-module .btn-danger:hover { filter: brightness(0.99); }
+    .cek-ongkir-module .results { margin-top: 18px; display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+    .cek-ongkir-module .pellet { display: inline-flex; align-items: center; gap: 8px; background: #f3f7ff; color: #1e40af; border: 1px solid #e9f2ff; padding: 8px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+    .cek-ongkir-module .kartu { border: 1px solid #eaf0fb; border-radius: 16px; padding: 18px; background: linear-gradient(180deg, #ffffff, #fbfdff); }
+    .cek-ongkir-module .kartu h4 { margin: 0 0 8px; font-size: 16px; letter-spacing: .2px; display: flex; align-items: center; gap: 8px; }
+    .cek-ongkir-module .harga { font-size: 28px; font-weight: 800; color: #0b5bd3; }
+    .cek-ongkir-module .muted { color: #607599; font-size: 13px; }
+    .cek-ongkir-module .formula { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas; background: #f6f9ff; border: 1px dashed #d9e7ff; padding: 10px 12px; border-radius: 10px; display: inline-block; margin-top: 8px; }
+    .cek-ongkir-module .footer { text-align: center; color: #eaf2ff; margin-top: 18px; font-size: 13px; }
+    /* Absensi Module Specific */
+    .absensi-module .topbar, .absensi-module .admin-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center; margin: 12px 0 20px; }
+    .absensi-module .topbar .btn, .absensi-module .admin-bar .btn { padding: 12px 18px; border: none; border-radius: 14px; background: var(--absensi-primary); color: #fff; font-weight: 700; cursor: pointer; transition: filter var(--transition-speed) ease, transform var(--transition-speed) ease; box-shadow: 0 4px 12px rgba(0,0,0,0.12); user-select: none; }
+    .absensi-module .topbar .btn:hover, .absensi-module .admin-bar .btn:hover, .absensi-module .topbar .btn:focus, .absensi-module .admin-bar .btn:focus { filter: brightness(0.9); transform: translateY(-2px); outline: none; box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+    .absensi-module .topbar .btn.ghost { background: #e8f4fb; color: var(--absensi-primary-dark); box-shadow: none; border: 1.5px solid var(--absensi-primary); }
+    .absensi-module .topbar .btn.active { background: var(--absensi-primary-dark); box-shadow: 0 6px 20px var(--absensi-shadow-strong); }
+    .absensi-module .admin-bar .btn.alt { background: #e8f4fb; color: var(--absensi-primary-dark); box-shadow: none; border: 1.5px solid var(--absensi-primary); }
+    .absensi-module .admin-bar .btn.danger { background: var(--absensi-danger); box-shadow: none; }
+    .absensi-module .admin-bar { display: none; }
+    .absensi-module .tab { display: none; }
+    .absensi-module .tab.active { display: block; }
+    .absensi-module .table-wrap { overflow-x: auto; border-radius: var(--absensi-radius); border: 1.5px solid #d6e4f0; margin-top: 16px; box-shadow: 0 6px 20px rgba(58,141,222,0.05); }
+    .absensi-module table { width: 100%; border-collapse: collapse; font-size: 15px; color: var(--absensi-text); min-width: 600px; }
+    .absensi-module thead th { position: sticky; top: 0; background: var(--absensi-primary); color: #fff; font-weight: 700; padding: 14px 16px; letter-spacing: 0.03em; z-index: 10; text-align: center; user-select: none; box-shadow: inset 0 -3px 6px rgba(0,0,0,0.1); }
+    .absensi-module tbody td { padding: 14px 16px; border-bottom: 1.5px solid #d6e4f0; text-align: center; transition: background var(--transition-speed) ease; }
+    .absensi-module tbody tr:hover td { background: #d9eaff; cursor: default; }
+    .absensi-module .badge { display: inline-block; padding: 7px 16px; border-radius: 9999px; font-weight: 700; font-size: 13px; user-select: none; transition: background var(--transition-speed) ease, color var(--transition-speed) ease; white-space: nowrap; }
+    .absensi-module .badge.on { background: #e9f7ef; color: #1b5e20; border: 1.5px solid #cdebd6; }
+    .absensi-module .badge.off { background: #ffebee; color: #b71c1c; border: 1.5px solid #ffcdd2; }
+    .absensi-module .badge.pending { background: #fff8e1; color: #f9a825; border: 1.5px solid #ffe082; }
+    .absensi-module .btn-mini { padding: 8px 14px; border: none; border-radius: 14px; color: #fff; font-weight: 700; cursor: pointer; transition: filter var(--transition-speed) ease, transform var(--transition-speed) ease; box-shadow: 0 4px 12px rgba(0,0,0,0.12); user-select: none; font-size: 14px; }
+    .absensi-module .btn-on { background: var(--absensi-ok); }
+    .absensi-module .btn-off { background: var(--absensi-danger); }
+    .absensi-module .btn-pending { background: var(--absensi-pending); }
+    .absensi-module .btn-on:hover, .absensi-module .btn-off:hover, .absensi-module .btn-pending:hover, .absensi-module .btn-on:focus, .absensi-module .btn-off:focus, .absensi-module .btn-pending:focus { filter: brightness(0.9); transform: translateY(-2px); outline: none; box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+    .absensi-module .login { background: #fff; width: min(92vw, 460px); border-radius: 20px; box-shadow: 0 12px 30px var(--absensi-shadow-light); padding: 28px 32px; text-align: center; user-select: none; }
+    .absensi-module .login h3 { color: var(--absensi-primary-dark); margin-bottom: 20px; font-weight: 800; font-size: 1.5rem; letter-spacing: 0.03em; }
+    .absensi-module .login input { width: 100%; padding: 14px 16px; border: 1.5px solid #cfe5f5; border-radius: 14px; margin: 12px 0; font-size: 1rem; color: var(--absensi-text); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
+    .absensi-module .login input:focus { border-color: var(--absensi-primary); box-shadow: 0 0 12px var(--absensi-primary); outline: none; background: #f0f8ff; }
+    .absensi-module .login .btn { width: 100%; padding: 14px 0; border: none; border-radius: 14px; background: var(--absensi-primary); color: #fff; font-weight: 900; font-size: 1.1rem; cursor: pointer; transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease; user-select: none; }
+    .absensi-module .login .btn:hover, .absensi-module .login .btn:focus { background: var(--absensi-primary-dark); box-shadow: 0 8px 24px var(--absensi-shadow-strong); outline: none; }
+    .absensi-module select { padding: 12px 16px; border: 1.5px solid #cfe5f5; border-radius: 14px; min-width: 220px; background: #f8fcff; cursor: pointer; transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; font-weight: 600; color: var(--absensi-text); user-select: none; }
+    .absensi-module select:hover, .absensi-module select:focus { border-color: var(--absensi-primary); box-shadow: 0 6px 18px rgba(58,141,222,0.25); outline: none; }
+    .absensi-module input { width: 100%; padding: 12px 16px; border: 1.5px solid #cfe5f5; border-radius: 14px; background: #f8fcff; color: var(--absensi-text); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; font-size: 1rem; }
+    .absensi-module input:focus { border-color: var(--absensi-primary); box-shadow: 0 6px 18px rgba(58,141,222,0.25); outline: none; }
+    /* Mobile */
+    @media (max-width: 900px) { 
+      .grid-3 { grid-template-columns: 1fr; } 
+      .line-card, .line-card-tambahan { grid-template-columns: 1fr 80px 120px 100px 80px; padding: 12px 16px; } 
+      .cek-ongkir-module .results { grid-template-columns: 1fr; } 
+      .absensi-module .topbar, .absensi-module .admin-bar { justify-content: flex-start; } 
+      .absensi-module .table-wrap { overflow-x: auto; } 
+      .absensi-module table { min-width: 100%; font-size: 14px; } 
+      .absensi-module .admin-bar { flex-direction: column; align-items: stretch; }
+      .absensi-module .admin-bar .btn { width: 100%; }
+    }
+    @media (max-width: 600px) { 
+      .container { padding: 10px 12px; margin: 12px auto; } 
+      .card { padding: 18px 20px; border-radius: 16px; margin-bottom: 16px; } 
+      h1 { font-size: clamp(20px, 6vw, 28px); } 
+      h2, h3 { font-size: 1.1rem; margin: 6px 0 12px 0; } 
+      label { font-size: 13px; margin-top: 10px; } 
+      input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select { padding: 10px 12px; border-radius: 10px; font-size: 0.85rem; } 
+      .btn { padding: 8px 12px; border-radius: 12px; font-size: 0.8rem; } 
+      .btnbar { gap: 6px; flex-direction: column; align-items: stretch; } 
+      nav.tab { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 8px; border-radius: 14px; } 
+      nav.tab button { padding: 10px 0; font-size: 0.85rem; border-radius: 12px; } 
+      .line-card, .line-card-tambahan { grid-template-columns: 3fr 50px 60px 70px; padding: 10px 12px; gap: 6px; } 
+      .nota-box { padding: 14px 16px; font-size: 0.8rem; min-height: 100px; } 
+      table { font-size: 0.8rem; } 
+      th, td { padding: 8px 6px; } 
+      .section-title { font-size: 0.9rem; margin-top: 8px; } 
+      .small { font-size: 10px; margin-top: 4px; } 
+      .notification-popup { padding: 10px 15px; font-size: 0.8rem; } /* Notifikasi lebih kecil di mobile */
+      .cek-ongkir-module .brand { font-size: clamp(16px, 2vw, 18px); } 
+      .cek-ongkir-module .headline { font-size: clamp(18px, 2.5vw, 24px); } 
+      .absensi-module #pengajuanForm { flex-direction: column; gap: 16px; padding: 16px; } 
+      .absensi-module #pengajuanForm select, .absensi-module #pengajuanForm button { min-width: 100% !important; width: 100% !important; } 
+      .absensi-module .table-wrap { overflow-x: auto; } 
+      .absensi-module table { min-width: 100%; font-size: 13px; } 
+      .absensi-module thead th, .absensi-module tbody td { padding: 10px 8px; } 
+      .absensi-module .badge { padding: 5px 10px; font-size: 11px; } 
+      .absensi-module .btn-mini { padding: 6px 10px; font-size: 12px; } 
+      .absensi-module .login { width: 90vw; padding: 20px; } 
+      .absensi-module .login input { padding: 10px 12px; font-size: 0.9rem; } 
+      .absensi-module .login .btn { padding: 12px 0; font-size: 1rem; } 
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Dashboard Kurir -->
+  <div id="kurirDashboard">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+        <div><h2>Halo, <span id="curUser"></span></h2><div class="small">Buat nota • Simpan Nota • Rekap bulanan • Pelacak • Cek Ongkir</div></div>
+        <div><div class="small">No Nota berikutnya:</div><div id="nextNota" style="font-weight:800;font-size:18px;color:#0b4870">-</div></div>
+        <button id="kurirLogoutBtn" class="btn danger">Logout</button>
+      </div>
+    </div>
+
+    <nav class="tab" id="kurirNavTabs">
+      <button data-tab="notaTab" class="active">📝 Nota</button>
+      <button data-tab="riwayatTab">📑 Riwayat</button>
+      <button data-tab="rekapTab">📊 Rekap</button>
+      <button data-tab="pelacakTab">📋 Pelacak</button>
+      <button data-tab="cekOngkirModule">📍 Cek Ongkir</button>
+      <button data-tab="absensiKurirModule">✅ Absensi Kurir</button>
+    </nav>
+
+    <!-- Tab Contents Kurir -->
+    <div id="notaTab" class="tabContent">
+      <div class="card">
+        <h3>Buat / Edit Nota</h3>
+        <div class="grid grid-3">
+          <div><label>Nama Kurir</label><input id="kurirName" type="text" readonly></div>
+          <div><label>Nomor WhatsApp Customer</label><input id="custPhone" type="text" placeholder="6281234... (opsional)"></div>
+          <div><label>Ongkir (Rp)</label><input id="ongkir" type="number" value="0" min="0"></div>
+        </div>
+        <div class="section-title" style="margin-top:14px"><div class="small" style="font-weight:700">Daftar Item</div><div class="btnbar"><button id="btnAddItem" class="btn">+ Item</button><button id="btnClearItems" class="btn secondary">Bersihkan</button></div></div>
+        <div id="itemsArea" class="list-v" style="margin-top:10px"></div>
+        <div class="section-title" style="margin-top:14px"><div class="small" style="font-weight:700">Tambahan Biaya</div><div class="btnbar"><button id="btnAddTambahan" class="btn secondary">+ Tambahan</button></div></div>
+        <div id="tambahanArea" class="list-v" style="margin-top:10px"></div>
+        <div class="grid grid-3" style="margin-top:8px;align-items:end">
+          <div><label>Total</label><div id="totalPesanan" style="font-weight:800;font-size:22px;color:#0b4870">Rp 0</div><div class="small">Subtotal item + ongkir + tambahan</div></div>
+          <div></div>
+          <div class="btnbar" style="justify-content:flex-end">
+            <button id="btnClearAll" class="btn danger">Bersihkan Semua</button>
+            <button id="btnSaveForm" class="btn">Simpan Nota</button>
+            <button id="btnExportPreview" class="btn secondary">Simpan Foto</button>
+            <button id="btnSharePreview" class="btn secondary">Bagikan WhatsApp</button>
+          </div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <div class="section-title"><h3 style="margin:0">Preview Nota</h3><div class="small">Nama file: <span id="previewFilename">-</span></div></div>
+          <div id="notaPreview" class="nota-box">Belum ada nota.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="riwayatTab" class="tabContent hidden">
+      <div class="card">
+        <h3>Riwayat Nota (akun ini)</h3>
+        <div id="notaHistory"></div>
+      </div>
+    </div>
+
+    <div id="rekapTab" class="tabContent hidden">
+      <div class="card">
+        <h3>Rekap Bulanan</h3>
+        <div class="grid grid-3">
+          <div><label>Bulan</label><input id="rekapMonth" type="month"></div>
+          <div style="align-self:end"><button id="btnLoadRekap" class="btn">Muat Rekap</button></div>
+        </div>
+        <div class="card" style="margin-top:10px">
+          <table aria-label="Rekap Bulanan">
+            <thead><tr><th>Tanggal</th><th>Jumlah Nota</th><th>Ongkir</th><th>Tambahan</th><th>Total</th></tr></thead>
+            <tbody id="rekapBody"></tbody>
+            <tfoot><tr><th>Total Bulan</th><th id="sumNota">0</th><th id="sumOngkir">0</th><th id="sumTambahan">0</th><th id="sumTotal">0</th></tr></tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="pelacakTab" class="tabContent hidden">
+      <div class="card">
+        <h3>Pelacak Orderan</h3>
+        <div class="grid grid-3">
+          <div><label>No Nota</label><input id="trackNoNota" type="text" placeholder="cth: 00012" list="listTrackNoNota">
+            <datalist id="listTrackNoNota"></datalist>
+          </div>
+          <div><label>Tanggal (YYYY-MM-DD)</label><input id="trackDate" type="date" placeholder="2025-09-01"></div>
+          <div><label>Nama Kurir</label><input id="trackKurir" type="text" placeholder="Nama Kurir" list="listTrackKurir">
+            <datalist id="listTrackKurir"></datalist>
+          </div>
+          <div style="align-self:end; grid-column: span 3;"><div class="btnbar"><button id="btnCariNota" class="btn">Cari</button><button id="btnCariReset" class="btn secondary">Reset</button></div></div>
+        </div>
+        <div id="pelacakHasil" style="margin-top:10px"></div>
+      </div>
+    </div>
+
+    <div id="cekOngkirModule" class="tabContent hidden cek-ongkir-module">
+      <div class="hero">
+        <div class="brand"><i class="fa-solid fa-box"></i> Ongkir Express</div>
+        <div class="headline">Cek Tarif Pengiriman – Asal & Tujuan</div>
+        <div class="sub">Pilih lokasi lewat pencarian pintar. Bisa isi salah satu atau keduanya. Otomatis hitung sesuai aturan.</div>
+      </div>
+      <main class="card">
+        <div class="card__body">
+          <div class="grid">
+            <div class="field" id="field-asal">
+              <div class="label"><i class="fa-solid fa-location-arrow"></i> Asal (opsional)</div>
+              <div class="control"><i class="fa-solid fa-magnifying-glass licon"></i><input id="asalInput" class="input" type="text" placeholder="Ketik lokasi asal… (opsional)"/><button class="clear-btn" title="Bersihkan" id="clearAsal"><i class="fa-solid fa-xmark"></i></button><div class="suggest" id="asalSuggest"></div></div>
+            </div>
+            <div class="field" id="field-tujuan">
+              <div class="label"><i class="fa-solid fa-location-dot"></i> Tujuan</div>
+              <div class="control"><i class="fa-solid fa-magnifying-glass licon"></i><input id="tujuanInput" class="input" type="text" placeholder="Ketik lokasi tujuan…"/><button class="clear-btn" title="Bersihkan" id="clearTujuan"><i class="fa-solid fa-xmark"></i></button><div class="suggest" id="tujuanSuggest"></div></div>
+            </div>
+          </div>
+          <div class="actions">
+            <button id="cekBtn" class="btn btn-primary"><i class="fa-solid fa-calculator"></i> Cek Ongkir</button>
+            <button id="bersihkanBtn" class="btn btn-ghost"><i class="fa-solid fa-broom"></i> Bersihkan</button>
+          </div>
+          <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap">
+            <span class="pellet"><i class="fa-regular fa-circle-check"></i> Isi salah satu = ongkir normal</span>
+            <span class="pellet"><i class="fa-regular fa-circle-check"></i> Isi dua-duanya = (Asal + Tujuan) − 6.000</span>
+          </div>
+          <div class="results" id="ongkirResults" style="display:none">
+            <div class="kartu"><h4><i class="fa-solid fa-tag"></i> Ongkir Normal</h4><div class="harga" id="normalHarga">–</div><div class="muted" id="normalKeterangan">—</div></div>
+            <div class="kartu"><h4><i class="fa-solid fa-route"></i> Ongkir Rute (Asal + Tujuan − 6.000)</h4><div class="harga" id="ruteHarga">–</div><div class="muted" id="ruteKeterangan">—</div><div class="formula" id="ruteFormula" style="display:none"></div></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div id="absensiKurirModule" class="tabContent hidden absensi-module">
+      <div class="card">
+        <h1>Jadwal & Absensi Kurir</h1>
+        <div class="topbar" id="absensiTopbar">
+          <button class="btn active" data-tab="tab-jadwal">Jadwal Off</button>
+          <button class="btn" data-tab="tab-rekap">Rekap & Keaktifan</button>
+          <button class="btn ghost" id="btn-absensi-tab" data-tab="tab-absensi" style="display:none;">Absensi Harian</button>
+          <button class="btn ghost" data-tab="tab-approval" id="btn-approval-tab" style="display:none;">Approval Kurir</button>
+          <div class="month-wrap">
+            <label for="monthPick"><small>Bulan:</small></label>
+            <input type="month" id="monthPick"/>
+          </div>
+        </div>
+
+        <div class="admin-bar" id="absensiAdminBar" style="display:none;">
+          <!-- Admin buttons are hidden for kurir.html -->
+        </div>
+
+        <!-- Tabs Absensi -->
+        <div id="tab-jadwal" class="tab active">
+          <div id="pengajuanForm" class="grid grid-3" style="gap: 10px; margin-bottom: 16px; padding: 10px; border: 1px solid var(--border); border-radius: 12px;">
+            <div><label>Tanggal Off Anda</label><select id="pengajuanTanggal"></select></div>
+            <div><label>Pengganti</label><select id="penggantiKurir"></select></div>
+            <div><label>Tanggal Off Pengganti</label><select id="tanggalTukar"></select></div>
+            <div style="grid-column: span 3;"><button class="btn full" id="btnAjukan">Ajukan Tukar Off</button></div>
+          </div>
+          <div class="table-wrap">
+            <table id="tableJadwal">
+              <thead><tr><th>Tanggal</th><th>Hari</th><th>Kurir Off</th><th>Pengganti</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="tab-absensi" class="tab">
+          <div class="table-wrap">
+            <table id="tableAbsensi">
+              <thead><tr><th>Tanggal</th><th>Nama Kurir</th><th>Status</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="tab-rekap" class="tab">
+          <div class="table-wrap">
+            <table id="tableRekap">
+              <thead><tr><th>Nama Kurir</th><th>Total On</th><th>Total Off</th><th>Skor Keaktifan</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="tab-approval" class="tab">
+          <div class="table-wrap">
+            <table id="tableApproval">
+              <thead><tr><th>Tanggal Pengajuan</th><th>Kurir Asal</th><th>Pengganti</th><th>Status</th><th>Aksi</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pop Notifikasi -->
+<div id="notificationPopup" class="notification-popup"></div>
+<audio id="notificationSound" src="https://www.soundjay.com/buttons/button-2.mp3" preload="auto"></audio>
+
+<!-- Pop-up Foto Nota -->
+<div id="notaPhotoOverlay" class="overlay">
+  <div class="overlay-content">
+    <button class="overlay-close" id="closePhotoOverlay">&times;</button>
+    <img id="notaPhotoImage" src="" alt="Nota Photo" />
+    <div class="btnbar" style="margin-top: 15px; justify-content: center;">
+      <button id="savePhotoBtn" class="btn">Simpan Foto</button>
+      <button id="shareTextBtn" class="btn secondary">Bagikan Teks WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  // Import Firebase SDKs
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+  import { getDatabase, ref, set, get, onValue, update, remove, runTransaction } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+  import { getFirestore, collection, doc, onSnapshot, setDoc, updateDoc, deleteDoc, query, orderBy, serverTimestamp, addDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+  import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+  // Firebase config Anda
+  const firebaseConfig = {
+    apiKey: "AIzaSyCtva8TeL40-WotK4kFL_vL8uUXL3GDfww",
+    authDomain: "sahabatkuu-bisa.firebaseapp.com",
+    databaseURL: "https://sahabatkuu-bisa-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "sahabatkuu-bisa",
+    storageBucket: "sahabatkuu-bisa.firebasestorage.app",
+    messagingSenderId: "315555564115",
+    appId: "1:315555564115:web:56f46dbceb8c154589d4a6",
+    measurementId: "G-PFGYL96VPS"
+  };
+
+  // Inisialisasi Firebase Apps
+  const app = initializeApp(firebaseConfig, "mainApp"); 
+  const db = getDatabase(app); // Realtime Database
+  const auth = getAuth(app); // Authentication
+  const firestoreDb = getFirestore(app); // Firestore (untuk absensi)
+
+  try { getAnalytics(app); } catch(e) {} // Optional analytics
+
+  // ====================================================================
+  // Helper Functions (UI & Notifikasi)
+  // ====================================================================
+  const el = (id) => document.getElementById(id);
+  const qs = (sel) => document.querySelector(sel);
+  const qsa = (sel) => Array.from(document.querySelectorAll(sel));
+  const money = (n) => (Number(n) || 0).toLocaleString('id-ID');
+  const leftPad = (num, len = 5) => String(num).padStart(len, '0');
+
+  function showNotification(message, type = 'success') {
+    const popup = el('notificationPopup');
+    popup.textContent = message;
+    popup.className = `notification-popup show ${type}`;
+    el('notificationSound').play();
+    setTimeout(() => {
+      popup.classList.remove('show');
+    }, 3000);
+  }
+
+  function setActiveTab(tabContainerId, tabId) {
+    qsa(`#${tabContainerId} button`).forEach(b => {
+      b.classList.toggle('active', b.dataset.tab === tabId);
+    });
+    const parentContainer = el(tabContainerId).closest('.tab-container') || el(tabContainerId).parentNode; 
+    qsa('.tabContent', parentContainer).forEach(t => t.classList.add('hidden'));
+    el(tabId).classList.remove('hidden');
+
+    // Trigger specific refresh for tabs
+    if (tabId === 'riwayatTab') refreshNotaHistory();
+    if (tabId === 'rekapTab') el('btnLoadRekap').click(); // Auto-load rekap
+    if (tabId === 'pelacakTab') loadPelacakData(); // Load data for pelacak tab
+    if (tabId === 'cekOngkirModule') el('tujuanInput').focus(); // Focus on input
+    if (tabId === 'absensiKurirModule') absensiQuickSync(); // Refresh absensi
+  }
+
+  // ====================================================================
+  // Kurir Dashboard Setup
+  // ====================================================================
+  let currentUser = localStorage.getItem('currentUser');
+  let lastNoNota = 0;
+  let notaCounterLoaded = false;
+
+  if (!currentUser) {
+    window.location.href = 'index.html'; // Redirect to login if no user
+  } else {
+    el('curUser').innerText = currentUser;
+    el('kurirName').value = currentUser;
+    ensureCounter().then(updateNextNotaLabel);
+    refreshNotaHistory();
+  }
+
+  el('kurirLogoutBtn').addEventListener('click', doKurirLogout);
+
+  function doKurirLogout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = 'index.html'; // Redirect to initial login
+    showNotification('Anda telah logout.', 'info');
+  }
+
+  // ====================================================================
+  // Kurir Dashboard: Nota Tab
+  // ====================================================================
+  const itemsArea = el('itemsArea');
+  const tambahanArea = el('tambahanArea');
+
+  el('btnAddItem').addEventListener('click', () => addItemUI());
+  el('btnClearItems').addEventListener('click', () => { itemsArea.innerHTML = ''; addItemUI(); updateTotals(); });
+  el('btnAddTambahan').addEventListener('click', () => addTambahanUI());
+  el('ongkir').addEventListener('input', updateTotals);
+  el('btnSaveForm').addEventListener('click', saveNoteToFirebase);
+  el('btnExportPreview').addEventListener('click', savePreviewAsImage);
+  el('btnSharePreview').addEventListener('click', sharePreviewImage);
+  el('btnClearAll').addEventListener('click', clearAllNotaForm);
+
+  // Default one item and one additional field
+  addItemUI();
+  addTambahanUI();
+
+  function addItemUI(pref = {}) {
+    const wrap = document.createElement('div');
+    wrap.className = 'line-card';
+    wrap.innerHTML = `
+      <div><label class="small">Nama Item</label><input class="iname" type="text" value="${pref.name || ''}" placeholder="Nama menu / barang"></div>
+      <div><label class="small">Qty</label><input class="iqty" type="number" min="1" value="${pref.qty || 1}"></div>
+      <div><label class="small">Harga (Rp)</label><input class="iprice" type="number" min="0" value="${pref.price || 0}"></div>
+      <div><label class="small">Subtotal</label><div class="sub isub">0</div></div>
+      <div><button class="btn danger mini-btn removeBtn">Hapus</button></div>
+    `;
+    itemsArea.appendChild(wrap);
+    wrap.querySelectorAll('input').forEach(i => i.addEventListener('input', updateTotals));
+    wrap.querySelector('.removeBtn').addEventListener('click', () => { wrap.remove(); updateTotals(); });
+    updateTotals();
+  }
+
+  function addTambahanUI(pref = {}) {
+    const row = document.createElement('div');
+    row.className = 'line-card-tambahan';
+    row.innerHTML = `
+      <div><label class="small">Jenis Tambahan</label><select class="t-type">
+        <option ${!pref.type ? 'selected' : ''} value="">-- Pilih --</option>
+        <option ${pref.type === 'Tambahan Ojeg' ? 'selected' : ''} value="Tambahan Ojeg">Tambahan Ojeg</option>
+        <option ${pref.type === 'Tambahan Malam' ? 'selected' : ''} value="Tambahan Malam">Tambahan Malam</option>
+        <option ${pref.type === 'Tambahan Tempat' ? 'selected' : ''} value="Tambahan Tempat">Tambahan Tempat</option>
+        <option ${pref.type === 'Tambahan Hujan' ? 'selected' : ''} value="Tambahan Hujan">Tambahan Hujan</option>
+        <option ${pref.type === 'Tambahan Parkir' ? 'selected' : ''} value="Tambahan Parkir">Tambahan Parkir</option>
+        <option ${pref.type === 'Tambahan Melebihi Kapasitas' ? 'selected' : ''} value="Tambahan Melebihi Kapasitas">Tambahan Melebihi Kapasitas</option>
+        <option ${pref.type === 'Tambahan Cash Minuman' ? 'selected' : ''} value="Tambahan Cash Minuman">Tambahan Cash Minuman</option>
+        <option ${pref.type === 'Lainnya' ? 'selected' : ''} value="Lainnya">Lainnya</option>
+      </select></div>
+      <div><label class="small">Nominal (Rp)</label><input class="t-nom" type="number" min="0" value="${pref.nominal || 0}"></div>
+      <div><button class="btn secondary mini-btn t-remove">Hapus</button></div>
+    `;
+    tambahanArea.appendChild(row);
+    row.querySelector('.t-nom').addEventListener('input', updateTotals);
+    row.querySelector('.t-type').addEventListener('change', updateTotals);
+    row.querySelector('.t-remove').addEventListener('click', () => { row.remove(); updateTotals(); });
+    updateTotals();
+  }
+
+  function updateTotals() {
+    let total = 0;
+    itemsArea.querySelectorAll('.line-card').forEach(c => {
+      const qty = Number(c.querySelector('.iqty').value) || 0;
+      const price = Number(c.querySelector('.iprice').value) || 0;
+      const sub = qty * price;
+      c.querySelector('.isub').innerText = sub.toLocaleString('id-ID');
+      total += sub;
+    });
+    const ong = Number(el('ongkir').value) || 0;
+    total += ong;
+    let t = 0;
+    tambahanArea.querySelectorAll('.t-nom').forEach(n => t += Number(n.value) || 0);
+    total += t;
+    el('totalPesanan').innerText = 'Rp ' + total.toLocaleString('id-ID');
+    updatePreviewFilename();
+    return total;
+  }
+
+  function clearAllNotaForm() {
+    if (!confirm('Yakin ingin membersihkan semua input nota?')) return;
+    el('custPhone').value = '';
+    el('ongkir').value = 0;
+    itemsArea.innerHTML = '';
+    tambahanArea.innerHTML = '';
+    addItemUI();
+    addTambahanUI();
+    updateTotals();
+    showNotification('Form nota dibersihkan.', 'info');
+  }
+
+  function updatePreviewFilename() {
+    const noNota = leftPad((lastNoNota || 0) + 1);
+    const filename = `${currentUser || 'User'}_nota_${noNota}.jpg`;
+    el('previewFilename').innerText = filename;
+    return filename;
+  }
+
+  function buildNotaObject() {
+    const items = [];
+    let subtotal = 0;
+    itemsArea.querySelectorAll('.line-card').forEach((c) => {
+      const name = (c.querySelector('.iname').value || '').trim();
+      const qty = Number(c.querySelector('.iqty').value) || 0;
+      const price = Number(c.querySelector('.iprice').value) || 0;
+      const sub = qty * price;
+      subtotal += sub;
+      if (name && (qty > 0 || price > 0)) items.push({ name, qty, price, subtotal: sub });
+    });
+
+    const tambahans = [];
+    let tambahTotal = 0;
+    tambahanArea.querySelectorAll('.line-card-tambahan').forEach(r => {
+      const type = (r.querySelector('.t-type').value || '').trim();
+      const nominal = Number(r.querySelector('.t-nom').value) || 0;
+      if (type && nominal > 0) {
+        tambahans.push({ type, nominal });
+        tambahTotal += nominal;
+      }
+    });
+
+    const ongkir = Number(el('ongkir').value) || 0;
+    const custPhone = (el('custPhone').value || '').replace(/\D/g, '');
+    const kurir = currentUser || '';
+
+    const total = subtotal + ongkir + tambahTotal;
+    const noNota = leftPad((lastNoNota || 0) + 1);
+    const createdAt = new Date().toISOString();
+
+    const lines = [];
+    lines.push('🧾 NOTA SAHABATKU DELIVERY');
+    lines.push('==========================');
+    lines.push(`Kurir  : ${kurir}`);
+    lines.push(`No     : ${noNota}`);
+    lines.push(`Tanggal: ${new Date(createdAt).toLocaleString('id-ID')}`);
+    if (custPhone) lines.push(`WA     : ${custPhone}`);
+    lines.push('--------------------------');
+    if (items.length === 0) {
+      lines.push('Tidak ada item.');
+    } else {
+      items.forEach((it, i) => lines.push(`${i + 1}. ${it.name} (${it.qty} x Rp ${it.price.toLocaleString('id-ID')}) = Rp ${it.subtotal.toLocaleString('id-ID')}`));
+    }
+    lines.push('--------------------------');
+    lines.push(`Ongkir   : Rp ${ongkir.toLocaleString('id-ID')}`);
+    if (tambahans.length > 0) {
+      tambahans.forEach(t => lines.push(`${t.type}: Rp ${Number(t.nominal).toLocaleString('id-ID')}`));
+    }
+    lines.push(`TOTAL    : Rp ${total.toLocaleString('id-ID')}`);
+    lines.push('');
+    lines.push('Terima kasih sudah menggunakan Sahabatku Delivery 🙏');
+
+    const text = lines.join('\n');
+    el('notaPreview').innerText = text;
+
+    return {
+      kurir, noNota, createdAt,
+      items, tambahans, ongkir, total, custPhone, text
+    };
+  }
+
+  // ====================================================================
+  // Counter No Nota per user
+  // ====================================================================
+  async function ensureCounter() {
+    if (!currentUser) return;
+    if (notaCounterLoaded) return;
+    const cRef = ref(db, `counters/${currentUser}`);
+    const snap = await get(cRef);
+    if (!snap.exists()) {
+      await set(cRef, { lastNoNota: 0 });
+      lastNoNota = 0;
+    } else {
+      lastNoNota = Number(snap.val().lastNoNota) || 0;
+    }
+    notaCounterLoaded = true;
+  }
+
+  async function increaseCounter() {
+    await ensureCounter();
+    lastNoNota = (Number(lastNoNota) || 0) + 1;
+    await update(ref(db, `counters/${currentUser}`), { lastNoNota });
+    updateNextNotaLabel();
+    return lastNoNota;
+  }
+
+  async function decreaseCounter() {
+    await ensureCounter();
+    if (lastNoNota > 0) {
+      lastNoNota = (Number(lastNoNota) || 0) - 1;
+      await update(ref(db, `counters/${currentUser}`), { lastNoNota });
+      updateNextNotaLabel();
+    }
+  }
+
+  function updateNextNotaLabel() {
+    el('nextNota').innerText = leftPad((lastNoNota || 0) + 1);
+  }
+
+  // ====================================================================
+  // Save Nota to Firebase
+  // ====================================================================
+  async function saveNoteToFirebase() {
+    if (!currentUser) { showNotification('Login dulu.', 'error'); return; }
+    const data = buildNotaObject();
+    if (data.items.length === 0 && data.ongkir === 0 && data.tambahans.length === 0) {
+      showNotification('Nota kosong, tidak bisa disimpan.', 'warning');
+      return;
+    }
+
+    const curNo = await increaseCounter();
+    data.noNota = leftPad(curNo);
+
+    const noteId = 'nota_' + Date.now();
+    const noteObj = { id: noteId, ...data };
+
+    try {
+      await set(ref(db, `nota/${currentUser}/${noteId}`), noteObj);
+      await set(ref(db, `pelacakByNo/${data.noNota}/${noteId}`), {
+        username: currentUser, createdAt: data.createdAt, total: data.total
+      });
+      const keyDate = data.createdAt.slice(0, 10);
+      await set(ref(db, `pelacakByDate/${keyDate}/${noteId}`), {
+        username: currentUser, noNota: data.noNota, total: data.total
+      });
+
+      showNotification(`Nota Tersimpan ✅ (No Nota ${data.noNota})`, 'success');
+      clearAllNotaForm(); // Clear form after successful save
+      refreshNotaHistory();
+      updatePreviewFilename();
+    } catch (error) {
+      console.error("Error saving note:", error);
+      showNotification('Gagal menyimpan nota: ' + error.message, 'error');
+    }
+  }
+
+  // ====================================================================
+  // Kurir Dashboard: Riwayat Tab
+  // ====================================================================
+  let currentViewedNota = null; // To store the nota object being viewed
+
+  function refreshNotaHistory() {
+    if (!currentUser) return;
+    const listEl = el('notaHistory');
+    listEl.innerHTML = 'Memuat...';
+    const notesRef = ref(db, `nota/${currentUser}`);
+    onValue(notesRef, (snap) => {
+      const val = snap.val() || {};
+      const arr = Object.values(val).sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+      if (arr.length === 0) { listEl.innerHTML = '<p class="small">Belum ada nota.</p>'; return; }
+      let html = '<div class="list-v">';
+      arr.forEach(n => {
+        html += `<div style="display:flex;justify-content:space-between;align-items:center;border:1px solid #eef6ff;padding:12px;border-radius:12px;background:#fff;gap:8px">
+          <div style="flex:1">
+            <div class="small">${new Date(n.createdAt).toLocaleString('id-ID')}</div>
+            <div style="font-weight:800">No: ${n.noNota} • Total: Rp ${(Number(n.total) || 0).toLocaleString('id-ID')}</div>
+            <div class="small">${(n.items || []).length} item • Ongkir Rp ${(Number(n.ongkir) || 0).toLocaleString('id-ID')}</div>
+          </div>
+          <div class="btnbar">
+            <button class="btn secondary" onclick="viewNote('${n.id}')">Lihat</button>
+            <button class="btn danger" onclick="hapusNote('${n.id}')">Hapus</button>
+          </div>
+        </div>`;
+      });
+      html += '</div>';
+      listEl.innerHTML = html;
+    });
+  }
+
+  window.viewNote = async (id) => {
+    const snap = await get(ref(db, `nota/${currentUser}/${id}`));
+    if (!snap.exists()) { showNotification('Nota tidak ditemukan', 'error'); return; }
+    const n = snap.val();
+    currentViewedNota = n; // Store the nota object
+
+    // Display nota as image in overlay
+    const notaPreviewNode = document.createElement('div');
+    notaPreviewNode.style.whiteSpace = 'pre-wrap';
+    notaPreviewNode.style.fontFamily = 'Courier New, Courier, monospace';
+    notaPreviewNode.style.background = '#f5faff';
+    notaPreviewNode.style.padding = '18px 20px';
+    notaPreviewNode.style.borderRadius = '14px';
+    notaPreviewNode.style.border = '1.5px solid #c9dbf8';
+    notaPreviewNode.style.minHeight = '140px';
+    notaPreviewNode.style.color = 'var(--text-primary)';
+    notaPreviewNode.style.fontSize = '0.9rem';
+    notaPreviewNode.style.boxShadow = 'inset 0 0 8px #dbeeff';
+    notaPreviewNode.style.lineHeight = '1.4';
+    notaPreviewNode.textContent = n.text || '';
+
+    // Temporarily append to body to render for html2canvas
+    document.body.appendChild(notaPreviewNode);
+
+    try {
+      const canvas = await html2canvas(notaPreviewNode, { scale: 2, backgroundColor: '#fff' });
+      const imgData = canvas.toDataURL('image/jpeg', 0.9);
+      el('notaPhotoImage').src = imgData;
+      el('notaPhotoOverlay').classList.add('show');
+    } catch (e) {
+      console.error("Error generating image for view:", e);
+      showNotification('Gagal menampilkan nota sebagai gambar.', 'error');
+    } finally {
+      notaPreviewNode.remove(); // Remove the temporary node
+    }
+  };
+
+  el('closePhotoOverlay').addEventListener('click', () => {
+    el('notaPhotoOverlay').classList.remove('show');
+    el('notaPhotoImage').src = ''; // Clear image
+    currentViewedNota = null; // Clear viewed nota
+  });
+
+  el('savePhotoBtn').addEventListener('click', async () => {
+    if (!currentViewedNota) { showNotification('Tidak ada nota untuk disimpan.', 'warning'); return; }
+    try {
+      const imgData = el('notaPhotoImage').src;
+      const filename = `${currentViewedNota.kurir}_nota_${currentViewedNota.noNota}.jpg`;
+      const a = document.createElement('a');
+      a.href = imgData;
+      a.download = filename;
+      a.click();
+      showNotification('Foto nota diunduh.', 'success');
+    } catch (e) {
+      console.error("Error saving photo:", e);
+      showNotification('Gagal menyimpan foto nota.', 'error');
+    }
+  });
+
+  el('shareTextBtn').addEventListener('click', () => {
+    if (!currentViewedNota) { showNotification('Tidak ada nota untuk dibagikan.', 'warning'); return; }
+    const textToShare = currentViewedNota.text;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(textToShare)}`;
+    window.open(whatsappUrl, '_blank');
+    showNotification('Teks nota dibagikan ke WhatsApp.', 'info');
+  });
+
+  window.hapusNote = async (id) => {
+    if (!confirm('Hapus nota ini dari Firebase?')) return;
+    try {
+      const notaRef = ref(db, `nota/${currentUser}/${id}`);
+      const notaSnap = await get(notaRef);
+      const notaData = notaSnap.val();
+
+      await remove(notaRef);
+      if (notaData && notaData.noNota) {
+        await remove(ref(db, `pelacakByNo/${notaData.noNota}/${id}`));
+        const keyDate = notaData.createdAt.slice(0, 10);
+        await remove(ref(db, `pelacakByDate/${keyDate}/${id}`));
+        await decreaseCounter(); // Decrement the counter
+      }
+      showNotification('Nota terhapus.', 'info');
+    } catch (error) {
+      console.error("Error deleting note:", error);
+      showNotification('Gagal menghapus nota: ' + error.message, 'error');
+    }
+  };
+
+  // ====================================================================
+  // Kurir Dashboard: Rekap Tab
+  // ====================================================================
+  el('btnLoadRekap').addEventListener('click', async () => {
+    if (!currentUser) { showNotification('Login dulu.', 'error'); return; }
+    const ym = el('rekapMonth').value;
+    if (!ym) { showNotification('Pilih bulan.', 'warning'); return; }
+    const [year, month] = ym.split('-').map(Number);
+
+    const snap = await get(ref(db, `nota/${currentUser}`));
+    const val = snap.val() || {};
+    const arr = Object.values(val);
+    const byDate = {};
+
+    arr.forEach(n => {
+      const d = new Date(n.createdAt);
+      if (d.getFullYear() === year && (d.getMonth() + 1) === month) {
+        const key = n.createdAt.slice(0, 10);
+        if (!byDate[key]) byDate[key] = { count: 0, ongkir: 0, tambahan: 0, total: 0, ids: [] };
+        byDate[key].count++;
+        byDate[key].ongkir += Number(n.ongkir) || 0;
+        const t = Array.isArray(n.tambahans) ? n.tambahans.reduce((s, x) => s + (Number(x.nominal) || 0), 0) : 0;
+        byDate[key].tambahan += t;
+        byDate[key].total += (Number(n.ongkir) || 0) + t; // Total di rekap hanya ongkir + tambahan
+        byDate[key].ids.push(n.id || n._id || n.key);
+      }
+    });
+
+    const tbody = el('rekapBody');
+    tbody.innerHTML = '';
+    let sumNota = 0, sumO = 0, sumT = 0, sumTot = 0;
+
+    Object.keys(byDate).sort().forEach(k => {
+      const v = byDate[k];
+      const totalHarian = v.ongkir + v.tambahan;
+
+      const tr = document.createElement('tr');
+      const tdTanggal = document.createElement('td');
+      tdTanggal.innerText = new Date(k).toLocaleDateString('id-ID');
+      tdTanggal.style.cursor = 'pointer';
+      tdTanggal.title = 'Klik untuk ubah tanggal (fitur admin)'; // Note: this feature is for admin panel
+      tr.appendChild(tdTanggal);
+      tr.innerHTML += `
+        <td>${v.count}</td>
+        <td>${v.ongkir.toLocaleString('id-ID')}</td>
+        <td>${v.tambahan.toLocaleString('id-ID')}</td>
+        <td>${totalHarian.toLocaleString('id-ID')}</td>
+      `;
+      tbody.appendChild(tr);
+
+      sumNota += v.count;
+      sumO += v.ongkir;
+      sumT += v.tambahan;
+      sumTot += totalHarian;
+    });
+
+    el('sumNota').innerText = sumNota;
+    el('sumOngkir').innerText = sumO.toLocaleString('id-ID');
+    el('sumTambahan').innerText = sumT.toLocaleString('id-ID');
+    el('sumTotal').innerText = sumTot.toLocaleString('id-ID');
+  });
+
+  // ====================================================================
+  // Kurir Dashboard: Pelacak Tab
+  // ====================================================================
+  let allPelacakData = {}; // Cache for all pelacak data
+
+  async function loadPelacakData() {
+    const snapNo = await get(ref(db, 'pelacakByNo'));
+    const snapDate = await get(ref(db, 'pelacakByDate'));
+    const snapKurir = await get(ref(db, 'kurir'));
+
+    const pelacakByNo = snapNo.exists() ? snapNo.val() : {};
+    const pelacakByDate = snapDate.exists() ? snapDate.val() : {};
+    const kurirList = snapKurir.exists() ? snapKurir.val() : {};
+
+    allPelacakData = { pelacakByNo, pelacakByDate, kurirList };
+
+    // Populate datalists
+    const listTrackNoNota = el('listTrackNoNota');
+    listTrackNoNota.innerHTML = '';
+    Object.keys(pelacakByNo).forEach(no => {
+      const opt = document.createElement('option');
+      opt.value = no;
+      listTrackNoNota.appendChild(opt);
+    });
+
+    const listTrackKurir = el('listTrackKurir');
+    listTrackKurir.innerHTML = '';
+    Object.keys(kurirList).forEach(kurir => {
+      const opt = document.createElement('option');
+      opt.value = kurir;
+      listTrackKurir.appendChild(opt);
+    });
+  }
+
+  el('btnCariNota').addEventListener('click', async () => {
+    const no = (el('trackNoNota').value || '').trim();
+    const date = (el('trackDate').value || '').trim();
+    const kurir = (el('trackKurir').value || '').trim();
+    const hasilEl = el('pelacakHasil');
+    hasilEl.innerHTML = 'Mencari...';
+
+    let html = '';
+    let results = [];
+
+    if (no) {
+      const s = allPelacakData.pelacakByNo[no];
+      if (s) {
+        Object.entries(s).forEach(([id, v]) => {
+          results.push({ id, ...v, type: 'noNota' });
+        });
+      }
+    } else if (date) {
+      const s2 = allPelacakData.pelacakByDate[date];
+      if (s2) {
+        Object.entries(s2).forEach(([id, v]) => {
+          results.push({ id, ...v, type: 'date' });
+        });
+      }
+    } else if (kurir) {
+      // If searching by kurir, we need to iterate through all notes for that kurir
+      const snap = await get(ref(db, `nota/${kurir}`));
+      const notes = snap.exists() ? snap.val() : {};
+      Object.values(notes).forEach(n => {
+        results.push({ id: n.id, username: n.kurir, createdAt: n.createdAt, total: n.total, noNota: n.noNota, type: 'kurir' });
+      });
+    }
+
+    // Filter results further if multiple criteria are provided (though UI only allows one main search)
+    // For simplicity, if multiple inputs are filled, prioritize noNota > date > kurir
+    if (no) {
+      results = results.filter(r => r.noNota === no);
+    } else if (date) {
+      results = results.filter(r => (r.createdAt || '').startsWith(date));
+    } else if (kurir) {
+      results = results.filter(r => r.username === kurir);
+    }
+
+    if (results.length > 0) {
+      results.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+      html += `<h4>Hasil Pencarian</h4>`;
+      results.forEach(n => {
+        html += `<div class="card" style="padding:10px">
+          <div><b>${new Date(n.createdAt).toLocaleString('id-ID')}</b> — Kurir: ${n.username} — No: ${n.noNota || '-'}</div>
+          <div>Total: Rp ${(Number(n.total) || 0).toLocaleString('id-ID')}</div>
+        </div>`;
+      });
+    } else {
+      html += `<p class="small">Tidak ada catatan ditemukan untuk kriteria ini.</p>`;
+    }
+
+    if (!no && !date && !kurir) { html = '<p class="small">Isi No Nota, Tanggal, atau Nama Kurir untuk mencari.</p>'; }
+    hasilEl.innerHTML = html;
+  });
+
+  el('btnCariReset').addEventListener('click', () => {
+    el('trackNoNota').value = '';
+    el('trackDate').value = '';
+    el('trackKurir').value = '';
+    el('pelacakHasil').innerHTML = '';
+    showNotification('Filter pelacak direset.', 'info');
+  });
+
+  // ====================================================================
+  // Kurir Dashboard: Export / Share Image (Web)
+  // ====================================================================
+  function canvasToBlob(canvas, type = 'image/jpeg', quality = 0.9) {
+    return new Promise(res => canvas.toBlob(b => res(b), type, quality));
+  }
+
+  async function getNotaBlob() {
+    const node = el('notaPreview');
+    if (!node.innerText.trim()) { buildNotaObject(); }
+    const canvas = await html2canvas(node, { scale: 2, backgroundColor: '#fff' });
+    const blob = await canvasToBlob(canvas, 'image/jpeg', 0.9);
+    return blob;
+  }
+
+  async function savePreviewAsImage() {
+    try {
+      const nota = buildNotaObject();
+      const blob = await getNotaBlob();
+      const filename = `${currentUser || 'User'}_nota_${nota.noNota}.jpg`;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+      showNotification('Foto nota diunduh. Cek folder Downloads/Galeri anda.', 'success');
+    } catch (e) {
+      console.error(e);
+      showNotification('Gagal simpan foto nota', 'error');
+    }
+  }
+
+  async function sharePreviewImage() {
+    try {
+      const nota = buildNotaObject();
+      const blob = await getNotaBlob();
+      const filename = `${currentUser || 'User'}_nota_${nota.noNota}.jpg`;
+      const file = new File([blob], filename, { type: 'image/jpeg' });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'Nota Sahabatku Delivery',
+          text: `No Nota ${nota.noNota} — Kurir ${currentUser}`
+        });
+      } else {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+        showNotification('Browser tidak support share langsung. File sudah diunduh, silakan bagikan via WhatsApp dari Galeri/Downloads.', 'info');
+      }
+    } catch (e) {
+      console.error(e);
+      showNotification('Gagal share nota.', 'error');
+    }
+  }
+
+  // ====================================================================
+  // Kurir Dashboard: Cek Ongkir Module
+  // ====================================================================
+  let ongkirData = []; // This will be loaded from Firebase
+
+  async function loadOngkirData() {
+    const snap = await get(ref(db, 'daftar_ongkir'));
+    if (snap.exists()) {
+      ongkirData = Object.values(snap.val());
+    } else {
+      showNotification('Data ongkir belum tersedia.', 'warning');
+    }
+  }
+
+  function findOngkirByName(input) {
+    if (!input) return null;
+    const q = input.trim().toLowerCase();
+    if (!q) return null;
+    let exact = ongkirData.find(x => x.wilayah.toLowerCase() === q);
+    if (exact) return exact;
+    let starts = ongkirData.find(x => x.wilayah.toLowerCase().startsWith(q));
+    if (starts) return starts;
+    let inc = ongkirData.find(x => x.wilayah.toLowerCase().includes(q));
+    return inc || null;
+  }
+
+  function attachAutocomplete(inputEl, dropdownEl, dataList) {
+    let items = [];
+    let active = -1;
+
+    function highlight(txt, query) {
+      const i = txt.toLowerCase().indexOf(query.toLowerCase());
+      if (i < 0) return txt;
+      return txt.substring(0, i) + "<mark>" + txt.substring(i, i + query.length) + "</mark>" + txt.substring(i + query.length);
+    }
+
+    function render(list, query) {
+      dropdownEl.innerHTML = "";
+      list.slice(0, 12).forEach((it, idx) => {
+        const div = document.createElement('div');
+        div.className = 's-item';
+        div.innerHTML = `
+          <div class="s-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div class="s-text">
+            <div class="s-name">${highlight(it.wilayah, query)}</div>
+            <div class="s-price">${money(it.ongkir)}</div>
+          </div>
+        `;
+        div.addEventListener('click', () => {
+          inputEl.value = it.wilayah;
+          hide();
+          hitungOngkir(); // Recalculate after selection
+        });
+        dropdownEl.appendChild(div);
+      });
+      dropdownEl.style.display = list.length ? 'block' : 'none';
+      active = -1;
+    }
+
+    function hide() { dropdownEl.style.display = 'none'; }
+
+    inputEl.addEventListener('input', () => {
+      const q = inputEl.value.trim();
+      if (q.length < 1) { hide(); return; }
+      const list = dataList
+        .filter(x => x.wilayah.toLowerCase().includes(q.toLowerCase()))
+        .sort((a, b) => a.wilayah.localeCompare(b.wilayah));
+      items = list;
+      render(items, q);
+    });
+
+    inputEl.addEventListener('keydown', (e) => {
+      const visible = dropdownEl.style.display === 'block';
+      if (!visible) return;
+      const count = dropdownEl.children.length;
+      if (e.key === 'ArrowDown') { e.preventDefault(); active = (active + 1) % count; updateActive(); } else if (e.key === 'ArrowUp') { e.preventDefault(); active = (active - 1 + count) % count; updateActive(); } else if (e.key === 'Enter') {
+        if (active >= 0 && dropdownEl.children[active]) {
+          e.preventDefault();
+          dropdownEl.children[active].click();
+        }
+      } else if (e.key === 'Escape') { hide(); }
+    });
+
+    function updateActive() {
+      [...dropdownEl.children].forEach((el, i) => {
+        el.classList.toggle('active', i === active);
+        if (i === active) el.scrollIntoView({ block: 'nearest' });
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!dropdownEl.contains(e.target) && e.target !== inputEl) { hide(); }
+    });
+
+    return { hide };
+  }
+
+  const asalInput = el('asalInput');
+  const tujuanInput = el('tujuanInput');
+  const asalSuggest = el('asalSuggest');
+  const tujuanSuggest = el('tujuanSuggest');
+  const normalHarga = el('normalHarga');
+  const normalKet = el('normalKeterangan');
+  const ruteHarga = el('ruteHarga');
+  const ruteKet = el('ruteKeterangan');
+  const ruteFormula = el('ruteFormula');
+  const ongkirResults = el('ongkirResults');
+
+  const { hide: hideAsal } = attachAutocomplete(asalInput, asalSuggest, ongkirData);
+  const { hide: hideTujuan } = attachAutocomplete(tujuanInput, tujuanSuggest, ongkirData);
+
+  el('clearAsal').addEventListener('click', () => { asalInput.value = ''; hideAsal(); hitungOngkir(); });
+  el('clearTujuan').addEventListener('click', () => { tujuanInput.value = ''; hideTujuan(); hitungOngkir(); });
+  el('bersihkanBtn').addEventListener('click', () => {
+    asalInput.value = '';
+    tujuanInput.value = '';
+    hideAsal();
+    hideTujuan();
+    ongkirResults.style.display = 'none';
+    showNotification('Form ongkir dibersihkan.', 'info');
+  });
+  el('cekBtn').addEventListener('click', hitungOngkir);
+  [asalInput, tujuanInput].forEach(input => {
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); hitungOngkir(); }
+    });
+  });
+
+  function hitungOngkir() {
+    const asalText = asalInput.value.trim();
+    const tujuanText = tujuanInput.value.trim();
+
+    const asalObj = asalText ? findOngkirByName(asalText) : null;
+    const tujuanObj = tujuanText ? findOngkirByName(tujuanText) : null;
+
+    if (!asalObj && !tujuanObj) {
+      ongkirResults.style.display = 'none';
+      showNotification('Masukkan minimal salah satu lokasi (Asal atau Tujuan) sesuai daftar.', 'warning');
+      return;
+    }
+    if (asalText && !asalObj) { showNotification('Lokasi Asal tidak ditemukan di daftar.', 'error'); return; }
+    if (tujuanText && !tujuanObj) { showNotification('Lokasi Tujuan tidak ditemukan di daftar.', 'error'); return; }
+
+    let normalCalcObj = tujuanObj || asalObj;
+    normalHarga.textContent = money(normalCalcObj.ongkir);
+    normalKet.textContent = `Lokasi: ${normalCalcObj.wilayah}`;
+
+    if (asalObj && tujuanObj) {
+      const total = Math.max(0, (asalObj.ongkir + tujuanObj.ongkir) - 6000);
+      ruteHarga.textContent = money(total);
+      ruteKet.textContent = `Asal: ${asalObj.wilayah} (${money(asalObj.ongkir)}) • Tujuan: ${tujuanObj.wilayah} (${money(tujuanObj.ongkir)})`;
+      ruteFormula.textContent = `${money(asalObj.ongkir)} + ${money(tujuanObj.ongkir)} − ${money(6000)} = ${money(total)}`;
+      ruteFormula.style.display = 'inline-block';
+    } else {
+      ruteHarga.textContent = '—';
+      ruteKet.textContent = 'Isi Asal & Tujuan untuk menghitung ongkir rute.';
+      ruteFormula.style.display = 'none';
+    }
+    ongkirResults.style.display = 'grid';
+  }
+
+  // ====================================================================
+  // Kurir Dashboard: Absensi Kurir Module
+  // ====================================================================
+  const MASTER_DOC = collection(firestoreDb, 'appdata');
+  const JADWAL_COLLECTION = collection(firestoreDb, 'jadwal_off');
+  const PENGAJUAN_COLLECTION = collection(firestoreDb, 'pengajuan_off');
+
+  let kurirListAbsensi = []; // This will be loaded from Firestore
+  let jadwalDataAbsensi = {};
+  let unsubJadwalAbsensi = null;
+  let pengajuanCacheAbsensi = [];
+  const idDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+  const absensiMonthPick = el('monthPick');
+  absensiMonthPick.value = new Date().toISOString().slice(0, 7);
+
+  // Absensi UI elements (admin-specific elements are hidden in kurir.html)
+  const btnAbsensiTab = el('btn-absensi-tab');
+  const btnApprovalTab = el('btn-approval-tab');
+
+  // Absensi Pengajuan Form
+  const pengajuanTanggal = el('pengajuanTanggal');
+  const penggantiKurir = el('penggantiKurir');
+  const tanggalTukar = el('tanggalTukar');
+  const btnAjukan = el('btnAjukan');
+
+  // Absensi Tabs
+  qsa('#absensiTopbar .btn[data-tab]').forEach(b => {
+    b.onclick = () => {
+      qsa('#absensiKurirModule .tab').forEach(t => t.classList.remove('active'));
+      qsa('#absensiTopbar .btn[data-tab]').forEach(bb => bb.classList.remove('active'));
+      el(b.dataset.tab).classList.add('active');
+      b.classList.add('active');
+      if (b.dataset.tab === 'tab-jadwal') renderJadwalAbsensi(absensiMonthPick.value);
+      if (b.dataset.tab === 'tab-rekap') renderRekapAbsensi(absensiMonthPick.value);
+      // Absensi Harian and Approval tabs are not shown for kurir
+    };
+  });
+
+  // Absensi Data & Renderers
+  function renderJadwalAbsensi(ym) {
+    const tbody = document.querySelector('#tableJadwal tbody');
+    tbody.innerHTML = '';
+    if (!jadwalDataAbsensi[ym]) return;
+
+    jadwalDataAbsensi[ym].forEach(it => {
+      const d = new Date(it.tanggal);
+      const hari = idDays[d.getDay()];
+      const tr = document.createElement('tr');
+
+      const tdTanggal = document.createElement('td'); tdTanggal.textContent = it.tanggal;
+      const tdHari = document.createElement('td'); tdHari.textContent = hari;
+
+      const tdOff = document.createElement('td');
+      const badge = document.createElement('span');
+      badge.className = it.off ? 'badge off' : 'badge on';
+      badge.textContent = it.off || 'Semua On';
+      badge.style.cursor = 'pointer';
+      badge.title = 'Klik untuk mengajukan tukar off';
+      badge.onclick = () => {
+        pengajuanTanggal.value = it.tanggal;
+        setupFormPengajuanAbsensi();
+        showNotification('Tanggal dipilih. Silakan lengkapi form pengajuan.', 'info');
+      };
+      tdOff.appendChild(badge);
+
+      const tdPeng = document.createElement('td');
+      tdPeng.textContent = it.pengganti || '—';
+
+      tr.append(tdTanggal, tdHari, tdOff, tdPeng);
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderRekapAbsensi(ym) {
+    const tbody = document.querySelector('#tableRekap tbody');
+    tbody.innerHTML = '';
+    if (!jadwalDataAbsensi[ym]) return;
+    const arr = jadwalDataAbsensi[ym];
+    const sum = Object.fromEntries(kurirListAbsensi.map(k => [k, { on: 0, off: 0 }]));
+    arr.forEach(it => { kurirListAbsensi.forEach(k => { if (k === it.off) sum[k].off++; else sum[k].on++; }); });
+    kurirListAbsensi.forEach(k => {
+      const { on, off } = sum[k];
+      const total = on + off || 1;
+      const skor = Math.round((on / total) * 100);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${k}</td><td>${on}</td><td>${off}</td><td>${skor}%</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function absensiQuickSync() {
+    const ym = absensiMonthPick.value;
+    renderJadwalAbsensi(ym);
+    renderRekapAbsensi(ym);
+  }
+
+  function setupFormPengajuanAbsensi() {
+    pengajuanTanggal.innerHTML = '';
+    penggantiKurir.innerHTML = '';
+    tanggalTukar.innerHTML = '';
+    const ym = absensiMonthPick.value;
+
+    if (!jadwalDataAbsensi[ym]) return;
+
+    jadwalDataAbsensi[ym].forEach(it => {
+      const opt = document.createElement('option');
+      opt.value = it.tanggal;
+      opt.textContent = it.tanggal + (it.off ? ` (Off: ${it.off})` : ' (Semua On)');
+      pengajuanTanggal.appendChild(opt);
+    });
+
+    kurirListAbsensi.forEach(k => {
+      const opt = document.createElement('option');
+      opt.value = k;
+      opt.textContent = k;
+      penggantiKurir.appendChild(opt);
+    });
+
+    function refreshTanggalTukar() {
+      const kurir = penggantiKurir.value;
+      tanggalTukar.innerHTML = '';
+      jadwalDataAbsensi[ym].forEach(it => {
+        if (it.off === kurir) {
+          const opt = document.createElement('option');
+          opt.value = it.tanggal;
+          opt.textContent = it.tanggal;
+          tanggalTukar.appendChild(opt);
+        }
+      });
+      if (!tanggalTukar.children.length) {
+        const opt = document.createElement('option');
+        opt.value = '';
+        opt.textContent = '(Kurir ini tidak punya OFF di bulan ini)';
+        tanggalTukar.appendChild(opt);
+      }
+    }
+
+    pengajuanTanggal.onchange = refreshTanggalTukar;
+    penggantiKurir.onchange = refreshTanggalTukar;
+    refreshTanggalTukar();
+  }
+
+  // Absensi Realtime Listeners
+  function listenMasterKurirAbsensi() {
+    onSnapshot(doc(MASTER_DOC, 'master'), docSnap => {
+      if (docSnap.exists()) {
+        kurirListAbsensi = Array.isArray(docSnap.data().kurirList) ? docSnap.data().kurirList : [];
+        absensiQuickSync();
+        setupFormPengajuanAbsensi();
+      } else {
+        absensiQuickSync();
+        setupFormPengajuanAbsensi();
+      }
+    });
+  }
+
+  function listenJadwalAbsensi(ym) {
+    if (unsubJadwalAbsensi) { unsubJadwalAbsensi(); unsubJadwalAbsensi = null; }
+    unsubJadwalAbsensi = onSnapshot(doc(JADWAL_COLLECTION, ym), async docSnap => {
+      if (docSnap.exists()) {
+        jadwalDataAbsensi[ym] = docSnap.data().data || [];
+        absensiQuickSync();
+        setupFormPengajuanAbsensi();
+      } else {
+        // If no data for the month, it means it hasn't been generated by admin yet.
+        // Kurir cannot generate, so just show empty.
+        jadwalDataAbsensi[ym] = [];
+        absensiQuickSync();
+        setupFormPengajuanAbsensi();
+        showNotification('Jadwal OFF bulan ini belum tersedia. Hubungi admin.', 'warning');
+      }
+    });
+  }
+
+  // Absensi Pengajuan
+  btnAjukan.addEventListener('click', async () => {
+    const tanggal = pengajuanTanggal.value;
+    const pengganti = penggantiKurir.value;
+    const tukarTanggal = tanggalTukar.value;
+    if (!tanggal || !pengganti || !tukarTanggal) { showNotification('Pilih tanggal, kurir pengganti & tanggal tukar.', 'warning'); return; }
+
+    const ym = tanggal.slice(0, 7);
+    const row = (jadwalDataAbsensi[ym] || []).find(it => it.tanggal === tanggal);
+    if (!row || row.off !== currentUser) { showNotification('Anda tidak sedang OFF pada tanggal ini.', 'warning'); return; }
+    if (row.off === pengganti) { showNotification('Tidak bisa tukar dengan diri sendiri.', 'warning'); return; }
+
+    try {
+      await addDoc(PENGAJUAN_COLLECTION, { // Use addDoc for new document with auto-generated ID
+        tanggal,
+        tukarTanggal,
+        asal: currentUser,
+        pengganti,
+        status: 'Pending',
+        created: serverTimestamp(), // Use serverTimestamp for accurate time
+      });
+      showNotification('Pengajuan terkirim. Tunggu approval admin.', 'info');
+    } catch (e) { showNotification('Gagal mengirim pengajuan: ' + e.message, 'error'); }
+  });
+
+  // Absensi Init
+  absensiMonthPick.addEventListener('change', () => listenJadwalAbsensi(absensiMonthPick.value));
+
+  // ====================================================================
+  // Initial Setup & Event Listeners
+  // ====================================================================
+  // Kurir Nav Tabs
+  qsa('#kurirNavTabs button').forEach(b => b.addEventListener('click', () => setActiveTab('kurirNavTabs', b.dataset.tab)));
+
+  // Initial loads for modules
+  loadOngkirData();
+  listenMasterKurirAbsensi();
+  listenJadwalAbsensi(absensiMonthPick.value); // Initial load for absensi
+</script>
+</body>
+</html>
