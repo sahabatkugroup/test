@@ -44,6 +44,37 @@
       --ongkir-brand-2:#5ea3ff;
       --ongkir-shadow: 0 20px 45px rgba(4,32,66,.18);
     }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: 'Inter', system-ui, Arial, Helvetica, sans-serif; background: var(--main-bg-color); color: var(--text-primary); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.6; }
+    .container { max-width: 960px; margin: 0 auto; padding: 16px 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    .card { background: var(--card-bg); border-radius: 20px; padding: 24px 28px; box-shadow: 0 12px 30px var(--shadow-light); margin-bottom: 20px; border: 1px solid var(--border); transition: box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease; }
+    .card:hover { box-shadow: 0 16px 40px var(--shadow-strong); transform: translateY(-3px); }
+    h1, h2, h3, h4 { margin: 8px 0 16px 0; color: var(--sky-strong); font-weight: 700; letter-spacing: 0.02em; }
+    h1 { font-size: clamp(24px, 4vw, 36px); text-align: center; }
+    h2 { font-size: clamp(20px, 3.5vw, 28px); }
+    h3 { font-size: clamp(18px, 3vw, 24px); }
+    h4 { font-size: clamp(16px, 2.5vw, 20px); }
+    label { display: block; margin-top: 12px; font-size: 14px; color: var(--muted); font-weight: 600; letter-spacing: 0.01em; }
+    input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select {
+      width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--border); margin-top: 8px; background: var(--glass); outline: none; font-size: 0.95rem; color: var(--text-primary); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+    input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="email"]:focus, textarea:focus, select:focus { border-color: var(--sky-strong); box-shadow: 0 0 8px var(--sky-strong); background: #f0f8ff; }
+    .btn { background: var(--sky-strong); color: #fff; border: none; padding: 10px 16px; border-radius: 14px; cursor: pointer; box-shadow: 0 6px 18px var(--shadow-light); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.02em; transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease; }
+    .btn:hover { background: #3a6fc1; box-shadow: 0 8px 24px var(--shadow-strong); transform: translateY(-2px); }
+    .btn.secondary { background: #f5f7fa; color: var(--text-primary); border: 1.5px solid var(--border); box-shadow: none; font-weight: 600; }
+    .btn.secondary:hover { background: #e1e9f8; border-color: var(--sky-strong); color: var(--sky-strong); }
+    .btn.ghost { background: transparent; color: var(--text-primary); border: 1.5px dashed var(--border); font-weight: 600; }
+    .btn.ghost:hover { border-color: var(--sky-strong); color: var(--sky-strong); }
+    .btn.danger { background: #ff6b6b; box-shadow: none; font-weight: 700; }
+    .btn.danger:hover { background: #e04e4e; }
+    .btn.full { width: 100%; }
+    .btnbar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .grid { display: grid; gap: 12px; }
+    .grid-2 { grid-template-columns: repeat(2,1fr); }
+    .grid-3 { grid-template-columns: repeat(3,1fr); }
+    .hidden { display: none !important; }
+    .small { font-size: 12px; color: var(--muted); font-weight: 600; }
+
     /* Notification Pop-up & Overlay */
     .notification-popup { 
       position: fixed; 
@@ -105,7 +136,7 @@
     <h2>Login Kurir</h2>
     <div class="grid grid-3">
       <div><label>Username</label><input id="kurirLoginUser" type="text" placeholder="Nama kurir (contoh: Tom Haye)" autocomplete="username"></div>
-      <div><label>Password</label><input id="kurirLoginPass" type="password" placeholder="ID Card (contoh: 12345)" autocomplete="current-password"></div>
+      <div><label>Password</label><input id="kurirLoginPass" type="password" placeholder="ID Card (contoh: A1234)" autocomplete="current-password"></div>
       <div style="align-self:end"><div class="btnbar"><button id="kurirLoginBtn" class="btn full">Masuk</button><button id="backToInitialKurir" class="btn secondary full">Kembali</button></div></div>
     </div>
     <p id="kurirLoginMsg" class="small" style="color:var(--error-color);margin-top:8px"></p>
@@ -125,7 +156,7 @@
 
 <!-- Pop Notifikasi -->
 <div id="notificationPopup" class="notification-popup"></div>
-<audio id="notificationSound" src="https://www.soundjay.com/buttons/button-3.mp3" preload="auto"></audio>
+<audio id="notificationSound" src="https://www.soundjay.com/buttons/button-2.mp3" preload="auto"></audio>
 
 <script type="module">
   // Import Firebase SDKs
