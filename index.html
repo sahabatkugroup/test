@@ -1,308 +1,250 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-  <title>Sahabatku Delivery - Login</title>
-  <link rel="preconnect" href="https://www.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <style>
-    /* Global Styles (Gabungan dari semua modul) */
-    :root {
-      --main-bg-color: #0BA6DF;
-      --card-bg: #fff;
-      --glass: rgba(255,255,255,0.85);
-      --border: #c9dbf8;
-      --shadow-light: rgba(74,144,226,0.15);
-      --shadow-strong: rgba(74,144,226,0.3);
-      --sky-light: #d0e8ff;
-      --sky: #a3c9ff;
-      --sky-strong: #4a90e2;
-      --accent: #0077c8;
-      --muted: #4a6fa5;
-      --text-primary: #0b3b5a;
-      --text-secondary: #506273;
-      --success-color: #28a745;
-      --error-color: #dc3545;
-      --info-color: #17a2b8;
-      --warning-color: #ffc107;
-      --transition-speed: 0.3s;
-      /* Absensi Colors */
-      --absensi-primary: #3a8dde;
-      --absensi-primary-dark: #1e5fa8;
-      --absensi-bg: #e8f4fd;
-      --absensi-ok: #43a047;
-      --absensi-danger: #e53935;
-      --absensi-pending: #f9a825;
-      --absensi-text: #1a2e4a;
-      --absensi-text-muted: #5a6d8c;
-      --absensi-radius: 16px;
-      --absensi-shadow-light: rgba(58,141,222,0.15);
-      --absensi-shadow-strong: rgba(58,141,222,0.25);
-      /* Cek Ongkir Specific */
-      --ongkir-brand:#2f80ed;
-      --ongkir-brand-2:#5ea3ff;
-      --ongkir-shadow: 0 20px 45px rgba(4,32,66,.18);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; font-family: 'Inter', system-ui, Arial, Helvetica, sans-serif; background: var(--main-bg-color); color: var(--text-primary); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.6; }
-    .container { max-width: 960px; margin: 0 auto; padding: 16px 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-    .card { background: var(--card-bg); border-radius: 20px; padding: 24px 28px; box-shadow: 0 12px 30px var(--shadow-light); margin-bottom: 20px; border: 1px solid var(--border); transition: box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease; }
-    .card:hover { box-shadow: 0 16px 40px var(--shadow-strong); transform: translateY(-3px); }
-    h1, h2, h3, h4 { margin: 8px 0 16px 0; color: var(--sky-strong); font-weight: 700; letter-spacing: 0.02em; }
-    h1 { font-size: clamp(24px, 4vw, 36px); text-align: center; }
-    h2 { font-size: clamp(20px, 3.5vw, 28px); }
-    h3 { font-size: clamp(18px, 3vw, 24px); }
-    h4 { font-size: clamp(16px, 2.5vw, 20px); }
-    label { display: block; margin-top: 12px; font-size: 14px; color: var(--muted); font-weight: 600; letter-spacing: 0.01em; }
-    input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select {
-      width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--border); margin-top: 8px; background: var(--glass); outline: none; font-size: 0.95rem; color: var(--text-primary); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-    }
-    input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="email"]:focus, textarea:focus, select:focus { border-color: var(--sky-strong); box-shadow: 0 0 8px var(--sky-strong); background: #f0f8ff; }
-    .btn { background: var(--sky-strong); color: #fff; border: none; padding: 10px 16px; border-radius: 14px; cursor: pointer; box-shadow: 0 6px 18px var(--shadow-light); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.02em; transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease; }
-    .btn:hover { background: #3a6fc1; box-shadow: 0 8px 24px var(--shadow-strong); transform: translateY(-2px); }
-    .btn.secondary { background: #f5f7fa; color: var(--text-primary); border: 1.5px solid var(--border); box-shadow: none; font-weight: 600; }
-    .btn.secondary:hover { background: #e1e9f8; border-color: var(--sky-strong); color: var(--sky-strong); }
-    .btn.ghost { background: transparent; color: var(--text-primary); border: 1.5px dashed var(--border); font-weight: 600; }
-    .btn.ghost:hover { border-color: var(--sky-strong); color: var(--sky-strong); }
-    .btn.danger { background: #ff6b6b; box-shadow: none; font-weight: 700; }
-    .btn.danger:hover { background: #e04e4e; }
-    .btn.full { width: 100%; }
-    .btnbar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
-    .grid { display: grid; gap: 12px; }
-    .grid-2 { grid-template-columns: repeat(2,1fr); }
-    .grid-3 { grid-template-columns: repeat(3,1fr); }
-    .hidden { display: none !important; }
-    .small { font-size: 12px; color: var(--muted); font-weight: 600; }
-
-    /* Notification Pop-up & Overlay */
-    .notification-popup { 
-      position: fixed; 
-      top: 20px; /* Lebih ke atas */
-      left: 50%; 
-      transform: translateX(-50%) translateY(-100px); /* Start above, slide down */
-      background-color: var(--success-color); 
-      color: #fff; 
-      padding: 10px 20px; /* Lebih kecil */
-      border-radius: 10px; /* Lebih kecil */
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Shadow lebih halus */
-      z-index: 10000; 
-      opacity: 0; 
-      visibility: hidden; 
-      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease; 
-      font-size: 0.9rem; /* Ukuran font lebih kecil */
-      font-weight: 600; /* Lebih ringan */
-      text-align: center; 
-      min-width: 200px; /* Lebar minimum */
-    }
-    .notification-popup.show { 
-      opacity: 1; 
-      visibility: visible; 
-      transform: translateX(-50%) translateY(0); /* Animasi slide down */
-    }
-    .notification-popup.success { background-color: var(--success-color); }
-    .notification-popup.error { background-color: var(--error-color); }
-    .notification-popup.info { background-color: var(--info-color); }
-    .notification-popup.warning { background-color: var(--warning-color); }
-
-    /* Mobile */
-    @media (max-width: 600px) { 
-      .container { padding: 10px 12px; margin: 12px auto; } 
-      .card { padding: 18px 20px; border-radius: 16px; margin-bottom: 16px; } 
-      h1 { font-size: clamp(20px, 6vw, 28px); } 
-      h2, h3 { font-size: 1.1rem; margin: 6px 0 12px 0; } 
-      label { font-size: 13px; margin-top: 10px; } 
-      input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select { padding: 10px 12px; border-radius: 10px; font-size: 0.85rem; } 
-      .btn { padding: 8px 12px; border-radius: 12px; font-size: 0.8rem; } 
-      .btnbar { gap: 6px; flex-direction: column; align-items: stretch; } 
-      .notification-popup { padding: 10px 15px; font-size: 0.8rem; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login App - Admin & Kurir</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0BA6DF 0%, #0A8CCF 50%, #1891D6 100%);
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+        .modal {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-100vh); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal.out {
+            animation: slideOut 0.5s ease-in forwards;
+        }
+        @keyframes slideOut {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(100vh); opacity: 0; }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(11, 166, 223, 0.4);
+        }
+    </style>
 </head>
-<body>
-<div class="container">
-  <!-- Halaman Login Pilihan -->
-  <div id="initialLoginChoice" class="card">
-    <h1>Selamat Datang di Sahabatku Delivery</h1>
-    <p style="text-align:center; margin-bottom:20px; color:var(--muted);">Pilih jenis login Anda:</p>
-    <div class="grid grid-2" style="max-width: 400px; margin: 0 auto; gap: 20px;">
-      <button id="showKurirLogin" class="btn full"><i class="fa-solid fa-user"></i> Login Kurir</button>
-      <button id="showAdminLogin" class="btn secondary full"><i class="fa-solid fa-user-gear"></i> Login Admin</button>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div id="welcome-screen" class="text-center fade-in">
+        <h1 class="text-4xl md:text-6xl font-bold mb-8 drop-shadow-lg">Selamat Datang!</h1>
+        <p class="mb-12 text-lg md:text-xl drop-shadow-md max-w-2xl">Pilih jenis login untuk melanjutkan ke aplikasi. Autentikasi dilaksanakan melalui Firebase dengan penyimpanan data di Firestore.</p>
+
+        <div class="flex flex-col md:flex-row gap-6 justify-center">
+            <button 
+                id="admin-btn" 
+                class="bg-white text-[#0BA6DF] font-semibold px-8 py-4 rounded-xl shadow-lg btn-hover transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#0BA6DF] focus:ring-opacity-50"
+                onclick="openLoginModal('admin')">
+                Login Admin
+            </button>
+            <button 
+                id="kurir-btn" 
+                class="bg-white text-[#0BA6DF] font-semibold px-8 py-4 rounded-xl shadow-lg btn-hover transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#0BA6DF] focus:ring-opacity-50"
+                onclick="openLoginModal('kurir')">
+                Login Kurir
+            </button>
+        </div>
     </div>
-  </div>
 
-  <!-- Form Login Kurir -->
-  <div id="kurirLoginForm" class="card hidden">
-    <h2>Login Kurir</h2>
-    <div class="grid grid-3">
-      <div><label>Username</label><input id="kurirLoginUser" type="text" placeholder="Nama kurir (contoh: Tom Haye)" autocomplete="username"></div>
-      <div><label>Password</label><input id="kurirLoginPass" type="password" placeholder="ID Card (contoh: A1234)" autocomplete="current-password"></div>
-      <div style="align-self:end"><div class="btnbar"><button id="kurirLoginBtn" class="btn full">Masuk</button><button id="backToInitialKurir" class="btn secondary full">Kembali</button></div></div>
+    <!-- Dashboard for logged-in users -->
+    <div id="dashboard" class="hidden text-center fade-in">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Dashboard</h2>
+        <div id="user-info" class="mb-8 p-6 bg-white bg-opacity-20 rounded-xl shadow-lg">
+            <p class="text-lg"><strong>Logged in as:</strong> <span id="display-name"></span></p>
+            <p class="text-lg"><strong>Role:</strong> <span id="user-role"></span></p>
+        </div>
+        <div id="role-specific-content">
+            <!-- Content changes based on role -->
+        </div>
+        <button 
+            class="mt-8 bg-red-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg btn-hover transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-400 focus:ring-opacity-50"
+            onclick="logout()">
+            Logout
+        </button>
     </div>
-    <p id="kurirLoginMsg" class="small" style="color:var(--error-color);margin-top:8px"></p>
-  </div>
 
-  <!-- Form Login Admin -->
-  <div id="adminLoginForm" class="card hidden">
-    <h2>Login Admin</h2>
-    <div class="grid grid-3">
-      <div><label>Email</label><input id="adminLoginEmail" type="email" placeholder="admin@email.com"></div>
-      <div><label>Password</label><input id="adminLoginPass" type="password" placeholder="••••••••"></div>
-      <div style="align-self:end"><div class="btnbar"><button id="adminLoginBtn" class="btn full">Masuk</button><button id="backToInitialAdmin" class="btn secondary full">Kembali</button></div></div>
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
+        <div id="modal-content" class="bg-white rounded-2xl max-w-md w-full p-8 shadow-2xl modal">
+            <button 
+                id="close-modal" 
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none transition-colors"
+                onclick="closeLoginModal()">
+                ✕
+            </button>
+
+            <h3 class="text-2xl font-bold mb-6 text-[#0BA6DF] text-center">
+                Login <span id="login-type"></span>
+            </h3>
+
+            <form id="login-form" class="space-y-4">
+                <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="Email" 
+                    required 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0BA6DF] focus:border-transparent transition"
+                />
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="Password" 
+                    required 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0BA6DF] focus:border-transparent transition"
+                />
+                <button 
+                    type="submit" 
+                    class="w-full bg-[#0BA6DF] text-white font-semibold py-3 rounded-lg shadow-md btn-hover transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#0BA6DF] focus:ring-opacity-50"
+                    id="login-btn">
+                    Masuk
+                </button>
+            </form>
+
+            <p id="error-msg" class="mt-4 text-red-600 text-center hidden"></p>
+        </div>
     </div>
-    <p id="adminLoginMsg" class="small" style="color:var(--error-color);margin-top:8px"></p>
-  </div>
-</div>
 
-<!-- Pop Notifikasi -->
-<div id="notificationPopup" class="notification-popup"></div>
-<audio id="notificationSound" src="https://www.soundjay.com/buttons/button-2.mp3" preload="auto"></audio>
+    <script>
+        // Firebase Configuration (Replace with your actual Firebase project config)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
-<script type="module">
-  // Import Firebase SDKs
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
-  import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
-  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
-  // Firebase config Anda
-  const firebaseConfig = {
-    apiKey: "AIzaSyCtva8TeL40-WotK4kFL_vL8uUXL3GDfww",
-    authDomain: "sahabatkuu-bisa.firebaseapp.com",
-    databaseURL: "https://sahabatkuu-bisa-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "sahabatkuu-bisa",
-    storageBucket: "sahabatkuu-bisa.firebasestorage.app",
-    messagingSenderId: "315555564115",
-    appId: "1:315555564115:web:56f46dbceb8c154589d4a6",
-    measurementId: "G-PFGYL96VPS"
-  };
+        let currentLoginType = '';
 
-  // Inisialisasi Firebase Apps
-  const app = initializeApp(firebaseConfig, "mainApp"); 
-  const db = getDatabase(app); // Realtime Database
-  const auth = getAuth(app); // Authentication
-
-  try { getAnalytics(app); } catch(e) {} // Optional analytics
-
-  // UID Admin
-  const ADMIN_UID = "kSW4ThusrwhUFCQeTsnPV1VNaR72"; 
-
-  // ====================================================================
-  // Helper Functions (UI & Notifikasi)
-  // ====================================================================
-  const el = (id) => document.getElementById(id);
-  const qs = (sel) => document.querySelector(sel);
-  const qsa = (sel) => Array.from(document.querySelectorAll(sel));
-
-  function showNotification(message, type = 'success') {
-    const popup = el('notificationPopup');
-    popup.textContent = message;
-    popup.className = `notification-popup show ${type}`;
-    el('notificationSound').play();
-    setTimeout(() => {
-      popup.classList.remove('show');
-    }, 3000);
-  }
-
-  function showSection(id) {
-    qsa('.container > div').forEach(div => div.classList.add('hidden'));
-    el(id).classList.remove('hidden');
-  }
-
-  // ====================================================================
-  // Initial Login Choice
-  // ====================================================================
-  el('showKurirLogin').addEventListener('click', () => showSection('kurirLoginForm'));
-  el('showAdminLogin').addEventListener('click', () => showSection('adminLoginForm'));
-
-  // ====================================================================
-  // Kurir Login
-  // ====================================================================
-  el('kurirLoginBtn').addEventListener('click', doKurirLogin);
-  el('backToInitialKurir').addEventListener('click', () => showSection('initialLoginChoice'));
-
-  async function doKurirLogin() {
-    const u = el('kurirLoginUser').value.trim();
-    const p = el('kurirLoginPass').value.trim();
-    const msgEl = el('kurirLoginMsg');
-    msgEl.innerText = '';
-
-    try {
-      const snap = await get(ref(db, 'kurir/' + u));
-      if (snap.exists()) {
-        const data = snap.val();
-        if (!data.enabled) {
-          msgEl.innerText = 'Akun ini dinonaktifkan! Silakan hubungi admin.';
-          showNotification('Akun diblokir!', 'error');
-          return;
+        // Open login modal
+        function openLoginModal(type) {
+            currentLoginType = type;
+            document.getElementById('login-type').textContent = type === 'admin' ? 'Admin' : 'Kurir';
+            document.getElementById('login-modal').classList.remove('hidden');
         }
-        if (data.password !== p) {
-          msgEl.innerText = 'Password salah!';
-          showNotification('Password salah!', 'error');
-          return;
+
+        // Close login modal
+        function closeLoginModal() {
+            const modal = document.getElementById('login-modal');
+            const content = document.getElementById('modal-content');
+            content.classList.add('out');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                content.classList.remove('out');
+                document.getElementById('login-form').reset();
+                document.getElementById('error-msg').classList.add('hidden');
+            }, 500);
         }
-        localStorage.setItem('currentUser', data.username);
-        window.location.href = 'kurir.html'; // Redirect to kurir dashboard
-      } else {
-        msgEl.innerText = 'User tidak ditemukan!';
-        showNotification('User tidak ditemukan!', 'error');
-      }
-    } catch (err) {
-      console.error("Firebase error:", err);
-      msgEl.innerText = 'Gagal konek Firebase atau user tidak ditemukan!';
-      showNotification('Login gagal!', 'error');
-    }
-  }
 
-  // Auto-login kurir if already in localStorage
-  window.addEventListener('load', () => {
-    const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
-      el('kurirLoginUser').value = savedUser;
-      // Optionally, attempt to auto-login or just show the form with pre-filled username
-      // For security, it's better to require password re-entry or use Firebase Auth for persistent sessions.
-      // For this example, we'll just pre-fill.
-    }
-  });
+        // Submit login form
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-  // ====================================================================
-  // Admin Login
-  // ====================================================================
-  el('adminLoginBtn').addEventListener('click', doAdminLogin);
-  el('backToInitialAdmin').addEventListener('click', () => showSection('initialLoginChoice'));
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-msg');
 
-  async function doAdminLogin() {
-    const email = el('adminLoginEmail').value.trim();
-    const password = el('adminLoginPass').value.trim();
-    const msgEl = el('adminLoginMsg');
-    msgEl.innerText = '';
+            try {
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
 
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password); 
-      if (userCredential.user.uid === ADMIN_UID) {
-        localStorage.setItem('isAdminLoggedIn', 'true'); // Simple flag for admin session
-        window.location.href = 'admin.html'; // Redirect to admin dashboard
-      } else {
-        msgEl.innerText = 'Anda bukan admin yang berwenang.';
-        showNotification('Login gagal!', 'error');
-      }
-    } catch (error) {
-      console.error("Admin login error:", error);
-      msgEl.innerText = 'Login gagal: ' + error.message;
-      showNotification('Login Admin Gagal!', 'error');
-    }
-  }
+                // Fetch user role from Firestore
+                const doc = await db.collection('users').doc(user.uid).get();
+                if (doc.exists) {
+                    const userData = doc.data();
+                    const role = userData.role;
+                    if (role === currentLoginType) {
+                        // Success, display dashboard
+                        document.getElementById('welcome-screen').classList.add('hidden');
+                        document.getElementById('dashboard').classList.remove('hidden');
+                        document.getElementById('display-name').textContent = userData.name || user.email;
+                        document.getElementById('user-role').textContent = role;
 
-  // Check admin auth state on load
-  onAuthStateChanged(auth, (user) => {
-    if (user && user.uid === ADMIN_UID) {
-      // If admin is already logged in via Firebase Auth, redirect directly
-      window.location.href = 'admin.html';
-    } else {
-      // If not admin, or no user, show initial choice
-      showSection('initialLoginChoice');
-    }
-  });
-</script>
+                        // Load role-specific content
+                        loadRoleContent(role, user.uid);
+                        closeLoginModal();
+                    } else {
+                        throw new Error('Role mismatch. Anda tidak memiliki akses sebagai ' + currentLoginType + '.');
+                    }
+                } else {
+                    throw new Error('User data tidak ditemukan di database.');
+                }
+            } catch (error) {
+                errorMsg.textContent = error.message;
+                errorMsg.classList.remove('hidden');
+            }
+        });
+
+        // Load role-specific content from Firestore
+        async function loadRoleContent(role, uid) {
+            const contentDiv = document.getElementById('role-specific-content');
+            contentDiv.innerHTML = '';
+
+            if (role === 'admin') {
+                // Example: Show list of users (admins can view all kurir or something)
+                const usersSnapshot = await db.collection('users').where('role', '==', 'kurir').get();
+                contentDiv.innerHTML = '<h3 class="text-xl font-bold mb-4">Daftar Kurir</h3><ul class="space-y-2">' +
+                    usersSnapshot.docs.map(doc => `<li class="p-3 bg-white bg-opacity-10 rounded-lg">${doc.data().name || doc.data().email}</li>`).join('') +
+                    '</ul>';
+            } else if (role === 'kurir') {
+                // Example: Show assigned tasks (stored in Firestore)
+                const tasksSnapshot = await db.collection('tasks').where('kurirId', '==', uid).get();
+                contentDiv.innerHTML = '<h3 class="text-xl font-bold mb-4">Tugas Hari Ini</h3><ul class="space-y-2">' +
+                    tasksSnapshot.docs.map(doc => `<li class="p-3 bg-white bg-opacity-10 rounded-lg">${doc.data().description}</li>`).join('') +
+                    '</ul>';
+            }
+        }
+
+        // Logout function
+        function logout() {
+            auth.signOut().then(() => {
+                document.getElementById('dashboard').classList.add('hidden');
+                document.getElementById('welcome-screen').classList.remove('hidden');
+            }).catch((error) => {
+                console.error('Logout error:', error);
+            });
+        }
+
+        // Check auth state on load
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const doc = await db.collection('users').doc(user.uid).get();
+                if (doc.exists) {
+                    const role = doc.data().role;
+                    document.getElementById('welcome-screen').classList.add('hidden');
+                    document.getElementById('dashboard').classList.remove('hidden');
+                    document.getElementById('display-name').textContent = doc.data().name || user.email;
+                    document.getElementById('user-role').textContent = role;
+                    loadRoleContent(role, user.uid);
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>
+</content>
+</create_file>
