@@ -4,10 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
   <title>Sahabatku Delivery - Admin</title>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
-    /* --- Global & Admin Styles --- */
+    /* Global Styles (Gabungan dari semua modul) */
     :root {
       --main-bg-color: #0BA6DF;
       --card-bg: #fff;
@@ -45,710 +46,448 @@
       --ongkir-shadow: 0 20px 45px rgba(4,32,66,.18);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body {
-      height: 100%;
-      font-family: 'Inter', system-ui, Arial, Helvetica, sans-serif;
-      background: var(--main-bg-color);
-      color: var(--text-primary);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      line-height: 1.6;
+    html, body { height: 100%; font-family: 'Inter', system-ui, Arial, Helvetica, sans-serif; background: var(--main-bg-color); color: var(--text-primary); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.6; }
+    .container { max-width: 960px; margin: 0 auto; padding: 16px 20px; }
+    .card { background: var(--card-bg); border-radius: 20px; padding: 24px 28px; box-shadow: 0 12px 30px var(--shadow-light); margin-bottom: 20px; border: 1px solid var(--border); transition: box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease; }
+    .card:hover { box-shadow: 0 16px 40px var(--shadow-strong); transform: translateY(-3px); }
+    h1, h2, h3, h4 { margin: 8px 0 16px 0; color: var(--sky-strong); font-weight: 700; letter-spacing: 0.02em; }
+    h1 { font-size: clamp(24px, 4vw, 36px); text-align: center; }
+    h2 { font-size: clamp(20px, 3.5vw, 28px); }
+    h3 { font-size: clamp(18px, 3vw, 24px); }
+    h4 { font-size: clamp(16px, 2.5vw, 20px); }
+    label { display: block; margin-top: 12px; font-size: 14px; color: var(--muted); font-weight: 600; letter-spacing: 0.01em; }
+    input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select {
+      width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--border); margin-top: 8px; background: var(--glass); outline: none; font-size: 0.95rem; color: var(--text-primary); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
     }
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 16px 20px;
+    input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="email"]:focus, textarea:focus, select:focus { border-color: var(--sky-strong); box-shadow: 0 0 8px var(--sky-strong); background: #f0f8ff; }
+    .btn { background: var(--sky-strong); color: #fff; border: none; padding: 10px 16px; border-radius: 14px; cursor: pointer; box-shadow: 0 6px 18px var(--shadow-light); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.02em; transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease; }
+    .btn:hover { background: #3a6fc1; box-shadow: 0 8px 24px var(--shadow-strong); transform: translateY(-2px); }
+    .btn.secondary { background: #f5f7fa; color: var(--text-primary); border: 1.5px solid var(--border); box-shadow: none; font-weight: 600; }
+    .btn.secondary:hover { background: #e1e9f8; border-color: var(--sky-strong); color: var(--sky-strong); }
+    .btn.ghost { background: transparent; color: var(--text-primary); border: 1.5px dashed var(--border); font-weight: 600; }
+    .btn.ghost:hover { border-color: var(--sky-strong); color: var(--sky-strong); }
+    .btn.danger { background: #ff6b6b; box-shadow: none; font-weight: 700; }
+    .btn.danger:hover { background: #e04e4e; }
+    .btn.full { width: 100%; }
+    .btnbar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    nav.tab { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 16px; background: var(--card-bg); padding: 10px; border-radius: 16px; box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+    nav.tab button { padding: 12px 0; border-radius: 14px; border: 1.5px solid var(--border); background: var(--card-bg); color: var(--text-primary); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.02em; transition: background var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease; cursor: pointer; }
+    nav.tab button.active { background: linear-gradient(90deg, var(--sky-strong), #6fc2ff); color: #fff; border-color: transparent; box-shadow: 0 6px 18px var(--shadow-light); }
+    .row { display: flex; gap: 12px; align-items: flex-start; }
+    .col { flex: 1; }
+    .hidden { display: none !important; }
+    .small { font-size: 12px; color: var(--muted); font-weight: 600; }
+    .stack { display: flex; flex-direction: column; gap: 10px; }
+    .grid { display: grid; gap: 12px; }
+    .grid-2 { grid-template-columns: repeat(2,1fr); }
+    .grid-3 { grid-template-columns: repeat(3,1fr); }
+    .grid-4 { grid-template-columns: repeat(4,1fr); }
+    .section-title { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-weight: 700; color: var(--sky-strong); font-size: 1rem; }
+    .list-v { display: flex; flex-direction: column; gap: 10px; }
+    .line-card { border: 1.5px solid var(--border); border-radius: 16px; background: var(--card-bg); padding: 12px 16px; display: grid; grid-template-columns: 2.5fr 80px 160px 120px 90px; gap: 10px; align-items: center; box-shadow: 0 3px 9px rgba(74,144,226,0.07); transition: box-shadow var(--transition-speed) ease; }
+    .line-card:hover { box-shadow: 0 6px 18px var(--shadow-light); }
+    .line-card .sub { font-weight: 700; text-align: center; color: var(--sky-strong); font-size: 0.9rem; }
+    .line-card .mini-btn { width: 100%; border-radius: 12px; padding: 6px 0; font-weight: 600; font-size: 0.85rem; background: var(--sky); color: var(--text-primary); border: none; cursor: pointer; transition: background var(--transition-speed) ease; }
+    .line-card .mini-btn:hover { background: var(--sky-strong); color: #fff; }
+    .line-card-tambahan { border: 1.5px solid var(--border); border-radius: 16px; background: var(--card-bg); padding: 12px 16px; display: grid; grid-template-columns: 1.8fr 1.2fr 120px; gap: 10px; align-items: center; box-shadow: 0 3px 9px rgba(74,144,226,0.07); transition: box-shadow var(--transition-speed) ease; }
+    .line-card-tambahan:hover { box-shadow: 0 6px 18px var(--shadow-light); }
+    .nota-box { white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; background: #f5faff; padding: 18px 20px; border-radius: 14px; border: 1.5px solid #c9dbf8; min-height: 140px; color: var(--text-primary); font-size: 0.9rem; box-shadow: inset 0 0 8px #dbeeff; line-height: 1.4; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; color: var(--text-primary); }
+    th, td { padding: 10px 8px; border: 1.5px solid var(--border); text-align: center; font-weight: 600; }
+    th { background: linear-gradient(90deg, var(--sky-strong), #6fc2ff); color: #fff; letter-spacing: 0.03em; }
+    /* Notification Pop-up & Overlay */
+    .notification-popup { 
+      position: fixed; 
+      top: 20px; /* Lebih ke atas */
+      left: 50%; 
+      transform: translateX(-50%) translateY(-100px); /* Start above, slide down */
+      background-color: var(--success-color); 
+      color: #fff; 
+      padding: 10px 20px; /* Lebih kecil */
+      border-radius: 10px; /* Lebih kecil */
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Shadow lebih halus */
+      z-index: 10000; 
+      opacity: 0; 
+      visibility: hidden; 
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease; 
+      font-size: 0.9rem; /* Ukuran font lebih kecil */
+      font-weight: 600; /* Lebih ringan */
+      text-align: center; 
+      min-width: 200px; /* Lebar minimum */
     }
-    .card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 24px 28px;
-      box-shadow: 0 12px 30px var(--shadow-light);
-      margin-bottom: 20px;
-      border: 1px solid var(--border);
-      transition: box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease;
-    }
-    .card:hover {
-      box-shadow: 0 16px 40px var(--shadow-strong);
-      transform: translateY(-3px);
-    }
-    h1, h2, h3, h4 {
-      margin: 8px 0 16px 0;
-      color: var(--sky-strong);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-    h1 {
-      font-size: clamp(24px, 4vw, 36px);
-      text-align: center;
-    }
-    label {
-      display: block;
-      margin-top: 12px;
-      font-size: 14px;
-      color: var(--muted);
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
-    input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select, input[type="date"], input[type="month"] {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1.5px solid var(--border);
-      margin-top: 8px;
-      background: var(--glass);
-      outline: none;
-      font-size: 0.95rem;
-      color: var(--text-primary);
-      transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-    }
-    input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="email"]:focus, textarea:focus, select:focus, input[type="date"]:focus, input[type="month"]:focus {
-      border-color: var(--sky-strong);
-      box-shadow: 0 0 8px var(--sky-strong);
-      background: #f0f8ff;
-    }
-    .btn {
-      background: var(--sky-strong);
-      color: #fff;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 14px;
-      cursor: pointer;
-      box-shadow: 0 6px 18px var(--shadow-light);
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 0.02em;
-      transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease;
-      user-select: none;
-    }
-    .btn:hover {
-      background: #3a6fc1;
-      box-shadow: 0 8px 24px var(--shadow-strong);
-      transform: translateY(-2px);
-    }
-    .btn.secondary {
-      background: #f5f7fa;
-      color: var(--text-primary);
-      border: 1.5px solid var(--border);
-      box-shadow: none;
-      font-weight: 600;
-    }
-    .btn.secondary:hover {
-      background: #e1e9f8;
-      border-color: var(--sky-strong);
-      color: var(--sky-strong);
-    }
-    .btn.danger {
-      background: #ff6b6b;
-      box-shadow: none;
-      font-weight: 700;
-    }
-    .btn.danger:hover {
-      background: #e04e4e;
-    }
-    nav.tab {
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 10px;
-      margin-bottom: 16px;
-      background: var(--card-bg);
-      padding: 10px;
-      border-radius: 16px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-      user-select: none;
-    }
-    nav.tab button {
-      padding: 12px 0;
-      border-radius: 14px;
-      border: 1.5px solid var(--border);
-      background: var(--card-bg);
-      color: var(--text-primary);
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 0.02em;
-      transition: background var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease;
-      cursor: pointer;
-      user-select: none;
-    }
-    nav.tab button.active {
-      background: linear-gradient(90deg, var(--sky-strong), #6fc2ff);
-      color: #fff;
-      border-color: transparent;
-      box-shadow: 0 6px 18px var(--shadow-light);
-    }
-    .row {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-    .col {
-      flex: 1;
-      min-width: 150px;
-    }
-    .hidden {
-      display: none !important;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-      color: var(--text-primary);
-    }
-    th, td {
-      padding: 10px 8px;
-      border: 1.5px solid var(--border);
-      text-align: center;
-      font-weight: 600;
-    }
-    th {
-      background: linear-gradient(90deg, var(--sky-strong), #6fc2ff);
-      color: #fff;
-      letter-spacing: 0.03em;
-      user-select: none;
-    }
-    .notification-popup {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-100px);
-      background-color: var(--success-color);
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      z-index: 10000;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-align: center;
-      min-width: 200px;
-      user-select: none;
-    }
-    .notification-popup.show {
-      opacity: 1;
-      visibility: visible;
-      transform: translateX(-50%) translateY(0);
+    .notification-popup.show { 
+      opacity: 1; 
+      visibility: visible; 
+      transform: translateX(-50%) translateY(0); /* Animasi slide down */
     }
     .notification-popup.success { background-color: var(--success-color); }
     .notification-popup.error { background-color: var(--error-color); }
     .notification-popup.info { background-color: var(--info-color); }
     .notification-popup.warning { background-color: var(--warning-color); }
-    /* Responsive */
-    @media (max-width: 900px) {
-      nav.tab {
-        grid-template-columns: repeat(2,1fr);
-      }
-      .row {
-        flex-direction: column;
-      }
-      /* Untuk filter di Kelola Nota, agar tetap sejajar ke kanan di mobile */
-      .filter-row-right {
-        flex-direction: column; /* Stack vertically */
-        align-items: flex-end; /* Align items to the right */
-      }
-      .filter-row-right .col {
-        width: 100%; /* Take full width */
-        min-width: unset; /* Remove min-width constraint */
-      }
-      .filter-row-right .col label {
-        text-align: right; /* Align label text to the right */
-      }
-      .filter-row-right .col input,
-      .filter-row-right .col select {
-        text-align: right; /* Align input text to the right */
-      }
-    }
-
-    /* New styles for the 4-column filter layout */
-    .filter-4-col-row {
-      display: flex;
-      flex-wrap: wrap; /* Allow wrapping on smaller screens */
-      gap: 12px; /* Space between columns */
-      justify-content: flex-end; /* Align to the right */
-      align-items: flex-start; /* Align items to the top */
-    }
-    .filter-4-col-row .filter-item {
-      flex: 1; /* Allow items to grow and shrink */
-      min-width: 120px; /* Minimum width for each item */
-      max-width: 200px; /* Max width to prevent excessive stretching */
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end; /* Align content within each item to the right */
-    }
-    .filter-4-col-row .filter-item label {
-      width: 100%; /* Label takes full width of its item */
-      text-align: right; /* Align label text to the right */
-    }
-    .filter-4-col-row .filter-item input,
-    .filter-4-col-row .filter-item select {
-      width: 100%; /* Input takes full width of its item */
-      text-align: right; /* Align input text to the right */
-    }
-
-    /* Responsive adjustments for the 4-column filter */
-    @media (max-width: 768px) {
-      .filter-4-col-row .filter-item {
-        min-width: calc(50% - 6px); /* Two columns on medium screens */
-      }
-    }
-    @media (max-width: 480px) {
-      .filter-4-col-row .filter-item {
-        min-width: 100%; /* One column on small screens */
-      }
-    }
-
-    /* Styles for Absensi Module */
-    :root {
-      --absensi-primary: #3a8dde;
-      --absensi-primary-dark: #1e5fa8;
-      --absensi-bg: #e8f4fd;
-      --absensi-ok: #43a047;
-      --absensi-danger: #e53935;
-      --absensi-pending: #f9a825;
-      --absensi-text: #1a2e4a;
-      --absensi-text-muted: #5a6d8c;
-      --absensi-radius: 16px;
-      --absensi-shadow-light: rgba(58,141,222,0.15);
-      --absensi-shadow-strong: rgba(58,141,222,0.25);
-    }
-    .absensi-module .topbar, .absensi-module .admin-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-      justify-content: center;
-      margin: 12px 0 20px;
-    }
-    .absensi-module .topbar .btn, .absensi-module .admin-bar .btn {
-      padding: 12px 18px;
-      border: none;
-      border-radius: 14px;
-      background: var(--absensi-primary);
-      color: #fff;
-      font-weight: 700;
-      cursor: pointer;
-      transition: filter var(--transition-speed) ease, transform var(--transition-speed) ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-      user-select: none;
-    }
-    .absensi-module .topbar .btn:hover, .absensi-module .admin-bar .btn:hover, .absensi-module .topbar .btn:focus, .absensi-module .admin-bar .btn:focus {
-      filter: brightness(0.9);
-      transform: translateY(-2px);
-      outline: none;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
-    }
-    .absensi-module .topbar .btn.ghost {
-      background: #e8f4fb;
-      color: var(--absensi-primary-dark);
-      box-shadow: none;
-      border: 1.5px solid var(--absensi-primary);
-    }
-    .absensi-module .topbar .btn.active {
-      background: var(--absensi-primary-dark);
-      box-shadow: 0 6px 20px var(--absensi-shadow-strong);
-    }
-    .absensi-module .admin-bar .btn.alt {
-      background: #e8f4fb;
-      color: var(--absensi-primary-dark);
-      box-shadow: none;
-      border: 1.5px solid var(--absensi-primary);
-    }
-    .absensi-module .admin-bar .btn.danger {
-      background: var(--absensi-danger);
-      box-shadow: none;
-    }
-    .absensi-module .admin-bar { display: none; } /* Hidden by default, shown by JS */
+    .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 9999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .overlay.show { opacity: 1; visibility: visible; }
+    .overlay-content { max-width: 90%; max-height: 90%; background: #fff; padding: 15px; border-radius: 10px; position: relative; }
+    .overlay-content img { max-width: 100%; max-height: 80vh; display: block; margin: 0 auto; border-radius: 8px; }
+    .overlay-close { position: absolute; top: 10px; right: 15px; font-size: 2rem; color: #333; cursor: pointer; background: none; border: none; padding: 0; }
+    /* Autocomplete */
+    .autocomplete-suggestions { border: 1px solid #999; background: #fff; cursor: default; overflow: auto; max-height: 150px; position: absolute; z-index: 100; width: calc(100% - 28px); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .autocomplete-suggestion { padding: 8px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.9rem; display: block; }
+    .autocomplete-suggestion.selected { background: var(--sky-light); color: var(--text-primary); }
+    .autocomplete-suggestion strong { font-weight: 700; color: var(--sky-strong); }
+    /* Cek Ongkir Specific */
+    .cek-ongkir-module .hero { position: relative; background: radial-gradient(1100px 400px at 10% -10%, rgba(255,255,255,.22), rgba(255,255,255,0)), linear-gradient(135deg, var(--ongkir-brand-2), var(--ongkir-brand)); border-radius: 20px; padding: 28px clamp(16px,3vw,36px); color: #fff; box-shadow: var(--ongkir-shadow); overflow: hidden; margin-bottom: 20px; }
+    .cek-ongkir-module .hero:after { content: ""; position: absolute; right: -120px; top: -120px; width: 280px; height: 280px; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), rgba(255,255,255,0) 60%); filter: blur(2px); transform: rotate(15deg); }
+    .cek-ongkir-module .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; font-size: clamp(18px, 2.4vw, 22px); }
+    .cek-ongkir-module .brand i { background: #fff; color: var(--ongkir-brand); width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,.15), inset 0 -2px 3px rgba(0,0,0,.08); }
+    .cek-ongkir-module .headline { font-size: clamp(22px, 3.2vw, 30px); font-weight: 700; margin: 12px 0 6px; }
+    .cek-ongkir-module .sub { opacity: .95; font-weight: 500; }
+    .cek-ongkir-module .card__body { padding: clamp(16px, 2.8vw, 28px); }
+    .cek-ongkir-module .field .label { font-size: 14px; font-weight: 600; color: #2a3b58; margin: 2px 0 8px 6px; display: flex; align-items: center; gap: 8px; }
+    .cek-ongkir-module .control { position: relative; }
+    .cek-ongkir-module .control .licon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #6c84a8; }
+    .cek-ongkir-module .control .clear-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: none; background: #f1f6ff; color: #1e429f; width: 30px; height: 30px; border-radius: 9px; cursor: pointer; }
+    .cek-ongkir-module .control .clear-btn:hover { filter: brightness(0.98); }
+    .cek-ongkir-module .suggest { position: absolute; z-index: 40; left: 0; right: 0; top: calc(100% + 6px); background: #fff; border: 1px solid #e8eef8; border-radius: 14px; overflow: hidden; box-shadow: 0 14px 40px rgba(17,38,87,.15); max-height: 320px; overflow-y: auto; display: none; }
+    .cek-ongkir-module .s-item { padding: 12px 14px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+    .cek-ongkir-module .s-item:hover, .cek-ongkir-module .s-item.active { background: #f6faff; }
+    .cek-ongkir-module .s-icon { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: #eef5ff; color: #2161ff; flex: 0 0 28px; }
+    .cek-ongkir-module .s-text { line-height: 1.2; }
+    .cek-ongkir-module .s-name { font-weight: 600; }
+    .cek-ongkir-module .s-price { font-size: 12px; color: #5a6d89; margin-top: 2px; }
+    .cek-ongkir-module mark { background: #ffefb3; padding: 0 .15em; border-radius: 4px; }
+    .cek-ongkir-module .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+    .cek-ongkir-module .btn-primary { color: #fff; background: linear-gradient(180deg, #3b82f6, #1d4ed8); box-shadow: 0 12px 30px rgba(30,64,175, .35); }
+    .cek-ongkir-module .btn-primary:hover { filter: brightness(1.03); }
+    .cek-ongkir-module .btn-ghost { background: #eff5ff; color: #1d4ed8; border: 1px solid #d9e7ff; }
+    .cek-ongkir-module .btn-ghost:hover { background: #e9f1ff; }
+    .cek-ongkir-module .btn-danger { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+    .cek-ongkir-module .btn-danger:hover { filter: brightness(0.99); }
+    .cek-ongkir-module .results { margin-top: 18px; display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+    .cek-ongkir-module .pellet { display: inline-flex; align-items: center; gap: 8px; background: #f3f7ff; color: #1e40af; border: 1px solid #e9f2ff; padding: 8px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+    .cek-ongkir-module .kartu { border: 1px solid #eaf0fb; border-radius: 16px; padding: 18px; background: linear-gradient(180deg, #ffffff, #fbfdff); }
+    .cek-ongkir-module .kartu h4 { margin: 0 0 8px; font-size: 16px; letter-spacing: .2px; display: flex; align-items: center; gap: 8px; }
+    .cek-ongkir-module .harga { font-size: 28px; font-weight: 800; color: #0b5bd3; }
+    .cek-ongkir-module .muted { color: #607599; font-size: 13px; }
+    .cek-ongkir-module .formula { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas; background: #f6f9ff; border: 1px dashed #d9e7ff; padding: 10px 12px; border-radius: 10px; display: inline-block; margin-top: 8px; }
+    .cek-ongkir-module .footer { text-align: center; color: #eaf2ff; margin-top: 18px; font-size: 13px; }
+    /* Absensi Module Specific */
+    .absensi-module .topbar, .absensi-module .admin-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center; margin: 12px 0 20px; }
+    .absensi-module .topbar .btn, .absensi-module .admin-bar .btn { padding: 12px 18px; border: none; border-radius: 14px; background: var(--absensi-primary); color: #fff; font-weight: 700; cursor: pointer; transition: filter var(--transition-speed) ease, transform var(--transition-speed) ease; box-shadow: 0 4px 12px rgba(0,0,0,0.12); user-select: none; }
+    .absensi-module .topbar .btn:hover, .absensi-module .admin-bar .btn:hover, .absensi-module .topbar .btn:focus, .absensi-module .admin-bar .btn:focus { filter: brightness(0.9); transform: translateY(-2px); outline: none; box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+    .absensi-module .topbar .btn.ghost { background: #e8f4fb; color: var(--absensi-primary-dark); box-shadow: none; border: 1.5px solid var(--absensi-primary); }
+    .absensi-module .topbar .btn.active { background: var(--absensi-primary-dark); box-shadow: 0 6px 20px var(--absensi-shadow-strong); }
+    .absensi-module .admin-bar .btn.alt { background: #e8f4fb; color: var(--absensi-primary-dark); box-shadow: none; border: 1.5px solid var(--absensi-primary); }
+    .absensi-module .admin-bar .btn.danger { background: var(--absensi-danger); box-shadow: none; }
+    .absensi-module .admin-bar { display: none; }
     .absensi-module .tab { display: none; }
     .absensi-module .tab.active { display: block; }
-    .absensi-module .table-wrap {
-      overflow-x: auto;
-      border-radius: var(--absensi-radius);
-      border: 1.5px solid #d6e4f0;
-      margin-top: 16px;
-      box-shadow: 0 6px 20px rgba(58,141,222,0.05);
-    }
-    .absensi-module table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 15px;
-      color: var(--absensi-text);
-      min-width: 600px;
-    }
-    .absensi-module thead th {
-      position: sticky;
-      top: 0;
-      background: var(--absensi-primary);
-      color: #fff;
-      font-weight: 700;
-      padding: 14px 16px;
-      letter-spacing: 0.03em;
-      z-index: 10;
-      text-align: center;
-      user-select: none;
-      box-shadow: inset 0 -3px 6px rgba(0,0,0,0.1);
-    }
-    .absensi-module tbody td {
-      padding: 14px 16px;
-      border-bottom: 1.5px solid #d6e4f0;
-      text-align: center;
-      transition: background var(--transition-speed) ease;
-    }
-    .absensi-module tbody tr:hover td {
-      background: #d9eaff;
-      cursor: default;
-    }
-    .absensi-module .badge {
-      display: inline-block;
-      padding: 7px 16px;
-      border-radius: 9999px;
-      font-weight: 700;
-      font-size: 13px;
-      user-select: none;
-      transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
-      white-space: nowrap;
-    }
+    .absensi-module .table-wrap { overflow-x: auto; border-radius: var(--absensi-radius); border: 1.5px solid #d6e4f0; margin-top: 16px; box-shadow: 0 6px 20px rgba(58,141,222,0.05); }
+    .absensi-module table { width: 100%; border-collapse: collapse; font-size: 15px; color: var(--absensi-text); min-width: 600px; }
+    .absensi-module thead th { position: sticky; top: 0; background: var(--absensi-primary); color: #fff; font-weight: 700; padding: 14px 16px; letter-spacing: 0.03em; z-index: 10; text-align: center; user-select: none; box-shadow: inset 0 -3px 6px rgba(0,0,0,0.1); }
+    .absensi-module tbody td { padding: 14px 16px; border-bottom: 1.5px solid #d6e4f0; text-align: center; transition: background var(--transition-speed) ease; }
+    .absensi-module tbody tr:hover td { background: #d9eaff; cursor: default; }
+    .absensi-module .badge { display: inline-block; padding: 7px 16px; border-radius: 9999px; font-weight: 700; font-size: 13px; user-select: none; transition: background var(--transition-speed) ease, color var(--transition-speed) ease; white-space: nowrap; }
     .absensi-module .badge.on { background: #e9f7ef; color: #1b5e20; border: 1.5px solid #cdebd6; }
     .absensi-module .badge.off { background: #ffebee; color: #b71c1c; border: 1.5px solid #ffcdd2; }
     .absensi-module .badge.pending { background: #fff8e1; color: #f9a825; border: 1.5px solid #ffe082; }
-    .absensi-module .btn-mini {
-      padding: 8px 14px;
-      border: none;
-      border-radius: 14px;
-      color: #fff;
-      font-weight: 700;
-      cursor: pointer;
-      transition: filter var(--transition-speed) ease, transform var(--transition-speed) ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-      user-select: none;
-      font-size: 14px;
-    }
+    .absensi-module .btn-mini { padding: 8px 14px; border: none; border-radius: 14px; color: #fff; font-weight: 700; cursor: pointer; transition: filter var(--transition-speed) ease, transform var(--transition-speed) ease; box-shadow: 0 4px 12px rgba(0,0,0,0.12); user-select: none; font-size: 14px; }
     .absensi-module .btn-on { background: var(--absensi-ok); }
     .absensi-module .btn-off { background: var(--absensi-danger); }
     .absensi-module .btn-pending { background: var(--absensi-pending); }
-    .absensi-module .btn-on:hover, .absensi-module .btn-off:hover, .absensi-module .btn-pending:hover, .absensi-module .btn-on:focus, .absensi-module .btn-off:focus, .absensi-module .btn-pending:focus {
-      filter: brightness(0.9);
-      transform: translateY(-2px);
-      outline: none;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    .absensi-module .btn-on:hover, .absensi-module .btn-off:hover, .absensi-module .btn-pending:hover, .absensi-module .btn-on:focus, .absensi-module .btn-off:focus, .absensi-module .btn-pending:focus { filter: brightness(0.9); transform: translateY(-2px); outline: none; box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+    .absensi-module .login { background: #fff; width: min(92vw, 460px); border-radius: 20px; box-shadow: 0 12px 30px var(--absensi-shadow-light); padding: 28px 32px; text-align: center; user-select: none; }
+    .absensi-module .login h3 { color: var(--absensi-primary-dark); margin-bottom: 20px; font-weight: 800; font-size: 1.5rem; letter-spacing: 0.03em; }
+    .absensi-module .login input { width: 100%; padding: 14px 16px; border: 1.5px solid #cfe5f5; border-radius: 14px; margin: 12px 0; font-size: 1rem; color: var(--absensi-text); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
+    .absensi-module .login input:focus { border-color: var(--absensi-primary); box-shadow: 0 0 12px var(--absensi-primary); outline: none; background: #f0f8ff; }
+    .absensi-module .login .btn { width: 100%; padding: 14px 0; border: none; border-radius: 14px; background: var(--absensi-primary); color: #fff; font-weight: 900; font-size: 1.1rem; cursor: pointer; transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease; user-select: none; }
+    .absensi-module .login .btn:hover, .absensi-module .login .btn:focus { background: var(--absensi-primary-dark); box-shadow: 0 8px 24px var(--absensi-shadow-strong); outline: none; }
+    .absensi-module select { padding: 12px 16px; border: 1.5px solid #cfe5f5; border-radius: 14px; min-width: 220px; background: #f8fcff; cursor: pointer; transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; font-weight: 600; color: var(--absensi-text); user-select: none; }
+    .absensi-module select:hover, .absensi-module select:focus { border-color: var(--absensi-primary); box-shadow: 0 6px 18px rgba(58,141,222,0.25); outline: none; }
+    .absensi-module input { width: 100%; padding: 12px 16px; border: 1.5px solid #cfe5f5; border-radius: 14px; background: #f8fcff; color: var(--absensi-text); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; font-size: 1rem; }
+    .absensi-module input:focus { border-color: var(--absensi-primary); box-shadow: 0 6px 18px rgba(58,141,222,0.25); outline: none; }
+    /* Mobile */
+    @media (max-width: 900px) { 
+      .grid-3 { grid-template-columns: 1fr; } 
+      .line-card, .line-card-tambahan { grid-template-columns: 1fr 80px 120px 100px 80px; padding: 12px 16px; } 
+      .cek-ongkir-module .results { grid-template-columns: 1fr; } 
+      .absensi-module .topbar, .absensi-module .admin-bar { justify-content: flex-start; } 
+      .absensi-module .table-wrap { overflow-x: auto; } 
+      .absensi-module table { min-width: 100%; font-size: 14px; } 
+      .absensi-module .admin-bar { flex-direction: column; align-items: stretch; }
+      .absensi-module .admin-bar .btn { width: 100%; }
     }
-    .absensi-module select {
-      padding: 12px 16px;
-      border: 1.5px solid #cfe5f5;
-      border-radius: 14px;
-      min-width: 220px;
-      background: #f8fcff;
-      cursor: pointer;
-      transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    @media (max-width: 600px) { 
+      .container { padding: 10px 12px; margin: 12px auto; } 
+      .card { padding: 18px 20px; border-radius: 16px; margin-bottom: 16px; } 
+      h1 { font-size: clamp(20px, 6vw, 28px); } 
+      h2, h3 { font-size: 1.1rem; margin: 6px 0 12px 0; } 
+      label { font-size: 13px; margin-top: 10px; } 
+      input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select { padding: 10px 12px; border-radius: 10px; font-size: 0.85rem; } 
+      .btn { padding: 8px 12px; border-radius: 12px; font-size: 0.8rem; } 
+      .btnbar { gap: 6px; flex-direction: column; align-items: stretch; } 
+      nav.tab { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 8px; border-radius: 14px; } 
+      nav.tab button { padding: 10px 0; font-size: 0.85rem; border-radius: 12px; } 
+      .line-card, .line-card-tambahan { grid-template-columns: 3fr 50px 60px 70px; padding: 10px 12px; gap: 6px; } 
+      .nota-box { padding: 14px 16px; font-size: 0.8rem; min-height: 100px; } 
+      table { font-size: 0.8rem; } 
+      th, td { padding: 8px 6px; } 
+      .section-title { font-size: 0.9rem; margin-top: 8px; } 
+      .small { font-size: 10px; margin-top: 4px; } 
+      .notification-popup { padding: 10px 15px; font-size: 0.8rem; } /* Notifikasi lebih kecil di mobile */
+      .cek-ongkir-module .brand { font-size: clamp(16px, 2vw, 18px); } 
+      .cek-ongkir-module .headline { font-size: clamp(18px, 2.5vw, 24px); } 
+      .absensi-module #pengajuanForm { flex-direction: column; gap: 16px; padding: 16px; } 
+      .absensi-module #pengajuanForm select, .absensi-module #pengajuanForm button { min-width: 100% !important; width: 100% !important; } 
+      .absensi-module .table-wrap { overflow-x: auto; } 
+      .absensi-module table { min-width: 100%; font-size: 13px; } 
+      .absensi-module thead th, .absensi-module tbody td { padding: 10px 8px; } 
+      .absensi-module .badge { padding: 5px 10px; font-size: 11px; } 
+      .absensi-module .btn-mini { padding: 6px 10px; font-size: 12px; } 
+      .absensi-module .login { width: 90vw; padding: 20px; } 
+      .absensi-module .login input { padding: 10px 12px; font-size: 0.9rem; } 
+      .absensi-module .login .btn { padding: 12px 0; font-size: 1rem; } 
+    }
+
+    /* Admin Header Golden Style */
+    .admin-header {
+      background: linear-gradient(90deg, #FFD700, #FFA500); /* Golden gradient */
+      color: #333;
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .admin-header .flex {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .admin-header .badge {
+      background: rgba(255,255,255,0.3);
+      color: #663300;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.8rem;
       font-weight: 600;
-      color: var(--absensi-text);
-      user-select: none;
-    }
-    .absensi-module select:hover, .absensi-module select:focus {
-      border-color: var(--absensi-primary);
-      box-shadow: 0 6px 18px rgba(58,141,222,0.25);
-      outline: none;
-    }
-    .absensi-module input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1.5px solid #cfe5f5;
-      border-radius: 14px;
-      background: #f8fcff;
-      color: var(--absensi-text);
-      transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-      font-size: 1rem;
-    }
-    .absensi-module input:focus {
-      border-color: var(--absensi-primary);
-      box-shadow: 0 6px 18px rgba(58,141,222,0.25);
-      outline: none;
-    }
-    @media (max-width: 600px) {
-      .container { padding: 10px 12px; margin: 12px auto; }
-      .card { padding: 18px 20px; border-radius: 16px; margin-bottom: 16px; }
-      h1 { font-size: clamp(20px, 6vw, 28px); }
-      label { font-size: 13px; margin-top: 10px; }
-      input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select { padding: 10px 12px; border-radius: 10px; font-size: 0.85rem; }
-      .btn { padding: 8px 12px; border-radius: 12px; font-size: 0.8rem; }
-      nav.tab { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 8px; border-radius: 14px; }
-      nav.tab button { padding: 10px 0; font-size: 0.85rem; border-radius: 12px; }
-      .notification-popup { padding: 10px 15px; font-size: 0.8rem; }
-      .absensi-module .topbar, .absensi-module .admin-bar { justify-content: flex-start; }
-      .absensi-module .table-wrap { overflow-x: auto; }
-      .absensi-module table { min-width: 100%; font-size: 13px; }
-      .absensi-module thead th, .absensi-module tbody td { padding: 10px 8px; }
-      .absensi-module .badge { padding: 5px 10px; font-size: 11px; }
-      .absensi-module .btn-mini { padding: 6px 10px; font-size: 12px; }
     }
   </style>
 </head>
 <body>
-<div class="container" id="adminDashboard" role="main" aria-label="Admin Panel Sahabatku Delivery">
-  <header class="card" style="display:flex; justify-content:space-between; align-items:center; user-select:none;">
-    <div style="font-weight:700; font-size:1.4rem; color: var(--sky-strong);">
-      <i class="fa-solid fa-chart-simple"></i> Admin Panel
-    </div>
-    <button id="adminLogoutBtn" class="btn danger" aria-label="Logout Admin">Logout</button>
-  </header>
-
-  <nav class="tab" role="tablist" aria-label="Navigasi Admin">
-    <button class="btn active" data-tab="tabNotaAdmin" role="tab" aria-selected="true" tabindex="0">📝 Kelola Nota</button>
-    <button class="btn" data-tab="tabRekapAdmin" role="tab" aria-selected="false" tabindex="-1">📈 Rekap & Riwayat</button>
-    <button class="btn" data-tab="tabKurirAdmin" role="tab" aria-selected="false" tabindex="-1">👥 Manajemen Kurir</button>
-    <button class="btn" data-tab="tabOngkirAdmin" role="tab" aria-selected="false" tabindex="-1">🚚 Manajemen Ongkir</button>
-    <button class="btn" data-tab="tabAbsensiAdmin" role="tab" aria-selected="false" tabindex="-1">✅ Manajemen Absensi</button>
-  </nav>
-
-  <!-- Kelola Nota Admin -->
-  <section id="tabNotaAdmin" class="card tab" role="tabpanel" tabindex="0" aria-labelledby="tabNotaAdmin-tab">
-    <!-- Filter inputs sejajar ke kanan dalam satu baris -->
-    <div class="filter-4-col-row">
-      <div class="filter-item">
-        <label for="filterKurir">Nama Kurir</label>
-        <select id="filterKurir" aria-label="Filter Nama Kurir">
-          <option value="">— Semua Kurir —</option>
-        </select>
-      </div>
-      <div class="filter-item">
-        <label for="filterTanggal">Tanggal</label>
-        <input type="date" id="filterTanggal" aria-label="Filter Tanggal" />
-      </div>
-      <div class="filter-item">
-        <label for="filterBulan">Bulan</label>
-        <input type="month" id="filterBulan" aria-label="Filter Bulan" />
-      </div>
-      <div class="filter-item">
-        <label for="filterTahun">Tahun</label>
-        <input type="number" id="filterTahun" min="2020" placeholder="2025" aria-label="Filter Tahun" />
-      </div>
-    </div>
-    <div class="row" style="margin-top:12px; flex-wrap: wrap; gap: 12px; align-items: flex-end;">
-      <div class="col" style="min-width: 250px; flex-grow: 1;">
-        <label for="filterCariNota">Cari Nota (No Nota)</label>
-        <input id="filterCariNota" list="listNoNota" placeholder="Pilih/ketik No Nota" aria-label="Cari No Nota" />
-        <datalist id="listNoNota"></datalist>
-      </div>
-      <div style="display:flex; gap:8px; flex-wrap: wrap; justify-content: flex-end;">
-        <button class="btn secondary" onclick="applyFilter()" aria-label="Terapkan Filter">Filter</button>
-        <button class="btn secondary" onclick="clearFilter()" aria-label="Reset Filter">Reset</button>
-        <button class="btn" onclick="showAddForm()" aria-label="Tambah Nota Baru">+ Tambah Nota</button>
-        <button class="btn secondary" onclick="exportCSV()" aria-label="Export Data Filter ke CSV">⬇ Export CSV</button>
-      </div>
-    </div>
-    <div id="notaList" style="margin-top:20px;"></div>
-
-    <!-- Form Tambah/Edit Nota -->
-    <div id="notaForm" class="card hidden" aria-hidden="true" style="margin-top:20px;">
-      <h3 id="formTitle">Tambah Nota</h3>
-      <div class="row" style="flex-wrap: wrap; gap: 12px;">
-        <div class="col">
-          <label for="formKurir">Kurir (dropdown / ketik manual)</label>
-          <input id="formKurir" list="listKurir" placeholder="Pilih/ketik kurir" aria-label="Input Nama Kurir" />
-          <datalist id="listKurir"></datalist>
-        </div>
-        <div class="col">
-          <label for="formNoNota">No Nota</label>
-          <input id="formNoNota" placeholder="NN-001 / otomatis" aria-label="Input Nomor Nota" />
-        </div>
-      </div>
-      <h4>Item</h4>
-      <table id="itemTable" aria-label="Daftar Item Nota" style="width:100%; margin-bottom:12px;">
-        <thead>
-          <tr><th>Nama</th><th>Qty</th><th>Harga</th><th>Aksi</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <div class="flex" style="margin-bottom:12px;">
-        <button class="btn ghost" onclick="addItemRow()" aria-label="Tambah Item">+ Item</button>
-      </div>
-      <div class="row" style="flex-wrap: wrap; gap: 12px;">
-        <div class="col">
-          <label for="formOngkir">Ongkir</label>
-          <input id="formOngkir" type="number" value="0" min="0" aria-label="Input Ongkir" />
-        </div>
-        <div class="col">
-          <label for="formTambahan">Tambahan</label>
-          <input id="formTambahan" type="number" value="0" min="0" aria-label="Input Tambahan" />
-        </div>
-        <div class="col" style="flex-grow:1;">
-          <label for="formText">Keterangan</label>
-          <input id="formText" placeholder="Catatan…" aria-label="Input Keterangan" />
-        </div>
-      </div>
-      <h4>Total: Rp <span id="formTotal">0</span></h4>
-      <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 12px;">
-        <button class="btn" onclick="saveNota()">Simpan</button>
-        <button class="btn danger" onclick="cancelNota()">Batal</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Tab Rekap & Riwayat -->
-  <section id="tabRekapAdmin" class="card tab hidden" role="tabpanel" tabindex="0">
-    <div class="row" style="flex-wrap: wrap; gap: 12px; justify-content: flex-end;">
-      <div class="col">
-        <label for="rekapKurirAdmin">Kurir</label>
-        <select id="rekapKurirAdmin" aria-label="Filter Kurir Rekap"><option value="">— Semua Kurir —</option></select>
-      </div>
-      <div class="col">
-        <label for="rekapBulanAdmin">Bulan</label>
-        <input type="month" id="rekapBulanAdmin" aria-label="Filter Bulan Rekap" />
-      </div>
-      <div style="align-self:end;">
-        <button class="btn secondary" onclick="renderRekapAdmin()">Terapkan</button>
-      </div>
-    </div>
-    <div class="flex" style="margin-top:12px; gap:12px; flex-wrap: wrap; user-select:none; justify-content: flex-end;">
-      <span class="pill" style="background:#d0e8ff; padding:6px 12px; border-radius:12px; font-weight:700; color:#0b3b5a;">Mode: Total Nota per Kurir</span>
-      <span class="pill" style="background:#d0e8ff; padding:6px 12px; border-radius:12px; font-weight:700; color:#0b3b5a;">Mode: Penghasilan (tanggal, jumlah, ongkir, tambahan, total)</span>
-    </div>
-    <div id="rekapRingkasAdmin" style="margin-top:10px"></div>
-    <div id="rekapTabelAdmin"></div>
-    <div class="flex" style="margin-top:12px; justify-content: flex-end;">
-      <button class="btn secondary" onclick="exportCSVRekapAdmin()">⬇ Export CSV (Rekap)</button>
-    </div>
-  </section>
-
-  <!-- Tab Manajemen Kurir -->
-  <section id="tabKurirAdmin" class="card tab hidden" role="tabpanel" tabindex="0">
-    <div class="grid grid-2" style="gap: 12px;">
-      <div>
-        <label>Tambah Kurir Baru</label>
-        <input id="kurirBaru" placeholder="Nama kurir (username)">
-      </div>
-      <div>
-        <label>Password (kurir)</label>
-        <input id="kurirPass" type="password" placeholder="minimal 6 karakter">
-      </div>
-      <div style="grid-column: span 2;">
-        <button class="btn full" onclick="tambahKurirAdmin()">+ Tambah Kurir</button>
-        <small style="display: block; margin-top: 8px; color: var(--muted);">Akun dibuat di Realtime DB. (Penghapusan akun Auth penuh memerlukan server admin.)</small>
-      </div>
-    </div>
-    <hr style="border:none;border-top:1px solid var(--border);margin:20px 0">
-    <div class="grid grid-2" style="gap: 12px;">
-      <div>
-        <label>Pilih Kurir</label>
-        <select id="kurirManage"></select>
-      </div>
-      <div style="align-self:end;">
-        <button class="btn danger full" onclick="hapusKurirAdmin()">Hapus Kurir</button>
-      </div>
-      <div style="grid-column: span 2;">
-        <button class="btn secondary full" onclick="ubahPasswordKurirAdmin()">Ubah Password Kurir</button>
-      </div>
-      <div style="grid-column: span 2;">
-        <button class="btn secondary full" onclick="blokirKurirAdmin()">Blokir Kurir</button>
-      </div>
-      <div style="grid-column: span 2;">
-        <button class="btn secondary full" onclick="bukaBlokirKurirAdmin()">Buka Blokir Kurir</button>
-      </div>
-    </div>
-    <small style="display: block; margin-top: 12px; color: var(--muted);">Catatan: Menghapus kurir akan menonaktifkan akses di aplikasi kurir dengan menghapus entri kurir di DB. Blokir/Buka Blokir akan mengubah status 'enabled' kurir.</small>
-    <div class="table-wrap" style="margin-top: 20px;">
-      <table id="tableKurirAdmin">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Password</th>
-            <th>Status</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Kurir data will be loaded here -->
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Tab Manajemen Ongkir -->
-  <section id="tabOngkirAdmin" class="card tab hidden" role="tabpanel" tabindex="0">
-    <div class="row" style="flex-wrap: wrap; gap: 12px; justify-content: flex-end;">
-      <div class="col">
-        <label for="wilayahInput">Wilayah</label>
-        <input id="wilayahInput" list="wilayahList" placeholder="Pilih/ketik wilayah">
-        <datalist id="wilayahList"></datalist>
-      </div>
-      <div class="col">
-        <label for="hargaOngkir">Harga Ongkir</label>
-        <input id="hargaOngkir" type="number" placeholder="0">
-      </div>
-      <div style="align-self:end; display:flex; gap:8px;">
-        <button class="btn" onclick="simpanOngkirAdmin()">💾 Save/Update</button>
-        <button class="btn danger" onclick="hapusOngkirAdmin()">🗑 Hapus</button>
-      </div>
-    </div>
-    <h4>Data Wilayah</h4>
-    <div id="ongkirTabel"></div>
-  </section>
-
-  <!-- Tab Manajemen Absensi Admin -->
-  <section id="tabAbsensiAdmin" class="tabContent hidden" role="tabpanel" tabindex="0">
+<div class="container">
+  <!-- Dashboard Admin -->
+  <div id="adminDashboard">
+    <header class="admin-header">
+      <div class="flex"><strong>📊 Admin Panel</strong><span class="badge">👑 Admin</span></div>
+      <button id="adminLogoutBtn" class="btn danger">Logout</button>
+    </header>
     <div class="card">
-      <h1>Manajemen Absensi Kurir</h1>
-      <div class="topbar" id="absensiTopbar">
-        <button class="btn active" data-tab="tab-jadwal">Jadwal Off</button>
-        <button class="btn" data-tab="tab-rekap">Rekap & Keaktifan</button>
-        <button class="btn" data-tab="tab-absensi">Absensi Harian</button>
-        <button class="btn" data-tab="tab-approval">Approval Kurir</button>
-        <div class="month-wrap">
-          <label for="monthPick"><small>Bulan:</small></label>
-          <input type="month" id="monthPick"/>
+      <div class="tabs">
+        <button class="btn active" data-tab="tabNotaAdmin">📝 Kelola Nota</button>
+        <button class="btn" data-tab="tabRekapAdmin">📈 Rekap & Riwayat</button>
+        <button class="btn" data-tab="tabKurirAdmin">👥 Manajemen Kurir</button>
+        <button class="btn" data-tab="tabOngkirAdmin">🚚 Manajemen Ongkir</button>
+        <button class="btn" data-tab="tabAbsensiAdmin">✅ Manajemen Absensi</button>
+      </div>
+    </div>
+
+    <!-- Kelola Nota Admin -->
+    <div id="tabNotaAdmin" class="card tab">
+      <div class="row">
+        <div><label>Nama Kurir</label><select id="filterKurir"><option value="">— Semua Kurir —</option></select></div>
+        <div><label>Tanggal</label><input type="date" id="filterTanggal"></div>
+        <div><label>Bulan</label><input type="month" id="filterBulan"></div>
+        <div><label>Tahun</label><input type="number" id="filterTahun" min="2020" placeholder="2025"></div>
+      </div>
+      <div class="row">
+        <div><label>Cari Nota (No Nota)</label><input id="filterCariNota" list="listNoNota" placeholder="Pilih/ketik No Nota"><datalist id="listNoNota"></datalist></div>
+        <div style="align-self:end">
+          <button class="btn secondary" onclick="applyFilter()">Filter</button>
+          <button class="btn secondary" onclick="clearFilter()">Reset</button>
+          <button class="btn" onclick="showAddForm()">+ Tambah Nota</button>
+          <button class="btn secondary" onclick="exportCSV()">⬇ Export CSV (hasil filter)</button>
         </div>
       </div>
+      <div id="notaList"></div>
 
-      <div class="admin-bar" id="absensiAdminBar" style="display:flex; flex-wrap:wrap; gap:12px; justify-content:flex-end;">
-        <button class="btn alt" id="btn-save">Save Data (Firestore)</button>
-        <button class="btn alt" id="btn-regen">Regenerasi Off</button>
-        <button class="btn" id="btn-add-kurir-absensi">Tambah Kurir</button>
-        <button class="btn danger" id="btn-del-kurir-absensi">Hapus Kurir</button>
-        <button class="btn secondary" id="btn-block-kurir-absensi">Blokir Kurir</button>
-        <button class="btn secondary" id="btn-unblock-kurir-absensi">Buka Blokir Kurir</button>
-      </div>
-
-      <!-- Tabs Absensi -->
-      <div id="tab-jadwal" class="tab active">
-        <div class="table-wrap">
-          <table id="tableJadwal">
-            <thead><tr><th>Tanggal</th><th>Hari</th><th>Kurir Off</th><th>Pengganti</th></tr></thead>
-            <tbody></tbody>
-          </table>
+      <!-- Form Tambah/Edit Nota Admin -->
+      <div id="notaForm" class="card hidden">
+        <h3 id="formTitle">Tambah Nota</h3>
+        <div class="row">
+          <div><label>Kurir (dropdown / ketik manual)</label><input id="formKurir" list="listKurir" placeholder="Pilih/ketik kurir"><datalist id="listKurir"></datalist></div>
+          <div><label>No Nota</label><input id="formNoNota" placeholder="NN-001 / otomatis"></div>
         </div>
-      </div>
-
-      <div id="tab-absensi" class="tab">
-        <div class="table-wrap">
-          <table id="tableAbsensi">
-            <thead><tr><th>Tanggal</th><th>Nama Kurir</th><th>Status</th></tr></thead>
-            <tbody></tbody>
-          </table>
+        <h4>Item</h4>
+        <table id="itemTable">
+          <thead><tr><th>Nama</th><th>Qty</th><th>Harga</th><th>Aksi</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="flex"><button class="btn ghost" onclick="addItemRow()">+ Item</button></div>
+        <div class="row">
+          <div><label>Ongkir</label><input id="formOngkir" type="number" value="0"></div>
+          <div><label>Tambahan</label><input id="formTambahan" type="number" value="0"></div>
+          <div><label>Keterangan</label><input id="formText" placeholder="Catatan…"></div>
         </div>
-      </div>
-
-      <div id="tab-rekap" class="tab">
-        <div class="table-wrap">
-          <table id="tableRekap">
-            <thead><tr><th>Nama Kurir</th><th>Total On</th><th>Total Off</th><th>Skor Keaktifan</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div id="tab-approval" class="tab">
-        <div class="table-wrap">
-          <table id="tableApproval">
-            <thead><tr><th>Tanggal Pengajuan</th><th>Kurir Asal</th><th>Pengganti</th><th>Status</th><th>Aksi</th></tr></thead>
-            <tbody></tbody>
-          </table>
+        <h4>Total: Rp <span id="formTotal">0</span></h4>
+        <div class="flex">
+          <button class="btn" onclick="saveNota()">Simpan</button>
+          <button class="btn danger" onclick="cancelNota()">Batal</button>
         </div>
       </div>
     </div>
+
+    <!-- Rekap & Riwayat Admin -->
+    <div id="tabRekapAdmin" class="card tab hidden">
+      <div class="row">
+        <div><label>Kurir</label><select id="rekapKurirAdmin"><option value="">— Semua Kurir —</option></select></div>
+        <div><label>Bulan</label><input type="month" id="rekapBulanAdmin"></div>
+        <div style="align-self:end"><button class="btn secondary" onclick="renderRekapAdmin()">Terapkan</button></div>
+      </div>
+      <div class="flex">
+        <span class="pill">Mode: Total Nota per Kurir</span>
+        <span class="pill">Mode: Penghasilan (tanggal, jumlah, ongkir, tambahan, total)</span>
+      </div>
+      <div id="rekapRingkasAdmin" style="margin-top:10px"></div>
+      <div id="rekapTabelAdmin"></div>
+      <div class="flex"><button class="btn secondary" onclick="exportCSVRekapAdmin()">⬇ Export CSV (Rekap)</button></div>
+    </div>
+
+    <!-- Manajemen Kurir Admin -->
+    <div id="tabKurirAdmin" class="card tab hidden">
+      <div class="grid grid-2" style="gap: 12px;">
+        <div>
+          <label>Tambah Kurir Baru</label>
+          <input id="kurirBaru" placeholder="Nama kurir (username)">
+        </div>
+        <div>
+          <label>Password (kurir)</label>
+          <input id="kurirPass" type="password" placeholder="minimal 6 karakter">
+        </div>
+        <div style="grid-column: span 2;">
+          <button class="btn full" onclick="tambahKurirAdmin()">+ Tambah Kurir</button>
+          <small style="display: block; margin-top: 8px; color: var(--muted);">Akun dibuat di Realtime DB. (Penghapusan akun Auth penuh memerlukan server admin.)</small>
+        </div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:20px 0">
+      <div class="grid grid-2" style="gap: 12px;">
+        <div>
+          <label>Pilih Kurir</label>
+          <select id="kurirManage"></select>
+        </div>
+        <div style="align-self:end;">
+          <button class="btn danger full" onclick="hapusKurirAdmin()">Hapus Kurir</button>
+        </div>
+        <div style="grid-column: span 2;">
+          <button class="btn secondary full" onclick="ubahPasswordKurirAdmin()">Ubah Password Kurir</button>
+        </div>
+        <div style="grid-column: span 2;">
+          <button class="btn secondary full" onclick="blokirKurirAdmin()">Blokir Kurir</button>
+        </div>
+        <div style="grid-column: span 2;">
+          <button class="btn secondary full" onclick="bukaBlokirKurirAdmin()">Buka Blokir Kurir</button>
+        </div>
+      </div>
+      <small style="display: block; margin-top: 12px; color: var(--muted);">Catatan: Menghapus kurir akan menonaktifkan akses di aplikasi kurir dengan menghapus entri kurir di DB. Blokir/Buka Blokir akan mengubah status 'enabled' kurir.</small>
+      <div class="table-wrap" style="margin-top: 20px;">
+        <table id="tableKurirAdmin">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Password</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Kurir data will be loaded here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Manajemen Ongkir Admin -->
+    <div id="tabOngkirAdmin" class="card tab hidden">
+      <div class="row">
+        <div><label>Wilayah</label><input id="wilayahInput" list="wilayahList" placeholder="Pilih/ketik wilayah"><datalist id="wilayahList"></datalist></div>
+        <div><label>Harga Ongkir</label><input id="hargaOngkir" type="number" placeholder="0"></div>
+        <div style="align-self:end">
+          <button class="btn" onclick="simpanOngkirAdmin()">💾 Save/Update</button>
+          <button class="btn danger" onclick="hapusOngkirAdmin()">🗑 Hapus</button>
+        </div>
+      </div>
+      <h4>Data Wilayah</h4>
+      <div id="ongkirTabel"></div>
+    </div>
+
+    <!-- Manajemen Absensi Admin -->
+    <div id="tabAbsensiAdmin" class="tabContent hidden absensi-module">
+      <div class="card">
+        <h1>Manajemen Absensi Kurir</h1>
+        <div class="topbar" id="absensiTopbar">
+          <button class="btn active" data-tab="tab-jadwal">Jadwal Off</button>
+          <button class="btn" data-tab="tab-rekap">Rekap & Keaktifan</button>
+          <button class="btn" data-tab="tab-absensi">Absensi Harian</button>
+          <button class="btn" data-tab="tab-approval">Approval Kurir</button>
+          <div class="month-wrap">
+            <label for="monthPick"><small>Bulan:</small></label>
+            <input type="month" id="monthPick"/>
+          </div>
+        </div>
+
+        <div class="admin-bar" id="absensiAdminBar">
+          <button class="btn alt" id="btn-save">Save Data (Firestore)</button>
+          <button class="btn alt" id="btn-regen">Regenerasi Off</button>
+          <button class="btn" id="btn-add-kurir-absensi">Tambah Kurir</button>
+          <button class="btn danger" id="btn-del-kurir-absensi">Hapus Kurir</button>
+          <button class="btn secondary" id="btn-block-kurir-absensi">Blokir Kurir</button>
+          <button class="btn secondary" id="btn-unblock-kurir-absensi">Buka Blokir Kurir</button>
+        </div>
+
+        <!-- Tabs Absensi -->
+        <div id="tab-jadwal" class="tab active">
+          <div class="table-wrap">
+            <table id="tableJadwal">
+              <thead><tr><th>Tanggal</th><th>Hari</th><th>Kurir Off</th><th>Pengganti</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="tab-absensi" class="tab">
+          <div class="table-wrap">
+            <table id="tableAbsensi">
+              <thead><tr><th>Tanggal</th><th>Nama Kurir</th><th>Status</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="tab-rekap" class="tab">
+          <div class="table-wrap">
+            <table id="tableRekap">
+              <thead><tr><th>Nama Kurir</th><th>Total On</th><th>Total Off</th><th>Skor Keaktifan</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="tab-approval" class="tab">
+          <div class="table-wrap">
+            <table id="tableApproval">
+              <thead><tr><th>Tanggal Pengajuan</th><th>Kurir Asal</th><th>Pengganti</th><th>Status</th><th>Aksi</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 <!-- Pop Notifikasi -->
 <div id="notificationPopup" class="notification-popup"></div>
 <audio id="notificationSound" src="https://www.soundjay.com/buttons/button-2.mp3" preload="auto"></audio>
