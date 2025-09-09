@@ -45,6 +45,84 @@
       --ongkir-brand-2:#5ea3ff;
       --ongkir-shadow: 0 20px 45px rgba(4,32,66,.18);
     }
+        /* Modal Konfirmasi Logout */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 1000;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.show {
+      opacity: 1; visibility: visible;
+    }
+    .modal-content {
+      background: var(--card-bg);
+      padding: 28px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      max-width: 400px;
+      width: 90%;
+      transform: scale(0.8);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      position: relative;
+      text-align: center;
+    }
+    .modal-overlay.show .modal-content {
+      transform: scale(1);
+      opacity: 1;
+    }
+    .modal-content h3 {
+      margin-top: 0; margin-bottom: 15px;
+      color: var(--text-primary);
+      font-size: 1.4rem;
+    }
+    .modal-content p {
+      margin-bottom: 20px;
+      color: var(--text-secondary);
+    }
+    .modal-content .modal-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .modal-content .modal-close {
+      position: absolute;
+      top: 15px; right: 15px;
+      background: none; border: none;
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    .modal-content .modal-close:hover {
+      color: var(--text-primary);
+    }
+    .btn {
+      background: var(--sky-strong);
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: background var(--transition-speed) ease;
+    }
+    .btn.danger {
+      background: #ff6b6b;
+    }
+    .btn.secondary {
+      background: #f5f7fa;
+      color: var(--text-primary);
+      border: 1.5px solid var(--border);
+    }
+    .btn:hover {
+      filter: brightness(0.9);
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; font-family: 'Inter', system-ui, Arial, Helvetica, sans-serif; background: var(--main-bg-color); color: var(--text-primary); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.6; }
     .container { max-width: 960px; margin: 0 auto; padding: 16px 20px; }
@@ -670,6 +748,94 @@
     </div>
   </div>
 </div>
+  <!-- Modal Konfirmasi Logout -->
+  <div id="logoutConfirmModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" id="logoutModalClose">&times;</button>
+      <h3>Konfirmasi Logout</h3>
+      <p>Apakah Anda yakin ingin logout?</p>
+      <div class="modal-actions">
+        <button id="logoutConfirmBtn" class="btn danger">Logout</button>
+        <button id="logoutCancelBtn" class="btn secondary">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifikasi -->
+  <div id="notificationPopup" class="notification-popup"></div>
+  <audio id="notificationSound" src="https://www.soundjay.com/buttons/button-2.mp3" preload="auto"></audio>
+
+  <script type="module">
+    // Import Firebase SDKs dan inisialisasi (sesuaikan dengan kode Anda)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getDatabase, ref, get, update, remove } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCtva8TeL40-WotK4kFL_vL8uUXL3GDfww",
+      authDomain: "sahabatkuu-bisa.firebaseapp.com",
+      databaseURL: "https://sahabatkuu-bisa-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "sahabatkuu-bisa",
+      storageBucket: "sahabatkuu-bisa.firebasestorage.app",
+      messagingSenderId: "315555564115",
+      appId: "1:315555564115:web:56f46dbceb8c154589d4a6",
+      measurementId: "G-PFGYL96VPS"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Elemen DOM
+    const el = id => document.getElementById(id);
+    const notificationPopup = el('notificationPopup');
+    const notificationSound = el('notificationSound');
+
+    function showNotification(message, type = 'success') {
+      notificationPopup.textContent = message;
+      notificationPopup.className = `notification-popup show ${type}`;
+      notificationSound.play();
+      setTimeout(() => {
+        notificationPopup.classList.remove('show');
+      }, 3000);
+    }
+
+    // Inisialisasi user dari localStorage
+    let currentUser  = localStorage.getItem('currentUser ');
+    if (!currentUser ) {
+      window.location.href = 'index.html';
+    } else {
+      el('curUser ').innerText = currentUser ;
+      // ... inisialisasi lainnya ...
+    }
+
+    // Modal logout
+    const logoutModal = el('logoutConfirmModal');
+    const logoutModalClose = el('logoutModalClose');
+    const logoutConfirmBtn = el('logoutConfirmBtn');
+    const logoutCancelBtn = el('logoutCancelBtn');
+    const logoutBtn = el('kurirLogoutBtn');
+
+    logoutBtn.addEventListener('click', () => {
+      logoutModal.classList.add('show');
+    });
+
+    logoutModalClose.addEventListener('click', () => {
+      logoutModal.classList.remove('show');
+    });
+
+    logoutCancelBtn.addEventListener('click', () => {
+      logoutModal.classList.remove('show');
+    });
+
+    logoutConfirmBtn.addEventListener('click', () => {
+      logoutModal.classList.remove('show');
+      // Proses logout: hapus localStorage dan redirect
+      localStorage.removeItem('currentUser ');
+      showNotification('Anda telah logout.', 'info');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 500);
+    });
+
 
 <script type="module">
   // Import Firebase SDKs
