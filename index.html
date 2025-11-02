@@ -41,11 +41,11 @@
         .icon-small { font-size: 14px; margin-right: 5px; }
         .flex-row { display: flex; align-items: center; }
         .add-to-cart-home { 
-            padding: 7px 15px; 
-            width: auto; 
+            padding: 3px 8px; 
+            width: 25px;
             height: auto; 
             border-radius: 6px; 
-            font-size: 13px;
+            font-size: 10px;
             font-weight: 600;
         }
         /* General Button Style (Modern & Keren - TIDAK OVER) */
@@ -63,7 +63,23 @@
         /* ========================================================= */
         /* 2. Layout & Header & Dynamic Greeting (NEW/MODIFIED for Stylish Centering) */
         /* ========================================================= */
-        header {
+        /* --- NEW CSS for Point 1: Galeri/Favorit Header Compact --- */
+        .home-section-header {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-top: 5px; 
+            margin-bottom: 10px;
+        }
+        .home-section-header h2 {
+            margin: 5px 0 10px; 
+            font-size: 16px; /* Lebih kecil di mobile */
+        }
+        .home-section-header .favorite-filter-btn {
+            padding: 5px 10px; /* Lebih kecil */
+            font-size: 12px;
+        }
+        .header {
             background: var(--bg-card);
             /* Tambahkan padding vertikal (misal: 18px) agar ada ruang yang cukup */
             padding: 18px 0; 
@@ -234,15 +250,15 @@
         }
 
         .category-icon { 
-            width: 65px; height: 65px; 
+            width: 50px; height: 50px; 
             background: #ffffff; /* Putih bersih */
             border-radius: 50%; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            font-size: 28px; /* Lebih besar */
+            font-size: 24px; /* Lebih besar */
             color: var(--primary-color); /* Warna Primary */
-            margin-bottom: 5px; 
+            margin-bottom: 3px; 
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
             transition: all 0.3s ease; 
             border: 2px solid #eee; /* Sedikit border tipis */
@@ -257,7 +273,7 @@
         }
         
         .category-item span { 
-            font-size: 12px; font-weight: 600; 
+            font-size: 10px; font-weight: 600; 
             color: #555; 
         }
         /* --- NEW FAVORITE STYLES --- */
@@ -320,20 +336,20 @@
         /* Menu Item Detail Favorite Icon */
         .menu-item-detail { position: relative; }
         .menu-item-detail .favorite-icon-btn {
-            top: 10px; 
+            top: 5px; 
             bottom: auto; 
-            right: 10px;
-            width: 35px;
-            height: 35px;
-            font-size: 16px;
+            right: 5px;
+            width: 25px;
+            height: 25px;
+            font-size: 12px;
         }
         /* Filter button style */
         .favorite-filter-btn {
             background: white;
             border: 1px solid #ddd;
             border-radius: 8px;
-            padding: 8px 15px;
-            font-size: 14px;
+            padding: 5px 10px !important;
+            font-size: 12px !important;
             font-weight: 600;
             color: #777;
             cursor: pointer;
@@ -348,20 +364,21 @@
         }
         /* TATA LETAK MENU UTAMA: 2 KOLOM */
         .menu-list-home { 
-            display: flex; /* Change to flex for horizontal scroll */
-            overflow-x: auto; /* Enable horizontal scroll */
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr); 
+            overflow-x: hidden !important;
             padding-bottom: 15px; /* Add padding for scrollbar visibility */
-            gap: 15px; 
+            gap: 10px; 
             margin-top: 15px; 
             -webkit-overflow-scrolling: touch; 
         }
         .menu-list-home::-webkit-scrollbar { display: none; } /* Hide scrollbar for neatness */
         
         .menu-card-home {
-            flex-shrink: 0; /* Important for horizontal scroll */
-            width: 180px; /* Fixed width for better appearance in horizontal scroll */
+            width: auto !important; /* Fixed width for better appearance in horizontal scroll */
+            height: auto;
             background: var(--bg-card); 
-            border-radius: var(--radius); 
+            border-radius: 8px; 
             overflow: hidden; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
             display: flex; 
@@ -374,17 +391,17 @@
         }
         .menu-card-home .menu-img { 
             width: 100%; 
-            height: 140px; /* Slightly taller image */
+            height: 120px; /* Slightly taller image */
             flex-shrink: 0; 
             object-fit: cover; 
-            border-radius: var(--radius) var(--radius) 0 0; 
+            border-radius: 8px 8px 0 0;
             margin-right: 0; 
         }
         .menu-card-home .menu-info-home { 
-            padding: 10px; /* Mengembalikan padding ke info menu */
+            padding: 8px; /* Mengembalikan padding ke info menu */
         }
         .menu-info-home h3 { 
-            font-size: 14px; 
+            font-size: 13px; 
             margin-bottom: 3px; 
             color: var(--text-color);
             white-space: nowrap; 
@@ -452,12 +469,7 @@
             color: var(--primary-color);
             line-height: 1;
         }
-        .add-to-cart-home { 
-            padding: 5px 10px; 
-            height: 30px; 
-            font-size: 11px; 
-            font-weight: 600;
-        }
+
 
         @media (min-width: 599px) {
             .menu-list-home {
@@ -493,7 +505,7 @@
             .cart-control-group { height: 25px; }
             .control-btn-menu { padding: 0 6px; font-size: 12px; }
             .quantity-display { font-size: 11px; min-width: 20px; }
-            .add-to-cart-home { padding: 7px 15px; font-size: 13px; height: 40px; }
+            .add-to-cart-home { padding: 3px 8px; font-size: 10px; height: 25px; }
             .favorite-icon-btn {
                 width: 20px !important; 
                 height: 20px !important;
@@ -560,7 +572,7 @@
             box-shadow: var(--shadow-soft); margin-top: -35px; position: relative; z-index: 5;
             margin-bottom: 20px;
         }
-        .detail-name { font-size: 24px; margin-bottom: 5px; color: var(--primary-color); }
+        .detail-name { font-size: 22px; margin-bottom: 5px; color: var(--primary-color); }
         .status-badge { display: inline-block; padding: 4px 10px; border-radius: 5px; font-size: 12px; font-weight: 700; margin-top: 8px;}
         .status-open { background-color: #e6ffed; color: var(--secondary-color); }
         .status-closed { background-color: #ffe6e6; color: var(--price-color); } /* UPDATED COLOR */
@@ -569,23 +581,26 @@
 
         /* Detail Kedai Menu List */
         .section-title { font-size: 18px; margin-top: 25px; margin-bottom: 15px; color: #555; }
-        .menu-list-detail { display: grid; gap: 15px; }
+        .menu-list-detail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .menu-item-detail { 
-            display: flex; background: var(--bg-card); border-radius: 12px; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 15px; align-items: center; 
+            display: flex; background: var(--bg-card); border-radius: 8px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); flex-direction: column; padding: 0; align-items: stretch;
         }
-        .menu-img-detail { width: 80px; height: 80px; flex-shrink: 0; border-radius: 8px; object-fit: cover; margin-right: 15px; }
-        .menu-details-detail { flex-grow: 1; }
+        .menu-img-detail { width: 100px; height: 100px; flex-shrink: 0; border-radius: 8px 8px 0 0; object-fit: cover; margin-right: 0px; }
+        .menu-details-detail { flex-grow: 1;padding: 8px; }
         .menu-price-detail { font-size: 15px; color: var(--price-color); font-weight: 800; margin-bottom: 3px; } /* UPDATED COLOR */
         .menu-category-text-detail { font-size: 12px; color: var(--primary-color); font-weight: 600; }
         
         /* Dynamic Cart Control Group (Detail Menu List - Larger) */
         .add-to-cart-btn-detail { /* Use this class for + button when cart is 0 */
-            background: var(--primary-color); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 18px; flex-shrink: 0;}
+            background: var(--primary-color); color: white; border: none; border-radius: 6px; width: 25px; height: 25px; font-size: 14px; flex-shrink: 0;
+            align-self: flex-end;margin: 0 8px 8px;
+        }
         
         .menu-item-detail .cart-control-group {
-            height: 40px; 
-            font-size: 16px;
+            height: 25px; /* KECILKAN: Dari 40px menjadi 25px */
+            font-size: 12px;
+            margin: 0 8px 8px;
         }
         .menu-item-detail .control-btn-menu {
             padding: 0 12px;
@@ -764,9 +779,9 @@
             cursor: grab;
         }
 
-        .gallery-viewer-header {
+        .gallery-viewer-header #galleryViewerKedaiName {
             background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent) !important;
-            padding: 15px; 
+            padding: 0 5px;font-size: 14px !important; 
         }
 
         /* Styling for the close/back button in viewer */
@@ -884,11 +899,11 @@
     <main>
         <div class="content-wrapper">
             <section id="menuListView" class="section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px; margin-bottom: 10px;">
-                  <h2 style="margin: 5px 0 10px; font-size: 18px;"><i class="fas fa-camera-retro" style="color: var(--primary-color);"></i> Galeri Cerita Kedai</h2>
-                  <button id="toggleFavoriteFilter" class="favorite-filter-btn" onclick="toggleFavoriteFilter()" style="margin: 0;">
-                      <i class="far fa-heart icon-small"></i> Tampilkan Favorit
-                  </button>
+                <div class="home-section-header">
+                    <h2><i class="fas fa-camera-retro" style="color: var(--primary-color);"></i> Galeri Cerita Kedai</h2>
+                    <button id="toggleFavoriteFilter" class="favorite-filter-btn" onclick="toggleFavoriteFilter()">
+                        <i class="far fa-heart icon-small"></i> Tampilkan Favorit
+                    </button>
                 </div>
                 <div class="gallery-story-bar" id="galleryStoryBarContainer">
                     <p style="text-align: center; color: #999; padding: 10px 15px; width: 100%;">Memuat galeri cerita...</p>
@@ -969,7 +984,7 @@
 
     <div id="galleryViewerModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; justify-content: center; align-items: center; padding: 0; z-index: 4000;">
         <div class="gallery-viewer-content" id="galleryViewerContent" style="background: none; max-width: 100%; height: 100%; padding: 0; position: relative;">
-            <div class="gallery-viewer-header" style="position: absolute; top: 0; left: 0; right: 0; z-index: 10; color: white; font-weight: 600; font-size: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <div class="gallery-viewer-header" style="position: absolute; top: 0; left: 0; right: 0; color: white; display: flex; justify-content: space-between; align-items: center; z-index: 10;">
                 <span id="galleryViewerTitle">Galeri Kedai</span>
                 <span class="gallery-viewer-counter" id="galleryCounter">1/1</span>
                 <span class="gallery-viewer-close" onclick="closeModal('galleryViewerModal')">&times;</span>
