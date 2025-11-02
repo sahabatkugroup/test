@@ -59,7 +59,47 @@
         .btn-whatsapp { background: #25D366; color: white; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4); }
         .btn-modern:active { transform: translateY(1px); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 
-
+        /* L40: 1. Global & Theme Variables */
+        /* ========================================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            /* ... existing variables ... */
+        }
+        /* NEW: Variabel Dark Mode */
+        [data-theme="dark"] {
+            --primary-color: #38b6ff;
+            --secondary-color: #69f0ae;
+            --price-color: #ff9a7c; 
+            --text-color: #f0f0f0; 
+            --bg-light: #121212; 
+            --bg-card: #1e1e1e; 
+            --shadow-soft: 0 8px 25px rgba(0,0,0,0.3); 
+        }
+        
+        /* L100: NEW CSS for Theme Toggle Button */
+        .theme-toggle-btn {
+            position: absolute; 
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-card);
+            color: var(--text-color);
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 101; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        [data-theme="dark"] .theme-toggle-btn {
+            border-color: #333;
+        }
         /* ========================================================= */
         /* 2. Layout & Header & Dynamic Greeting (NEW/MODIFIED for Stylish Centering) */
         /* ========================================================= */
@@ -200,9 +240,9 @@
         /* Search Bar */
         .search-container { margin: 15px 0; }
         .search-container input {
-            width: 100%; padding: 12px 15px; border: 1px solid #eee; border-radius: 10px;
+            width: 100%; padding: 10px 15px; border: 1px solid #eee; border-radius: 10px;
             font-family: 'Poppins', sans-serif; background: white;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);font-size: 13px;
         }
 
         /* ========================================================= */
@@ -232,12 +272,16 @@
             white-space: normal; 
             overflow: hidden; 
             line-height: 1.1;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; 
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
         }
 
         /* ========================================================= */
         /* 4. Menu List & Cart Control (Home) */
         /* ========================================================= */
-        .category-bar { display: flex; overflow-x: auto; padding: 5px 0 20px; gap: 15px; -webkit-overflow-scrolling: touch; }
+        .category-bar { display: flex; overflow-x: auto; padding: 5px 0 15px; gap: 10px; -webkit-overflow-scrolling: touch; }
         .category-bar::-webkit-scrollbar { display: none; }
         /* MODIFIKASI STYLING CATEGORY BAR UNTUK TAMPILAN LEBIH KEREN */
         .category-item { 
@@ -401,22 +445,22 @@
             padding: 8px; /* Mengembalikan padding ke info menu */
         }
         .menu-info-home h3 { 
-            font-size: 13px; 
-            margin-bottom: 3px; 
+            font-size: 12px; 
+            margin-bottom: 2px; 
             color: var(--text-color);
             white-space: nowrap; 
             overflow: hidden; 
             text-overflow: ellipsis; 
         }
         .menu-info-home .menu-category-tag { 
-            font-size: 10px; 
+            font-size: 9px; 
             color: var(--secondary-color); 
             font-weight: 600; 
         }
         .menu-info-home .kedai-link {
-             font-size: 10px; 
+             font-size: 8px; 
              color: #777; 
-             margin-top: 5px;
+             margin-top: 2px;
              white-space: nowrap; 
              overflow: hidden; 
              text-overflow: ellipsis;
@@ -429,11 +473,22 @@
             min-height: 30px;
         }
         .menu-info-home p.price { 
-            font-size: 13px; 
+            font-size: 12px; 
             color: var(--price-color); /* UPDATED COLOR */
             font-weight: 800; 
         }
-        
+        /* L255: NEW CSS for Category Full Toggle (Request #6) */
+        .category-full-toggle {
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--primary-color);
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .menu-category-tag, .menu-category-text-detail {
+            line-height: 1.2;
+            min-height: 1.2em; 
+        }        
         /* Dynamic Cart Control Group (Home Menu List) */
         .cart-control-group {
             display: flex;
@@ -483,21 +538,21 @@
             }
             .menu-card-home {
                 width: auto;!important /* Hapus lebar tetap */
-                height: 140px; 
+                height: 120px; 
                 padding: 0;
                 border-radius: 5px; 
                 box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             }
             .menu-card-home .menu-img { 
-                height: 100px; 
+                height: 80px; 
                 border-radius: 5px 5px 0 0;
             }
             .menu-info-home {
-                padding: 3px; /* Padding info lebih kecil */
+                padding: 2px; /* Padding info lebih kecil */
                 border-radius: 5px 5px 0 0;
             }          
             .menu-info-home h3 { font-size: 8px; }
-            .menu-info-home p.price { font-size: 12px; }
+            .menu-info-home p.price { font-size: 10px; }
             .menu-info-home .price-and-action {
                 display: none;
             }
@@ -547,17 +602,22 @@
             object-fit: cover; 
         }
         .kedai-info-bottom { padding: 8px; }
-        .kedai-info-bottom h3 { font-size: 13px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .kedai-info-bottom h3 { font-size: 12px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .kedai-status-tag { 
-            display: inline-block; padding: 3px 8px; border-radius: 5px; font-size: 9px; font-weight: 700; 
-            margin-top: 5px; 
+            display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 8px; font-weight: 700; 
+            margin-top: 3px; 
         }
         /* Open/Closed color scheme */
         .kedai-card-bottom.open .kedai-status-tag { background-color: #e6ffed; color: var(--secondary-color); }
         .kedai-card-bottom.closed .kedai-status-tag { background-color: #ffe6e6; color: var(--price-color); } /* UPDATED COLOR */
         .menu-count-bottom { font-size: 11px; color: #555; }
 
-
+        .kedai-info-details {
+            font-size: 11px; /* Dikecilkan dari 12px inline style */
+            color: #777; 
+            margin-top: 5px; 
+            margin-bottom: 5px;
+        }
         /* ========================================================= */
         /* 6. Detail Kedai & Menu List di Detail */
         /* ========================================================= */
@@ -777,6 +837,7 @@
             height: auto;
             object-fit: contain; 
             cursor: grab;
+            touch-action: none;
         }
 
         .gallery-viewer-header #galleryViewerKedaiName {
@@ -829,23 +890,23 @@
             z-index: 10000;
             background-color: #333; /* Warna latar gelap */
             color: white;
-            padding: 10px 15px; /* Padding lebih kecil */
-            border-radius: 8px;
+            padding: 8px 12px; /* Padding lebih kecil */
+            border-radius: 6px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             text-align: left;
-            max-width: 300px; /* Batasi lebar */
+            max-width: 250px; /* Batasi lebar */
             opacity: 0; 
             transition: opacity 0.5s ease-in-out; 
             visibility: hidden;
-            font-size: 14px; /* Ukuran teks lebih kecil */
+            font-size: 13px; /* Ukuran teks lebih kecil */
         }
         #tempNotification.show {
             opacity: 1;
             visibility: visible;
         }
         #tempNotification p {
-            margin-bottom: 5px;
-        }
+            margin-bottom: 3px;
+            font-size: 12px;        }
         #tempNotification a {
             color: var(--primary-color, #00CAFF); 
             text-decoration: underline; /* Tautan dijadikan underline saja */
@@ -854,6 +915,9 @@
             margin-top: 0;
             padding: 0;
             border: none;
+        }
+        #tempNotification strong {
+            font-size: 13px;
         }
       /* Styling untuk Tombol Close */
       .close-btn {
@@ -1067,8 +1131,8 @@
           measurementId: "G-C66WQ6FHX1"
         };
         
-        const DEFAULT_RESTAURANT_IMAGE = 'https://via.placeholder.com/600x400?text=SahabatKu+Kedai';
-        const DEFAULT_MENU_IMAGE = 'https://via.placeholder.com/400x300?text=SahabatKu+Menu';
+        const DEFAULT_RESTAURANT_IMAGE = 'https://res.cloudinary.com/sahabatkugroup/image/upload/v1762000455/tgaeu7hv7jmkhcqazbip.png';
+        const DEFAULT_MENU_IMAGE = 'https://res.cloudinary.com/sahabatkugroup/image/upload/v1762108703/ywifsbuhnvwlxgtvriwg.jpg';
         const WHATSAPP_ADMIN_NUMBER = '6282219313326'; // GANTI DENGAN NOMOR WHATSAPP ADMIN
 
         let geocoder;
