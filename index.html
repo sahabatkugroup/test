@@ -1289,7 +1289,7 @@
                 <h2 style="margin: 30px 0 15px; font-size: 20px; border-top: 1px solid #eee; padding-top: 20px;"><i class="fas fa-store" style="color: #007bff;"></i> Rekomendasi Kami </h2>
                 
                 <div class="search-container" style="margin-top: -5px; margin-bottom: 15px;">
-                    <input type="text" id="searchKedai" placeholder="Cari nama kedai..." onkeyup="renderRestaurantListAtBottom()">
+                    <input type="text" id="searchKedai" placeholder="Telusuri Kedai Rekomendasi..." onkeyup="renderRestaurantListAtBottom()">
                 </div>
                 
                 <div class="kedai-list-bottom" id="kedaiItemsListAtBottom">
@@ -1881,7 +1881,7 @@
                 .sort((a, b) => a.name.localeCompare(b.name));
 
             if (searchTerm) {
-                restaurantList = restaurantList.filter(r => r.name.toLowerCase().includes(searchTerm) || r.address.toLowerCase().includes(searchTerm));
+                restaurantList = restaurantList.filter(r => r.name.toLowerCase().includes(searchTerm));
             }
             if (isFavoriteFilterActive) {
                 const favKedaiIds = getFavoriteKedaiIds();
