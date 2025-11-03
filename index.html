@@ -411,19 +411,24 @@
             box-shadow: 0 4px 10px rgba(255, 56, 56, 0.4);
         }
         /* TATA LETAK MENU UTAMA: 2 KOLOM */
+        /* ========================================================= */
+        /* 🔧 PERBAIKAN TAMPILAN CART CONTROL di MENU LIST HOME 🔧 */
+        /* ========================================================= */
+        
+        /* Kartu menu di home */
         .menu-list-home { 
             display: grid !important;
-            grid-template-columns: repeat(2, 1fr); 
-            overflow-x: hidden !important;
-            padding-bottom: 15px; /* Add padding for scrollbar visibility */
+            grid-template-columns: repeat(3, 1fr); 
             gap: 10px; 
             margin-top: 15px; 
+            overflow-x: hidden !important;
+            padding-bottom: 15px;
             -webkit-overflow-scrolling: touch; 
         }
-        .menu-list-home::-webkit-scrollbar { display: none; } /* Hide scrollbar for neatness */
+        .menu-list-home::-webkit-scrollbar { display: none; }
         
         .menu-card-home {
-            width: auto !important; /* Fixed width for better appearance in horizontal scroll */
+            width: auto !important;
             height: auto;
             background: var(--bg-card); 
             border-radius: 8px; 
@@ -431,25 +436,24 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
             display: flex; 
             flex-direction: column; 
-            padding: 0; /* Pastikan padding 0 agar icon favorit berada di tepi */
+            padding: 0;
             position: relative;
             cursor: pointer;
+            transition: transform 0.15s ease;
         }
         .menu-card-home:active { transform: scale(0.98); }
-        }
+        
         .menu-card-home .menu-img { 
             width: 100%; 
-            height: 120px; /* Slightly taller image */
-            flex-shrink: 0; 
+            height: 120px; 
             object-fit: cover; 
             border-radius: 8px 8px 0 0;
-            margin-right: 0; 
         }
         .menu-card-home .menu-info-home { 
-            padding: 8px; /* Mengembalikan padding ke info menu */
+            padding: 8px;
         }
         .menu-info-home h3 { 
-            font-size: 12px; 
+            font-size: 15px; 
             margin-bottom: 2px; 
             color: var(--text-color);
             white-space: nowrap; 
@@ -465,138 +469,205 @@
             overflow: hidden;
             text-overflow: ellipsis;
             line-height: 1.1;
-            max-height: 1.1em;
-        }
-        .menu-info-home .kedai-link {
-             font-size: 9px; 
-             color: #777; 
-             margin-top: 4px;
-             white-space: nowrap; 
-             overflow: hidden; 
-             text-overflow: ellipsis;
-        }
-        .menu-info-home .price-and-action { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            margin-top: 8px; 
-            min-height: 30px;
         }
         .menu-info-home p.price { 
-            font-size: 11px; 
-            color: var(--price-color); /* UPDATED COLOR */
+            font-size: 15px; 
+            color: var(--price-color);
             font-weight: 800; 
         }
-        /* L255: NEW CSS for Category Full Toggle (Request #6) */
-        .category-full-toggle {
-            font-size: 9px;
-            font-weight: 700;
-            color: var(--primary-color);
-            cursor: pointer;
-            margin-left: 5px;
-        }
-        .menu-category-tag, .menu-category-text-detail {
-            line-height: 1.2;
-            min-height: 1.2em; 
-        }        
-        /* Dynamic Cart Control Group (Home Menu List) */
+        
+        /* ========================================================= */
+        /* 🎯 CART CONTROL GROUP — Disamakan dengan Tombol +Tambah */
+        /* ========================================================= */
+        
+        /* ========================================================= */
+        /* 🔧 PERBAIKAN TOMBOL +TAMBAH DAN + / - (FINAL RESPONSIF) */
+        /* ========================================================= */
+        
+        /* Wrapper kontrol kuantitas */
         .cart-control-group {
             display: flex;
             align-items: center;
-            border: 1px solid var(--primary-color);
-            border-radius: 4px;
-            overflow: hidden;
-            height: 30px;
-            flex-shrink: 0;
+            justify-content: center;
+            border: 1.5px solid var(--primary-color);
+            border-radius: 6px;
+            background: var(--bg-card);
+            height: 36px;
+            padding: 0 6px;
+            box-sizing: border-box;
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.25s ease;
         }
+        
+        /* Tombol tambah/kurang */
         .control-btn-menu {
             border: none;
-            background: var(--primary-color);
-            color: white;
-            padding: 0 8px;
-            height: 100%;
-            cursor: pointer;
-            transition: background 0.2s;
-            font-size: 14px;
-            line-height: 1;
+            border-radius: 4px;
+            width: 32px;
+            height: 28px;
+            font-size: 16px;
+            font-weight: 700;
             display: flex;
             align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
-        .control-minus-menu { background: var(--price-color); } /* UPDATED COLOR */
+        .control-minus-menu { background: var(--price-color); }
         .control-plus-menu { background: var(--secondary-color); }
-
+        
         .quantity-display {
-            padding: 0 8px;
-            font-weight: 700;
             font-size: 14px;
-            min-width: 25px;
+            font-weight: 700;
+            min-width: 28px;
             text-align: center;
             color: var(--primary-color);
-            line-height: 1;
+            margin: 0 6px;
         }
-
-
-        @media (min-width: 598px) {
-            .menu-list-home {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr); /* Grid 4 Kolom Responsif */
-                gap: 10px; /* Jarak antar kartu lebih rapat */
-                overflow-x: hidden; /* Matikan scroll horizontal */
-                padding: 0; 
-                margin-left: 0; /* Pastikan margin normal */
-                margin-right: 0;
-            }
-            .menu-card-home {
-                width: auto;!important /* Hapus lebar tetap */
-                height: 80px; 
-                padding: 0;
-                border-radius: 5px; 
-                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            }
-            .menu-card-home .menu-img { 
-                width: 100%;
-                height: 100px; 
-                object-fit: cover;
-                border-radius: 5px 5px 0 0;
-            }
-            .menu-card-home .image-wrapper {
-                width: 100%;
-                aspect-ratio: 1 / 1; /* Ini adalah cara modern untuk memastikan rasio 1:1 */
-                overflow: hidden;
-            }
-            .menu-img {
-                width: 100%;
-                height: 100px; /* **Tentukan tinggi gambar yang konsisten** */
-                object-fit: cover; /* Penting agar gambar tidak terdistorsi */
-                border-radius: 8px 8px 0 0;
-            }
-            .menu-info-home {
-                padding: 2px; /* Padding info lebih kecil */
-                border-radius: 5px 5px 0 0;
-            }          
-            .menu-info-home p.price { font-size: 11px; }
-            .menu-info-home .price-and-action {
-                display: none;
-            }
-            .menu-card-home:active { transform: none; }
-            .cart-control-group { height: 30px; }
-            .control-btn-menu { padding: 0 6px; font-size: 12px; }
-            .quantity-display { font-size: 11px; min-width: 20px; }
-            .favorite-icon-btn {
-                width: 20px !important; 
-                height: 20px !important;
-                font-size: 10px !important;
-                top: 3px !important;
-                right: 3px !important;
-            }    
-        }
-         
+        
         /* ========================================================= */
+        /* Tombol +Tambah — sama tinggi dan animasi transisi halus */
+        /* ========================================================= */
+        .add-to-cart-btn-detail {
+            height: 36px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .add-to-cart-btn-detail:hover {
+            background: #00b2e6;
+        }
+        
+        /* ========================================================= */
+        /* ✨ ANIMASI TRANSISI TOMBOL +TAMBAH <-> KONTROL + / - */
+        /* ========================================================= */
+        .add-to-cart-btn-detail,
+        .cart-control-group {
+            transition: all 0.3s ease-in-out;
+        }
+        .add-to-cart-btn-detail.fade-out {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        .cart-control-group.fade-in {
+            opacity: 1;
+            transform: scale(1);
+        }
+        /* ========================================================= */
+        /* 🔧 SINKRONISASI UKURAN TOMBOL +TAMBAH DAN + / - */
+        /* ========================================================= */
+        
+        /* Untuk tombol +Tambah di Home & Detail */
+        .add-to-cart-home,
+        .add-to-cart-btn-detail {
+          height: 28px !important;
+          border-radius: 6px !important;
+          font-size: 12px !important;
+          font-weight: 700 !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          padding: 0 12px !important;
+          background: var(--primary-color) !important;
+          color: #fff !important;
+          border: none !important;
+          cursor: pointer !important;
+          transition: all 0.2s ease !important;
+        }
+        
+        /* Untuk grup + / - */
+        .cart-control-group {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          height: 36px !important; /* samakan tinggi */
+          border-radius: 6px !important;
+          border: 1.5px solid var(--primary-color) !important;
+          background: var(--bg-card) !important;
+          padding: 0 6px !important;
+          box-sizing: border-box !important;
+        }
+        
+        /* Tombol + dan - */
+        .control-btn-menu {
+          width: 25px !important;
+          height: 25px !important;
+          border: none !important;
+          border-radius: 4px !important;
+          font-size: 16px !important;
+          font-weight: 700 !important;
+          color: #fff !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          cursor: pointer !important;
+          transition: background 0.25s ease !important;
+        }
+        .control-minus-menu { background: var(--price-color) !important; }
+        .control-plus-menu { background: var(--secondary-color) !important; }
+        
+        /* Angka di tengah */
+        .quantity-display {
+          font-size: 14px !important;
+          font-weight: 700 !important;
+          min-width: 28px !important;
+          text-align: center !important;
+          color: var(--primary-color) !important;
+          margin: 0 6px !important;
+        }
+        
+        /* Responsif biar rapi di HP kecil */
+        @media (max-width: 480px) {
+          .add-to-cart-home,
+          .add-to-cart-btn-detail,
+          .cart-control-group {
+            height: 26px !important;
+          }
+          .control-btn-menu {
+            width: 28px !important;
+            height: 26px !important;
+            font-size: 14px !important;
+          }
+          .quantity-display {
+            font-size: 13px !important;
+          }
+        }        
+        /* ========================================================= */
+        /* 📱 RESPONSIF UNTUK LAYAR KECIL */
+        /* ========================================================= */
+        @media (max-width: 480px) {
+            .add-to-cart-btn-detail,
+            .cart-control-group {
+                height: 32px; /* sedikit lebih kecil di layar kecil */
+                border-radius: 5px;
+            }
+            .control-btn-menu {
+                width: 28px;
+                height: 26px;
+                font-size: 14px;
+            }
+            .quantity-display {
+                font-size: 13px;
+                min-width: 24px;
+                margin: 0 4px;
+            }
+        }        /* ========================================================= */
         /* 5. Kedai List (BUKA Saja) */
         /* ========================================================= */
         .kedai-list-bottom {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Grid 2 Kolom Responsif */
+            grid-template-columns: repeat(3, 1fr); /* Grid 2 Kolom Responsif */
             gap: 10px; /* Jarak antar kartu lebih rapat */
             overflow-x: hidden; /* Matikan scroll horizontal */
             padding: 0;
@@ -633,7 +704,7 @@
             text-overflow: ellipsis;
                   
         }
-        .kedai-info-bottom h3 { font-size: 11px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .kedai-info-bottom h3 { font-size: 12px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .kedai-status-tag { 
             display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: 700; 
             margin-top: 3px; 
@@ -671,34 +742,109 @@
         .order-direct-btn { padding: 15px 25px; border-radius: 12px; width: 100%; font-size: 16px; margin-top: 15px; }
 
         /* Detail Kedai Menu List */
-        .section-title { font-size: 18px; margin-top: 25px; margin-bottom: 15px; color: #555; }
-        .menu-list-detail { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .menu-item-detail { 
-            display: flex; background: var(--bg-card); border-radius: 8px; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05); flex-direction: column; padding: 0; align-items: stretch;
+        .section-title { 
+            font-size: 20px; 
+            margin-top: 25px; 
+            margin-bottom: 15px; 
+            color: #555; 
         }
-        .menu-img-detail { width: 100px; height: 100px; flex-shrink: 0; border-radius: 8px 8px 0 0; object-fit: cover; margin-right: 15px; }
-        .menu-details-detail { flex-grow: 1;padding: 8px; }
-        .menu-price-detail { font-size: 15px; color: var(--price-color); font-weight: 800; margin-bottom: 3px; } /* UPDATED COLOR */
-        .menu-category-text-detail { font-size: 12px; color: var(--primary-color); font-weight: 600; }
+        .menu-list-detail { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 10px; 
+        }
+        .menu-item-detail { 
+            /* PENTING: Atur tinggi 100% dan Flexbox Column */
+            height: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            
+            background: var(--bg-card); 
+            border-radius: 8px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
+            padding: 0; 
+            align-items: stretch;
+        }
+        .menu-img-detail { 
+            /* Perbaikan: Ganti width menjadi tinggi dan gunakan 100% width */
+            width: 100%; /* Gambar ambil lebar penuh kontainer */
+            height: 100px; /* Tinggi gambar tetap 100px */
+            flex-shrink: 0; 
+            border-radius: 8px 8px 0 0; 
+            object-fit: cover; 
+            margin-right: 0; /* Tidak perlu margin kanan karena layout vertikal */
+        }
         
+        /* KONTEN DETAIL: Perbaikan Utama untuk Perataan */
+        .menu-details-detail { 
+            flex-grow: 1; /* Ambil semua sisa ruang */
+            padding: 8px; 
+            display: flex; /* Aktifkan Flexbox */
+            flex-direction: column; /* Susun konten ke bawah */
+            justify-content: space-between; /* PENTING: Mendorong elemen terakhir (price/action) ke bawah */
+        }
+        .menu-price-detail { 
+            font-size: 15px; 
+            color: var(--price-color); 
+            font-weight: 800; 
+            margin-bottom: 0; /* Hilangkan margin-bottom */
+        } /* UPDATED COLOR */
+        .menu-category-text-detail {
+          font-size: 12px; 
+          color: var(--primary-color); 
+          font-weight: 600; 
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          line-height: 1.2;
+          max-height: 2.4em;
+          white-space: normal;
+          transition: max-height 0.3s ease;
+        }
+
+        
+        /* ========================================================= */
+        /* Penambahan Wrapper untuk Harga dan Kontrol Aksi (Wajib di HTML Anda) */
+        /* ========================================================= */
+        
+        .price-action-wrapper {
+            display: flex;
+            justify-content: space-between; /* Harga di kiri, kontrol di kanan */
+            align-items: center; /* Sejajarkan vertikal */
+            margin-top: auto; /* Mendorong ke dasar container */
+            padding-top: 5px; /* Sedikit padding di atas untuk pemisah visual */
+        }
+         
         /* Dynamic Cart Control Group (Detail Menu List - Larger) */
         .add-to-cart-btn-detail { /* Use this class for + button when cart is 0 */
-            background: var(--primary-color); color: white; border: none; border-radius: 4px; width: 28px; height: 28px; font-size: 16px; flex-shrink: 0;
-            align-self: flex-end;margin: 0 8px 8px;
+            background: var(--primary-color); 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            width: 28px; 
+            height: 28px; 
+            font-size: 16px; 
+            flex-shrink: 0;
+            /* Perbaikan: Hapus align-self dan margin yang mengganggu */
+            margin: 0; 
+            align-self: unset;
         }
-        
+         
         .menu-item-detail .cart-control-group {
-            height: 30px; /* KECILKAN: Dari 40px menjadi 25px */
+            height: 30px; 
             font-size: 12px;
-            margin: 0 8px 8px;
+            /* Perbaikan: Hapus margin yang mengganggu */
+            margin: 0; 
+            flex-shrink: 0;
         }
         .menu-item-detail .control-btn-menu {
-            padding: 0 12px;
+            padding: 10px;
         }
         .menu-item-detail .quantity-display {
-            font-size: 16px;
-            min-width: 30px;
+            font-size: 12px;
+            min-width: 20px; /* Diperkecil agar lebih ringkas */
+            text-align: center;
         }
 
         /* Gallery Carousel (Untuk Detail Kedai & Modal Preview) */
@@ -910,6 +1056,70 @@
         }
         .floating-admin-wa:hover {
             transform: scale(1.05);
+        }
+        /* ===== PERBAIKAN PENUH UNTUK TOMBOL +/- ===== */
+        .cart-control-group {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: 1.5px solid var(--primary-color) !important;
+            border-radius: 6px !important;
+            height: 36px !important;
+            padding: 0 6px !important; /* 🔹 beri ruang di kiri-kanan */
+            background: var(--bg-card) !important;
+            box-sizing: border-box !important;
+        }
+        
+        .control-btn-menu {
+            width: 32px !important;
+            height: 28px !important;
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            border: none !important;
+            border-radius: 4px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            transition: background 0.2s ease !important;
+        }
+        
+        .control-minus-menu {
+            background: var(--price-color) !important;
+        }
+        
+        .control-plus-menu {
+            background: var(--secondary-color) !important;
+        }
+        
+        .quantity-display {
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            min-width: 28px !important;
+            text-align: center !important;
+            color: var(--primary-color) !important;
+            margin: 0 6px !important; /* 🔹 jarak aman antar tombol */
+            line-height: 1 !important;
+        }
+        
+        /* Samakan tinggi tombol “+ Tambah” agar transisi tidak loncat */
+        .add-to-cart-btn-detail {
+            height: 36px !important;
+            border-radius: 6px !important;
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: var(--primary-color) !important;
+            color: white !important;
+            border: none !important;
+            width: 100% !important;
+            cursor: pointer !important;
+            transition: background 0.2s ease !important;
+        }
+        .add-to-cart-btn-detail:hover {
+            background: #00b2e6 !important;
         }
         /* ========================================================= */
         /* 9. Notifikasi Sementara (PERUBAHAN untuk Kanan Atas) */
@@ -1645,7 +1855,7 @@
                     <div class="kedai-info-bottom">
                         <h3>${r.name}</h3>
                         <span class="kedai-status-tag">${status}</span>
-                        <p style="font-size: 9px; color: #777; margin-top: 4px; margin-bottom: 4px;"><i class="icon-small fas fa-map-marker-alt"></i> ${r.address.substring(0, 40)}</p>
+                        <p style="font-size: 10px; color: #777; margin-top: 4px; margin-bottom: 4px;"><i class="icon-small fas fa-map-marker-alt"></i> ${r.address.substring(0, 40)}</p>
                         <p class="menu-count-bottom"><i class="icon-small fas fa-list"></i> ${menuCount} Menu</p>
                     </div>
                 `;
