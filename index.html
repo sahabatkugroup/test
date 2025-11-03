@@ -41,10 +41,10 @@
         .icon-small { font-size: 14px; margin-right: 5px; }
         .flex-row { display: flex; align-items: center; }
         .add-to-cart-home { 
-            padding: 3px 8px; 
-            width: 25px;
-            height: auto; 
-            border-radius: 6px; 
+            padding: 1px 4px; 
+            width: auto;
+            height: 22px;
+            border-radius: 4px;
             font-size: 10px;
             font-weight: 600;
         }
@@ -119,14 +119,18 @@
             padding: 5px 10px; /* Lebih kecil */
             font-size: 12px;
         }
-        .header {
+        header {
             background: var(--bg-card);
-            /* Tambahkan padding vertikal (misal: 18px) agar ada ruang yang cukup */
-            padding: 18px 0; 
+            padding: 20px 0; /* Padding vertikal sedikit ditingkatkan */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             position: sticky; 
             top: 0; 
             z-index: 100;
+            /* [MODIFIKASI 1: Animasi Stylish] */
+            transition: padding 0.3s ease, box-shadow 0.3s ease;  
+        }
+        .header:hover {
+            box-shadow: 0 6px 20px rgba(0, 202, 255, 0.15); /* Subtle primary color glow */
         }
         
         .header-content {
@@ -152,7 +156,7 @@
             left: 15px; 
             z-index: 10;
             top: 50%;
-            transform: translateY(-50%) translateX(-40px); 
+            transform: translateY(-50%) translateX(0) scale(1.05); 
             
             /* PENTING: Sembunyikan dan Nonaktifkan Klik */
             opacity: 0; 
@@ -163,7 +167,7 @@
         
         .back-btn.active {
             opacity: 1;
-            transform: translateY(-50%) translateX(0);
+            transform: translateY(-50%) translateX(0) scale(1.05);
             pointer-events: auto; /* Aktifkan klik saat terlihat */
         }
         .logo {
@@ -171,9 +175,7 @@
             justify-content: center; /* Center the content */
             align-items: center;
             width: 100%; /* Take full width to ensure centering works */
-            /* Tambahkan transisi untuk animasi smooth */
-            transition: transform 0.3s ease, opacity 0.3s ease; 
-        }
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;        }
         
         /* Modifikasi agar logo bergeser saat tombol kembali aktif */
         .logo.shifted {
@@ -197,7 +199,7 @@
             font-weight: 500; 
             color: #555;
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateY(-10px);
             animation: fadeInDown 0.5s forwards 0.2s;
         }
         .app-title-small {
@@ -206,17 +208,17 @@
             color: var(--primary-color); 
             line-height: 1.1;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(10px);
             animation: fadeInUp 0.5s forwards 0.4s;
         }
 
         /* NEW Stylish Animations */
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -285,7 +287,7 @@
         .category-bar::-webkit-scrollbar { display: none; }
         /* MODIFIKASI STYLING CATEGORY BAR UNTUK TAMPILAN LEBIH KEREN */
         .category-item { 
-            flex-shrink: 0; text-align: center; cursor: pointer; 
+            flex-shrink: 0; text-align: center; cursor: pointer; width: 60px;
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease; 
         }
         .category-item:hover {
@@ -294,13 +296,13 @@
         }
 
         .category-icon { 
-            width: 50px; height: 50px; 
+            width: 60px; height: 60px; 
             background: #ffffff; /* Putih bersih */
             border-radius: 50%; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            font-size: 24px; /* Lebih besar */
+            font-size: 20px; /* Lebih besar */
             color: var(--primary-color); /* Warna Primary */
             margin-bottom: 3px; 
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
@@ -445,7 +447,7 @@
             padding: 8px; /* Mengembalikan padding ke info menu */
         }
         .menu-info-home h3 { 
-            font-size: 12px; 
+            font-size: 11px; 
             margin-bottom: 2px; 
             color: var(--text-color);
             white-space: nowrap; 
@@ -456,11 +458,17 @@
             font-size: 9px; 
             color: var(--secondary-color); 
             font-weight: 600; 
+            display: block; 
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.1;
+            max-height: 1.1em;
         }
         .menu-info-home .kedai-link {
-             font-size: 8px; 
+             font-size: 9px; 
              color: #777; 
-             margin-top: 2px;
+             margin-top: 4px;
              white-space: nowrap; 
              overflow: hidden; 
              text-overflow: ellipsis;
@@ -473,7 +481,7 @@
             min-height: 30px;
         }
         .menu-info-home p.price { 
-            font-size: 12px; 
+            font-size: 11px; 
             color: var(--price-color); /* UPDATED COLOR */
             font-weight: 800; 
         }
@@ -494,20 +502,20 @@
             display: flex;
             align-items: center;
             border: 1px solid var(--primary-color);
-            border-radius: 8px;
+            border-radius: 4px;
             overflow: hidden;
-            height: 30px; 
+            height: 22px; 
             flex-shrink: 0;
         }
         .control-btn-menu {
             border: none;
             background: var(--primary-color);
             color: white;
-            padding: 0 8px;
+            padding: 0 4px;
             height: 100%;
             cursor: pointer;
             transition: background 0.2s;
-            font-size: 14px;
+            font-size: 11px;
             line-height: 1;
             display: flex;
             align-items: center;
@@ -516,21 +524,21 @@
         .control-plus-menu { background: var(--secondary-color); }
 
         .quantity-display {
-            padding: 0 10px;
+            padding: 0 6px;
             font-weight: 700;
-            font-size: 13px;
-            min-width: 25px;
+            font-size: 11px;
+            min-width: 18px;
             text-align: center;
             color: var(--primary-color);
             line-height: 1;
         }
 
 
-        @media (min-width: 599px) {
+        @media (min-width: 598px) {
             .menu-list-home {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr); /* Grid 4 Kolom Responsif */
-                gap: 5px; /* Jarak antar kartu lebih rapat */
+                gap: 10px; /* Jarak antar kartu lebih rapat */
                 overflow-x: hidden; /* Matikan scroll horizontal */
                 padding: 0; 
                 margin-left: 0; /* Pastikan margin normal */
@@ -538,21 +546,21 @@
             }
             .menu-card-home {
                 width: auto;!important /* Hapus lebar tetap */
-                height: 120px; 
+                height: 80px; 
                 padding: 0;
                 border-radius: 5px; 
                 box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             }
             .menu-card-home .menu-img { 
-                height: 80px; 
+                height: 100px; 
                 border-radius: 5px 5px 0 0;
             }
             .menu-info-home {
                 padding: 2px; /* Padding info lebih kecil */
                 border-radius: 5px 5px 0 0;
             }          
-            .menu-info-home h3 { font-size: 8px; }
-            .menu-info-home p.price { font-size: 10px; }
+            .menu-info-home h3 { font-size: 11px; }
+            .menu-info-home p.price { font-size: 11px; }
             .menu-info-home .price-and-action {
                 display: none;
             }
@@ -560,7 +568,6 @@
             .cart-control-group { height: 25px; }
             .control-btn-menu { padding: 0 6px; font-size: 12px; }
             .quantity-display { font-size: 11px; min-width: 20px; }
-            .add-to-cart-home { padding: 3px 8px; font-size: 10px; height: 25px; }
             .favorite-icon-btn {
                 width: 20px !important; 
                 height: 20px !important;
@@ -587,30 +594,41 @@
         
         .kedai-card-bottom {
             flex-shrink: 0; /* Important for horizontal scroll */
-            width: auto; /* Fixed width for better appearance in horizontal scroll */
+            width: 100%; /* Fixed width for better appearance in horizontal scroll */
             background: var(--bg-card); border-radius: 10px; overflow: hidden; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; 
             transition: transform 0.2s;
-            height: 200px; 
+            height: auto; 
             position: relative; /* Untuk posisi icon favorit */
             padding: 0;
         }
         .kedai-card-bottom:active { transform: scale(0.98); }
         .kedai-card-bottom img { 
             width: 100%; 
-            height: 90px; 
+            aspect-ratio: 1 / 1;
+            height: auto; 
             object-fit: cover; 
         }
-        .kedai-info-bottom { padding: 8px; }
-        .kedai-info-bottom h3 { font-size: 12px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .kedai-info-bottom .address-text {
+            padding: 10px;
+            font-size: 12px; /* Dikecilkan dari 12px */
+            color: #777;
+            margin-top: 4px;
+            margin-bottom: 4px;
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+                  
+        }
+        .kedai-info-bottom h3 { font-size: 11px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .kedai-status-tag { 
-            display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 8px; font-weight: 700; 
+            display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: 700; 
             margin-top: 3px; 
         }
         /* Open/Closed color scheme */
         .kedai-card-bottom.open .kedai-status-tag { background-color: #e6ffed; color: var(--secondary-color); }
         .kedai-card-bottom.closed .kedai-status-tag { background-color: #ffe6e6; color: var(--price-color); } /* UPDATED COLOR */
-        .menu-count-bottom { font-size: 11px; color: #555; }
+        .menu-count-bottom { font-size: 9px; color: #555;margin-top: 5px; }
 
         .kedai-info-details {
             font-size: 11px; /* Dikecilkan dari 12px inline style */
@@ -632,7 +650,7 @@
             box-shadow: var(--shadow-soft); margin-top: -35px; position: relative; z-index: 5;
             margin-bottom: 20px;
         }
-        .detail-name { font-size: 22px; margin-bottom: 5px; color: var(--primary-color); }
+        .detail-name { font-size: 25px; margin-bottom: 5px; color: var(--primary-color); }
         .status-badge { display: inline-block; padding: 4px 10px; border-radius: 5px; font-size: 12px; font-weight: 700; margin-top: 8px;}
         .status-open { background-color: #e6ffed; color: var(--secondary-color); }
         .status-closed { background-color: #ffe6e6; color: var(--price-color); } /* UPDATED COLOR */
@@ -653,7 +671,7 @@
         
         /* Dynamic Cart Control Group (Detail Menu List - Larger) */
         .add-to-cart-btn-detail { /* Use this class for + button when cart is 0 */
-            background: var(--primary-color); color: white; border: none; border-radius: 6px; width: 25px; height: 25px; font-size: 14px; flex-shrink: 0;
+            background: var(--primary-color); color: white; border: none; border-radius: 4px; width: 28px; height: 28px; font-size: 16px; flex-shrink: 0;
             align-self: flex-end;margin: 0 8px 8px;
         }
         
@@ -1003,7 +1021,7 @@
                 <img id="detailImage" class="detail-header-img" src="">
                 <div class="detail-profile-box">
                     <h1 id="detailName" class="detail-name"></h1>
-                    <p class="flex-row" style="font-size: 14px; color: #777;"><i class="icon-small fas fa-map-marker-alt"></i> <span id="detailAddress"></span></p>
+                    <p class="flex-row" style="font-size: 12px; color: #777;"><i class="icon-small fas fa-map-marker-alt"></i> <span id="detailAddress"></span></p>
                     <div class="status-badge" id="detailStatus"></div>
                     
                     <p class="detail-description" id="detailDescription" style="margin-top: 10px; font-size: 13px; color: #555;"></p>
@@ -1611,12 +1629,12 @@
                     <button class="favorite-icon-kedai ${isFav ? 'is-favorite fas' : 'far'}" 
                             onclick="event.stopPropagation(); toggleFavoriteKedai('${r.id}')" title="${isFav ? 'Hapus dari Favorit' : 'Tambah ke Favorit'}">
                         <i class="${isFav ? 'fas fa-heart' : 'far fa-heart'}"></i>
-                    </button>                
+                    </button>
                     <img src="${r.image || DEFAULT_RESTAURANT_IMAGE}" alt="${r.name}">
                     <div class="kedai-info-bottom">
                         <h3>${r.name}</h3>
                         <span class="kedai-status-tag">${status}</span>
-                        <p style="font-size: 12px; color: #777; margin-top: 5px; margin-bottom: 5px;"><i class="icon-small fas fa-map-marker-alt"></i> ${r.address.substring(0, 40)}</p>
+                        <p style="font-size: 9px; color: #777; margin-top: 4px; margin-bottom: 4px;"><i class="icon-small fas fa-map-marker-alt"></i> ${r.address.substring(0, 40)}</p>
                         <p class="menu-count-bottom"><i class="icon-small fas fa-list"></i> ${menuCount} Menu</p>
                     </div>
                 `;
