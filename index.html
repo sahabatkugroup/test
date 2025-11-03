@@ -1238,6 +1238,65 @@
       .close-btn:hover {
           color: white;
       }
+      /* ========================================================= */
+      /* 📱 PERBAIKAN TATA LETAK RESPONSIF (MAX-WIDTH: 600px) */
+      /* ========================================================= */
+      @media (max-width: 600px) {
+          /* --- PERBAIKAN GRID --- */
+      
+          /* 1. LIST KEDAI (Halaman Utama) */
+          .kedai-list-bottom {
+              grid-template-columns: repeat(3, 1fr) !important; /* Tampilkan 2 kolom di HP */
+              gap: 8px; /* Rapatkan sedikit jarak antar kartu */
+          }
+      
+          /* 2. MENU LIST (Halaman Utama) */
+          .menu-list-home {
+              grid-template-columns: repeat(3, 1fr) !important; /* Tampilkan 2 kolom di HP */
+          }
+          /* 3. MENU LIST (Detail Kedai) */
+          .menu-list-detail {
+              grid-template-columns: repeat(3, 1fr) !important; /* Tampilkan 2 kolom di HP */
+          }
+          /* --- PERBAIKAN TEKS & UKURAN FONT PADA KARTU --- */
+          /* Nama Kedai (Halaman Utama) */
+          .kedai-info-bottom h3 {
+              font-size: 13px; /* Kecilkan sedikit agar muat 2 kolom */
+              padding-right: 5px; /* Beri ruang di kanan */
+          }
+          
+          /* Alamat dan Menu Count (Halaman Utama) */
+          .kedai-info-bottom .address-text,
+          .menu-count-bottom {
+              font-size: 11px; /* Kecilkan agar muat */
+          }
+          
+          /* Nama Menu (Halaman Utama & Detail) */
+          .menu-info-home h3,
+          .menu-name-detail-text { /* Asumsi ini adalah kelas nama menu di detail */
+              font-size: 14px; /* Kecilkan sedikit */
+          }
+          
+          /* Harga Menu (Halaman Utama & Detail) */
+          .menu-info-home p.price,
+          .menu-price-detail {
+              font-size: 14px; /* Kecilkan sedikit */
+          }
+      
+          /* Tombol dan Kontrol (+/-) disinkronkan ke standar 32px di HP */
+          .add-to-cart-home,
+          .add-to-cart-btn-detail,
+          .cart-control-group {
+              height: 32px !important;
+          }
+          .control-btn-menu {
+              width: 28px !important;
+              height: 26px !important;
+          }
+          .quantity-display {
+              font-size: 13px !important;
+          }
+      }
     </style>
 </head>
 <body>
