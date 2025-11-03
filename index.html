@@ -122,7 +122,7 @@
         }
         header {
             background: var(--bg-card);
-            padding: 25px 0; /* Padding vertikal sedikit ditingkatkan */
+            padding: 20px 0; /* Padding vertikal sedikit ditingkatkan */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             position: sticky; 
             top: 0; 
@@ -189,8 +189,6 @@
         /* Dynamic Greeting Styles (Centered & Stylish) */
         .greeting-container {
             display: flex;
-            text-align: center;
-            width: 100%;
             flex-direction: column;
             align-items: center; /* Center the text inside the container */
             margin-left: 0; /* Remove old margin */
@@ -405,18 +403,12 @@
             cursor: pointer;
             transition: all 0.2s;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            position: absolute;
-            top: 15px;
-            right: 15px
         }
         .favorite-filter-btn.active {
             background: #ff3838;
             color: white;
             border-color: #ff3838;
             box-shadow: 0 4px 10px rgba(255, 56, 56, 0.4);
-        }
-        .icon-medium { font-size: 18px; 
-          
         }
         /* TATA LETAK MENU UTAMA: 2 KOLOM */
         .menu-list-home { 
@@ -562,12 +554,19 @@
                 box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             }
             .menu-card-home .menu-img { 
+                width: 100%;
                 height: 100px; 
+                object-fit: cover;
                 border-radius: 5px 5px 0 0;
+            }
+            .menu-card-home .image-wrapper {
+                width: 100%;
+                aspect-ratio: 1 / 1; /* Ini adalah cara modern untuk memastikan rasio 1:1 */
+                overflow: hidden;
             }
             .menu-img {
                 width: 100%;
-                height: 120px; /* **Tentukan tinggi gambar yang konsisten** */
+                height: 100px; /* **Tentukan tinggi gambar yang konsisten** */
                 object-fit: cover; /* Penting agar gambar tidak terdistorsi */
                 border-radius: 8px 8px 0 0;
             }
@@ -678,7 +677,7 @@
             display: flex; background: var(--bg-card); border-radius: 8px; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.05); flex-direction: column; padding: 0; align-items: stretch;
         }
-        .menu-img-detail { width: 100px; height: 100px; flex-shrink: 0; border-radius: 8px 8px 0 0; object-fit: cover; margin-right: 0px; }
+        .menu-img-detail { width: 100px; height: 100px; flex-shrink: 0; border-radius: 8px 8px 0 0; object-fit: cover; margin-right: 15px; }
         .menu-details-detail { flex-grow: 1;padding: 8px; }
         .menu-price-detail { font-size: 15px; color: var(--price-color); font-weight: 800; margin-bottom: 3px; } /* UPDATED COLOR */
         .menu-category-text-detail { font-size: 12px; color: var(--primary-color); font-weight: 600; }
@@ -690,7 +689,7 @@
         }
         
         .menu-item-detail .cart-control-group {
-            height: 30px; /
+            height: 30px; /* KECILKAN: Dari 40px menjadi 25px */
             font-size: 12px;
             margin: 0 8px 8px;
         }
@@ -951,29 +950,6 @@
         #tempNotification strong {
             font-size: 13px;
         }
-        .search-container {
-            display: flex; /* Memposisikan item secara horizontal */
-            align-items: center; /* Meratakan item secara vertikal di tengah */
-        }
-        
-        /* Penyesuaian agar input memenuhi ruang yang tersisa */
-        #searchMenu {
-            flex-grow: 1; 
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-right: none; /* Hilangkan border kanan agar menyatu dengan tombol */
-            border-radius: 5px 0 0 5px; /* Pojok bulat hanya di kiri */
-        }
-        
-        .search-button {
-            padding: 10px 15px;
-            border: 1px solid #007bff; /* Contoh warna border */
-            background-color: #007bff; /* Contoh warna latar belakang */
-            color: white;
-            cursor: pointer;
-            border-radius: 0 5px 5px 0; /* Pojok bulat hanya di kanan */
-            border-right: none;
-        }
       /* Styling untuk Tombol Close */
       .close-btn {
           position: absolute;
@@ -1003,20 +979,10 @@
                 <div class="greeting-container">
                     <span class="app-title-small" id="headerTitle">SahabatKu Food App</span>
                     <span class="greeting-time" id="dynamicGreeting">Memuat...</span>
-                    <button id="toggleFavoriteFilter" class="favorite-filter-btn" onclick="toggleFavoriteFilter()">
-                        <i class="far fa-heart icon-medium"></i>
-                    </button>
                 </div>
             </div>
         </div>
     </header>
-                
-    <div class="search-container">
-         <input type="text" id="searchMenu" placeholder="Memuat pesan apa hari ini?" onkeyup="renderMenuListView()">
-         <button type="button" class="search-button">
-        <i class="fa fa-search"></i>
-      </button>
-    </div>
     <div id="tempNotification">
         <button class="close-btn" id="closeNotificationBtn">&times;</button>
         <p>
@@ -1028,26 +994,36 @@
     <main>
         <div class="content-wrapper">
             <section id="menuListView" class="section">
+                <div class="home-section-header"> 
+                    <h2><i class="fas fa-camera-retro" style="color: var(--primary-color);"></i>  Cerita Kedai</h2>
+                    <button id="toggleFavoriteFilter" class="favorite-filter-btn" onclick="toggleFavoriteFilter()">
+                        <i class="far fa-heart icon-small"></i>Favoritmu
+                    </button>
+                </div>
                 <div class="gallery-story-bar" id="galleryStoryBarContainer">
-                    <p style="text-align: center; color: #999; padding: 10px 15px; width: 100%;">Memuat...</p>
+                    <p style="text-align: center; color: #999; padding: 10px 15px; width: 100%;">Memuat galeri cerita...</p>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" id="searchMenu" placeholder="Memuat pesan apa hari ini?" onkeyup="renderMenuListView()">
                 </div>
 
                 <div class="category-bar" id="categoryBar">
-                    <p style="text-align: center; color: #999; padding: 10px 0;">Memuat...</p>
+                    <p style="text-align: center; color: #999; padding: 10px 0;">Memuat kategori...</p>
                 </div>
                 
                 <div class="menu-list-home" id="menuItemsListView">
-                    <p style="text-align: center; color: #999; padding: 50px; grid-column: 1 / -1;">Memuat...</p>
+                    <p style="text-align: center; color: #999; padding: 50px; grid-column: 1 / -1;">Memuat daftar menu...</p>
                 </div>
 
-                <h2 style="margin: 30px 0 15px; font-size: 20px; border-top: 1px solid #eee; padding-top: 20px;"><i class="fas fa-store" style="color: #007bff;"></i> Kedai Favoritmu</h2>
+                <h2 style="margin: 30px 0 15px; font-size: 20px; border-top: 1px solid #eee; padding-top: 20px;"><i class="fas fa-store" style="color: #007bff;"></i> Daftar Kedai Buka</h2>
                 
                 <div class="search-container" style="margin-top: -5px; margin-bottom: 15px;">
-                    <input type="text" id="searchKedai" placeholder="Cari nama kedai favoritmu..." onkeyup="renderRestaurantListAtBottom()">
+                    <input type="text" id="searchKedai" placeholder="Cari nama kedai..." onkeyup="renderRestaurantListAtBottom()">
                 </div>
                 
                 <div class="kedai-list-bottom" id="kedaiItemsListAtBottom">
-                    <p style="text-align: center; color: #999; padding: 20px; grid-column: 1 / -1;">Memuat...</p>
+                    <p style="text-align: center; color: #999; padding: 20px; grid-column: 1 / -1;">Memuat kedai...</p>
                 </div>
             </section>
 
@@ -1336,10 +1312,10 @@
             const button = document.getElementById('toggleFavoriteFilter');
             if (isFavoriteFilterActive) {
                 button.classList.add('active');
-                button.innerHTML = '<i class="fas fa-heart icon-medium"></i>';
+                button.innerHTML = '<i class="fas fa-heart icon-small"></i> Favorit Aktif';
             } else {
                 button.classList.remove('active');
-                button.innerHTML = '<i class="far fa-heart icon-medium"></i>';
+                button.innerHTML = '<i class="far fa-heart icon-small"></i> Tampilkan Favorit';
             }
             // Reset filter lain untuk fokus ke favorit
             document.getElementById('searchMenu').value = ''; 
