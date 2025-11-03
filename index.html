@@ -445,8 +445,9 @@
         
         .menu-card-home .menu-img { 
             width: 100%; 
-            height: 120px; 
+            height: auto; 
             object-fit: cover; 
+            aspect-ratio: 1 / 1;
             border-radius: 8px 8px 0 0;
         }
         .menu-card-home .menu-info-home { 
@@ -567,39 +568,45 @@
         /* ========================================================= */
         /* 🔧 SINKRONISASI UKURAN TOMBOL +TAMBAH DAN + / - */
         /* ========================================================= */
-        
+        /* 🔧 SINKRONISASI UKURAN TOMBOL +TAMBAH DAN + / - */
+        /* ========================================================= */
+         	 	 
         /* Untuk tombol +Tambah di Home & Detail */
         .add-to-cart-home,
         .add-to-cart-btn-detail {
-          height: 28px !important;
+          height: 36px !important; 
           border-radius: 6px !important;
           font-size: 12px !important;
           font-weight: 700 !important;
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
-          padding: 0 12px !important;
+          
+          /* PERUBAHAN UTAMA UNTUK MEMPERPANJANG TOMBOL */
+          padding: 0 0 !important; /* MENGHAPUS padding horizontal (12px) */
+          width: 100% !important; /* MENAMBAH: Memaksa tombol mengambil lebar penuh kartu */
+          
           background: var(--primary-color) !important;
           color: #fff !important;
           border: none !important;
           cursor: pointer !important;
           transition: all 0.2s ease !important;
         }
-        
-        /* Untuk grup + / - */
+         	 	 
+        /* Untuk grup + / - (TIDAK ADA PERUBAHAN) */
         .cart-control-group {
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
-          height: 36px !important; /* samakan tinggi */
+          height: 36px !important; 
           border-radius: 6px !important;
           border: 1.5px solid var(--primary-color) !important;
           background: var(--bg-card) !important;
           padding: 0 6px !important;
           box-sizing: border-box !important;
         }
-        
-        /* Tombol + dan - */
+         	 	 
+        /* Tombol + dan - (TIDAK ADA PERUBAHAN) */
         .control-btn-menu {
           width: 25px !important;
           height: 25px !important;
@@ -616,8 +623,8 @@
         }
         .control-minus-menu { background: var(--price-color) !important; }
         .control-plus-menu { background: var(--secondary-color) !important; }
-        
-        /* Angka di tengah */
+         	 	 
+        /* Angka di tengah (TIDAK ADA PERUBAHAN) */
         .quantity-display {
           font-size: 14px !important;
           font-weight: 700 !important;
@@ -626,13 +633,13 @@
           color: var(--primary-color) !important;
           margin: 0 6px !important;
         }
-        
-        /* Responsif biar rapi di HP kecil */
+         	 	 
+        /* Responsif biar rapi di HP kecil (TIDAK ADA PERUBAHAN PENTING) */
         @media (max-width: 480px) {
           .add-to-cart-home,
           .add-to-cart-btn-detail,
           .cart-control-group {
-            height: 26px !important;
+            height: 32px !important; 
           }
           .control-btn-menu {
             width: 28px !important;
@@ -642,7 +649,7 @@
           .quantity-display {
             font-size: 13px !important;
           }
-        }        
+        }
         /* ========================================================= */
         /* 📱 RESPONSIF UNTUK LAYAR KECIL */
         /* ========================================================= */
@@ -662,8 +669,10 @@
                 min-width: 24px;
                 margin: 0 4px;
             }
-        }        /* ========================================================= */
-        /* 5. Kedai List (BUKA Saja) */
+        } 
+        .menu-card-home .menu-info-home { 
+            padding: 8px; /* Pastikan padding ini ada untuk memberi jarak pada konten lain di kartu */
+        }
         /* ========================================================= */
         .kedai-list-bottom {
             display: grid;
@@ -677,13 +686,13 @@
         .kedai-list-bottom::-webkit-scrollbar { display: none; } /* Hide scrollbar for neatness */
         
         .kedai-card-bottom {
-            flex-shrink: 0; /* Important for horizontal scroll */
-            width: 100%; /* Fixed width for better appearance in horizontal scroll */
-            background: var(--bg-card); border-radius: 10px; overflow: hidden; 
+            flex-shrink: 0; 
+            width: 100%; 
+            background: var(--bg-card); border-radius: 10px; overflow: hidden; /* Pastikan overflow: hidden; ada di sini */
             box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; 
             transition: transform 0.2s;
             height: auto; 
-            position: relative; /* Untuk posisi icon favorit */
+            position: relative; 
             padding: 0;
         }
         .kedai-card-bottom:active { transform: scale(0.98); }
@@ -693,32 +702,71 @@
             height: auto; 
             object-fit: cover; 
         }
+        .kedai-info-bottom {
+            padding: 8px 10px 10px 10px; /* Padding: Atas 8px, Kanan 10px, Bawah 10px, Kiri 10px */
+        }
         .kedai-info-bottom .address-text {
-            padding: 10px;
-            font-size: 12px; /* Dikecilkan dari 12px */
+            padding: 0;
+            font-size: 14px;
             color: #777;
-            margin-top: 4px;
-            margin-bottom: 4px;
+            /* HAPUS margin-top/bottom di sini karena sudah diatur di status tag */
+            margin-top: 0;
+            margin-bottom: 4px; 
             white-space: nowrap; 
             overflow: hidden; 
             text-overflow: ellipsis;
-                  
         }
-        .kedai-info-bottom h3 { font-size: 12px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        /* PASTIKAN HEADING (NAMA TOKO) TERPOTONG RAPI */
+        .kedai-info-bottom h3 { 
+            font-size: 15px; 
+            margin-bottom: 2px; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            padding: 0; /* Tambahkan padding agar tidak menempel */
+        }
         .kedai-status-tag { 
-            display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: 700; 
-            margin-top: 3px; 
+            display: block !important; /* PAKSA elemen ini berada di baris baru */
+            width: fit-content !important; /* Batasi lebar hanya sepanjang isinya (misal: "Buka") */
+            max-width: 90% !important; /* Batas maksimum agar tidak terlalu mepet ke kanan */
+            
+            /* Properti Teks */
+            padding: 2px 6px !important; 
+            border-radius: 4px !important; 
+            font-size: 14px !important; 
+            font-weight: 700 !important; 
+            
+            /* Properti Jarak */
+            margin-top: 3px !important; 
+            margin-bottom: 5px !important; 
+            margin-left: 0px !important; /* Tambahkan jarak 10px dari tepi kiri kartu (seperti h3) */
+            
+            /* Properti Pemotongan (jika teks status sangat panjang, walau jarang terjadi) */
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
         }
         /* Open/Closed color scheme */
         .kedai-card-bottom.open .kedai-status-tag { background-color: #e6ffed; color: var(--secondary-color); }
         .kedai-card-bottom.closed .kedai-status-tag { background-color: #ffe6e6; color: var(--price-color); } /* UPDATED COLOR */
-        .menu-count-bottom { font-size: 9px; color: #555;margin-top: 5px; }
+        
+        .menu-count-bottom { 
+            font-size: 9px; 
+            color: #555;
+            margin-top: 5px; 
+            padding: 0; /* Tambahkan padding di bawah */
+        }
 
+        /* PASTIKAN DETAIL INFO JUGA TERPOTONG (JIKA BERUPA TULISAN PANJANG) */
         .kedai-info-details {
-            font-size: 11px; /* Dikecilkan dari 12px inline style */
+            font-size: 11px;
             color: #777; 
             margin-top: 5px; 
             margin-bottom: 5px;
+            white-space: nowrap; /* Ditambahkan */
+            overflow: hidden; /* Ditambahkan */
+            text-overflow: ellipsis; /* Ditambahkan */
+            padding: 0; /* Tambahkan padding agar tidak menempel */
         }
         /* ========================================================= */
         /* 6. Detail Kedai & Menu List di Detail */
@@ -766,23 +814,35 @@
             align-items: stretch;
         }
         .menu-img-detail { 
-            /* Perbaikan: Ganti width menjadi tinggi dan gunakan 100% width */
             width: 100%; /* Gambar ambil lebar penuh kontainer */
-            height: 100px; /* Tinggi gambar tetap 100px */
+            height: auto;
+            aspect-ratio: 1 / 1;
             flex-shrink: 0; 
             border-radius: 8px 8px 0 0; 
             object-fit: cover; 
             margin-right: 0; /* Tidak perlu margin kanan karena layout vertikal */
         }
-        
-        /* KONTEN DETAIL: Perbaikan Utama untuk Perataan */
-        .menu-details-detail { 
-            flex-grow: 1; /* Ambil semua sisa ruang */
-            padding: 8px; 
-            display: flex; /* Aktifkan Flexbox */
-            flex-direction: column; /* Susun konten ke bawah */
-            justify-content: space-between; /* PENTING: Mendorong elemen terakhir (price/action) ke bawah */
+        /* TAMBAHKAN KODE INI */
+        .menu-name-detail {
+            font-size: 16px; /* Bisa disesuaikan */
+            font-weight: 700; /* Membuat teks tebal (bold) */
+            color: var(--text-color); /* Atau warna yang Anda inginkan */
+            margin-bottom: 4px; /* Jarak dari kategori di bawah */
+            /* Pastikan juga terpotong rapi */
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
         }
+        /* KONTEN DETAIL: Perbaikan Utama untuk Perataan */
+        .menu-details-detail > :first-child { 
+            font-weight: 700; /* Membuat teks tebal (bold) */
+            font-size: 16px;  /* Sedikit lebih besar dari 15px */
+            color: var(--text-color);
+            margin-bottom: 2px;
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+       }
         .menu-price-detail { 
             font-size: 15px; 
             color: var(--price-color); 
@@ -790,17 +850,17 @@
             margin-bottom: 0; /* Hilangkan margin-bottom */
         } /* UPDATED COLOR */
         .menu-category-text-detail {
-          font-size: 12px; 
-          color: var(--primary-color); 
-          font-weight: 600; 
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          line-height: 1.2;
-          max-height: 2.4em;
-          white-space: normal;
-          transition: max-height 0.3s ease;
+            font-size: 12px; 
+            color: var(--primary-color); 
+            font-weight: 600; 
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.2;
+            max-height: 2.4em;
+            white-space: normal;
+            transition: max-height 0.3s ease;
         }
 
         
@@ -1226,7 +1286,7 @@
                     <p style="text-align: center; color: #999; padding: 50px; grid-column: 1 / -1;">Memuat daftar menu...</p>
                 </div>
 
-                <h2 style="margin: 30px 0 15px; font-size: 20px; border-top: 1px solid #eee; padding-top: 20px;"><i class="fas fa-store" style="color: #007bff;"></i> Daftar Kedai Buka</h2>
+                <h2 style="margin: 30px 0 15px; font-size: 20px; border-top: 1px solid #eee; padding-top: 20px;"><i class="fas fa-store" style="color: #007bff;"></i> Rekomendasi Kami </h2>
                 
                 <div class="search-container" style="margin-top: -5px; margin-bottom: 15px;">
                     <input type="text" id="searchKedai" placeholder="Cari nama kedai..." onkeyup="renderRestaurantListAtBottom()">
@@ -1855,7 +1915,7 @@
                     <div class="kedai-info-bottom">
                         <h3>${r.name}</h3>
                         <span class="kedai-status-tag">${status}</span>
-                        <p style="font-size: 10px; color: #777; margin-top: 4px; margin-bottom: 4px;"><i class="icon-small fas fa-map-marker-alt"></i> ${r.address.substring(0, 40)}</p>
+                        <div class="address-text"><i class="icon-small fas fa-map-marker-alt"></i> ${r.address}</div>
                         <p class="menu-count-bottom"><i class="icon-small fas fa-list"></i> ${menuCount} Menu</p>
                     </div>
                 `;
