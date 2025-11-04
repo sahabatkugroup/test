@@ -180,7 +180,6 @@
         
         /* Modifikasi agar logo bergeser saat tombol kembali aktif */
         .logo.shifted {
-            transform: translateX(15px); /* Geser sedikit ke kanan agar tidak terlalu dekat dengan tombol back */
         }
         .logo > i { /* Hide the small icon when the text is centered, show only back button if active */
             display: none; 
@@ -1155,6 +1154,32 @@
             overflow: hidden;    /* Sembunyikan sisa teks */
             text-overflow: ellipsis; /* Ganti teks tersembunyi dengan titik-titik */
         }
+        /* index (16).html: Tambahkan atau Ganti CSS ini */
+        
+        .store-detail-title {
+            /* Font dan Ketebalan */
+            font-size: 20px; 
+            font-weight: 800; 
+            line-height: 1.1;
+            
+            /* WARNA: Sama dengan headerTitle (.app-title-small) */
+            color: var(--primary-color); 
+            
+            /* TEKNIK CENTERING ABSOLUT: Ini yang Paling Penting */
+            position: absolute; 
+            left: 50%; /* Posisikan ke titik tengah horizontal kontainer */
+            transform: translateX(-50%); /* Geser balik 50% dari lebar elemen sendiri (centering sempurna) */
+            
+            /* BATASAN LEBAR: Ruang aman 120px untuk tombol Kembali dan tombol kanan lainnya (Tema/Keranjang) */
+            max-width: calc(100% - 120px); 
+            
+            /* PENGELOLAAN TEKS */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            
+            z-index: 10;
+        }
         /* ========================================================= */
         /* 9. Notifikasi Sementara (PERUBAHAN untuk Kanan Atas) */
         /* ========================================================= */
@@ -1229,6 +1254,7 @@
                     <span class="app-title-small" id="headerTitle">SahabatKu Food App</span>
                     <span class="greeting-time" id="dynamicGreeting">Memuat...</span>
                 </div>
+                <span class="store-detail-title" id="storeDetailTitle" style="display: none;"></span>
             </div>
         </div>
     </header>
@@ -1910,6 +1936,12 @@
 
             currentRestaurantId = id;
             document.getElementById('searchMenuDetail').value = '';
+            document.querySelector('.greeting-container').style.display = 'none'; 
+            
+            // 2. Isi dan Tampilkan Judul Kedai
+            const storeTitleEl = document.getElementById('storeDetailTitle');
+            storeTitleEl.textContent = r.name; // Isi dengan nama kedai
+            storeTitleEl.style.display = 'block';
             document.getElementById('headerTitle').style.display = 'none';
             document.getElementById('dynamicGreeting').style.display = 'none'; // NEW: Hide greeting
             document.getElementById('backButton').classList.add('active');
@@ -1943,6 +1975,8 @@
             document.getElementById('backButton').classList.remove('active');
             document.querySelector('.logo').classList.remove('shifted');
             document.getElementById('headerTitle').style.display = 'block';
+            document.getElementById('storeDetailTitle').style.display = 'none';
+            document.querySelector('.greeting-container').style.display = 'flex';
             document.getElementById('dynamicGreeting').style.display = 'block'; // NEW: Show greeting
             document.getElementById('restaurantDetail').classList.remove('active');
             document.getElementById('menuListView').classList.remove('hidden');
