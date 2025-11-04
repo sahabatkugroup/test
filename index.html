@@ -733,7 +733,7 @@
             /* Properti Teks */
             padding: 2px 6px !important; 
             border-radius: 4px !important; 
-            font-size: 14px !important; 
+            font-size: 12px !important; 
             font-weight: 700 !important; 
             
             /* Properti Jarak */
@@ -1241,9 +1241,8 @@
       /* ========================================================= */
       /* 📱 PERBAIKAN TATA LETAK RESPONSIF (MAX-WIDTH: 600px) */
       /* ========================================================= */
-      @media (max-width: 600px) {
-          /* --- PERBAIKAN GRID --- */
-      
+      @media (max-width: 597px) {
+
           /* 1. LIST KEDAI (Halaman Utama) */
           .kedai-list-bottom {
               grid-template-columns: repeat(3, 1fr) !important; /* Tampilkan 2 kolom di HP */
@@ -1641,10 +1640,10 @@
             const button = document.getElementById('toggleFavoriteFilter');
             if (isFavoriteFilterActive) {
                 button.classList.add('active');
-                button.innerHTML = '<i class="fas fa-heart icon-small"></i> Favorit Aktif';
+                button.innerHTML = '<i class="fas fa-heart icon-small"></i> Favoritmu';
             } else {
                 button.classList.remove('active');
-                button.innerHTML = '<i class="far fa-heart icon-small"></i> Tampilkan Favorit';
+                button.innerHTML = '<i class="far fa-heart icon-small"></i> Favoritmu';
             }
             // Reset filter lain untuk fokus ke favorit
             document.getElementById('searchMenu').value = ''; 
