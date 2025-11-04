@@ -1551,7 +1551,8 @@
             }
             localStorage.setItem(LS_FAVORITE_KEDAI, JSON.stringify(Array.from(favorites)));
             updateKedaiFavoriteStatus(kedaiId); 
-            renderRestaurantListAtBottom(); // Re-render list kedai
+            renderRestaurantListAtBottom();
+            renderGalleryStoryBar();// Re-render list kedai
             // Jika sedang di halaman detail kedai, update status tombol
             if (currentRestaurantId === kedaiId) {
                 const detailBtn = document.getElementById('favoriteKedaiButton');
@@ -1596,6 +1597,7 @@
             document.getElementById('searchMenu').value = ''; 
             currentCategoryFilter = 'semua'; 
             renderCategoryBar();
+            renderGalleryStoryBar();
             renderMenuListView();
             renderRestaurantListAtBottom();
         };
@@ -1717,23 +1719,35 @@
             container.innerHTML = '';
 
             const storyData = {};
-            Object.values(GALLERIES)
-                .filter(g => g.isPublished !== false && OPEN_RESTAURANT_IDS.has(g.restaurantId))
-                .forEach(g => {
-                    if (!storyData[g.restaurantId]) {
-                        storyData[g.restaurantId] = { 
-                            kedaiName: RESTAURANTS[g.restaurantId].name,
-                            kedaiImage: RESTAURANTS[g.restaurantId].image,
-                            gallery: [] 
-                        };
-                    }
-                    storyData[g.restaurantId].gallery.push(g.image || DEFAULT_RESTAURANT_IMAGE);
-                });
+            const favKedaiIds = getFavoriteKedaiIds(); //
+            
+            let filteredGalleries = Object.values(GALLERIES)
+                .filter(g => g.isPublished !== false && OPEN_RESTAURANT_IDS.has(g.restaurantId)); //
+            
+            // >>> TAMBAHAN: Terapkan filter hanya untuk kedai favorit jika filter aktif
+            if (isFavoriteFilterActive) {
+                filteredGalleries = filteredGalleries.filter(g => favKedaiIds.has(g.restaurantId));
+            }
+            filteredGalleries.forEach(g => { 
+                if (!storyData[g.restaurantId]) {
+                    storyData[g.restaurantId] = { 
+                        kedaiName: RESTAURANTS[g.restaurantId].name,
+                        kedaiImage: RESTAURANTS[g.restaurantId].image,
+                        gallery: [] 
+                    };
+                }
+                storyData[g.restaurantId].gallery.push(g.image || DEFAULT_RESTAURANT_IMAGE);
+            });
             
             const storyIds = Object.keys(storyData).sort((a,b) => storyData[a].kedaiName.localeCompare(storyData[b].kedaiName));
 
             if (storyIds.length === 0) {
-                container.innerHTML = `<p style="text-align: center; color: #999; padding: 10px 15px; width: 100%;">Tidak ada cerita dari kedai yang buka saat ini.</p>`;
+                // >>> TEMPAT PERBAIKAN: Logika pesan baru untuk filter favorit
+                const message = isFavoriteFilterActive
+                    ? `Filter Favorit Aktif: Tidak ada cerita dari kedai favorit yang buka saat ini.`
+                    : `Tidak ada cerita dari kedai yang buka saat ini.`;
+                    
+                container.innerHTML = `<p style="text-align: center; color: #999; padding: 10px 15px; width: 100%;">${message}</p>`;
                 return;
             }
 
