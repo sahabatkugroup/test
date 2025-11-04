@@ -454,7 +454,7 @@
             padding: 8px;
         }
         .menu-info-home h3 { 
-            font-size: 15px; 
+            font-size: 12px; 
             margin-bottom: 2px; 
             color: var(--text-color);
             white-space: nowrap; 
@@ -634,41 +634,10 @@
           margin: 0 6px !important;
         }
          	 	 
-        /* Responsif biar rapi di HP kecil (TIDAK ADA PERUBAHAN PENTING) */
-        @media (max-width: 480px) {
-          .add-to-cart-home,
-          .add-to-cart-btn-detail,
-          .cart-control-group {
-            height: 32px !important; 
-          }
-          .control-btn-menu {
-            width: 28px !important;
-            height: 26px !important;
-            font-size: 14px !important;
-          }
-          .quantity-display {
-            font-size: 13px !important;
-          }
-        }
         /* ========================================================= */
         /* 📱 RESPONSIF UNTUK LAYAR KECIL */
         /* ========================================================= */
         @media (max-width: 480px) {
-            .add-to-cart-btn-detail,
-            .cart-control-group {
-                height: 32px; /* sedikit lebih kecil di layar kecil */
-                border-radius: 5px;
-            }
-            .control-btn-menu {
-                width: 28px;
-                height: 26px;
-                font-size: 14px;
-            }
-            .quantity-display {
-                font-size: 13px;
-                min-width: 24px;
-                margin: 0 4px;
-            }
         } 
         .menu-card-home .menu-info-home { 
             padding: 8px; /* Pastikan padding ini ada untuk memberi jarak pada konten lain di kartu */
@@ -707,7 +676,7 @@
         }
         .kedai-info-bottom .address-text {
             padding: 0;
-            font-size: 14px;
+            font-size: 10px;
             color: #777;
             /* HAPUS margin-top/bottom di sini karena sudah diatur di status tag */
             margin-top: 0;
@@ -718,7 +687,7 @@
         }
         /* PASTIKAN HEADING (NAMA TOKO) TERPOTONG RAPI */
         .kedai-info-bottom h3 { 
-            font-size: 15px; 
+            font-size: 14px; 
             margin-bottom: 2px; 
             white-space: nowrap; 
             overflow: hidden; 
@@ -1181,6 +1150,11 @@
         .add-to-cart-btn-detail:hover {
             background: #00b2e6 !important;
         }
+        .kedai-link {
+            white-space: nowrap; /* Teks tidak boleh turun baris */
+            overflow: hidden;    /* Sembunyikan sisa teks */
+            text-overflow: ellipsis; /* Ganti teks tersembunyi dengan titik-titik */
+        }
         /* ========================================================= */
         /* 9. Notifikasi Sementara (PERUBAHAN untuk Kanan Atas) */
         /* ========================================================= */
@@ -1241,60 +1215,7 @@
       /* ========================================================= */
       /* 📱 PERBAIKAN TATA LETAK RESPONSIF (MAX-WIDTH: 600px) */
       /* ========================================================= */
-      @media (max-width: 597px) {
-
-          /* 1. LIST KEDAI (Halaman Utama) */
-          .kedai-list-bottom {
-              grid-template-columns: repeat(3, 1fr) !important; /* Tampilkan 2 kolom di HP */
-              gap: 8px; /* Rapatkan sedikit jarak antar kartu */
-          }
-      
-          /* 2. MENU LIST (Halaman Utama) */
-          .menu-list-home {
-              grid-template-columns: repeat(3, 1fr) !important; /* Tampilkan 2 kolom di HP */
-          }
-          /* 3. MENU LIST (Detail Kedai) */
-          .menu-list-detail {
-              grid-template-columns: repeat(3, 1fr) !important; /* Tampilkan 2 kolom di HP */
-          }
-          /* --- PERBAIKAN TEKS & UKURAN FONT PADA KARTU --- */
-          /* Nama Kedai (Halaman Utama) */
-          .kedai-info-bottom h3 {
-              font-size: 13px; /* Kecilkan sedikit agar muat 2 kolom */
-              padding-right: 5px; /* Beri ruang di kanan */
-          }
-          
-          /* Alamat dan Menu Count (Halaman Utama) */
-          .kedai-info-bottom .address-text,
-          .menu-count-bottom {
-              font-size: 11px; /* Kecilkan agar muat */
-          }
-          
-          /* Nama Menu (Halaman Utama & Detail) */
-          .menu-info-home h3,
-          .menu-name-detail-text { /* Asumsi ini adalah kelas nama menu di detail */
-              font-size: 14px; /* Kecilkan sedikit */
-          }
-          
-          /* Harga Menu (Halaman Utama & Detail) */
-          .menu-info-home p.price,
-          .menu-price-detail {
-              font-size: 14px; /* Kecilkan sedikit */
-          }
-      
-          /* Tombol dan Kontrol (+/-) disinkronkan ke standar 32px di HP */
-          .add-to-cart-home,
-          .add-to-cart-btn-detail,
-          .cart-control-group {
-              height: 32px !important;
-          }
-          .control-btn-menu {
-              width: 28px !important;
-              height: 26px !important;
-          }
-          .quantity-display {
-              font-size: 13px !important;
-          }
+      @media (max-width: 600px) {
       }
     </style>
 </head>
@@ -1581,7 +1502,7 @@
             try {
                 return new Set(JSON.parse(localStorage.getItem(LS_FAVORITE_KEDAI) || '[]'));
             } catch (e) {
-                console.error("Error reading favorite kedai from localStorage:", e);
+                console.error("Error reading favorite kedai:", e);
                 return new Set();
             }
         };
@@ -1590,7 +1511,7 @@
             try {
                 return new Set(JSON.parse(localStorage.getItem(LS_FAVORITE_MENU) || '[]'));
             } catch (e) {
-                console.error("Error reading favorite menu from localStorage:", e);
+                console.error("Error reading favorite menu from:", e);
                 return new Set();
             }
         };
@@ -1760,7 +1681,7 @@
                 })
                 .catch(error => {
                     console.error("Error loading data:", error);
-                    document.getElementById('menuItemsListView').innerHTML = `<p style="color: var(--price-color); padding: 50px; grid-column: 1 / -1;">Gagal memuat data kedai. Cek koneksi Firebase Anda.</p>`;
+                    document.getElementById('menuItemsListView').innerHTML = `<p style="color: var(--price-color); padding: 50px; grid-column: 1 / -1;">Gagal memuat data kedai. Cek koneksi Internet Anda.</p>`;
                 });
         };
 
@@ -2365,7 +2286,7 @@
                 // Check if items in cart are from multiple restaurants
                 const kedaiIds = new Set(cart.map(i => i.restaurantId));
                 if (kedaiIds.size > 1) {
-                    orderBtn.textContent = 'Pesan Sekarang (Multi-Kedai)';
+                    orderBtn.textContent = 'Pesan Sekarang ';
                 } else {
                     orderBtn.textContent = 'Pesan Sekarang';
                 }
@@ -2405,7 +2326,7 @@
                 }
                 
                 document.getElementById('modalTitle').textContent = `Formulir Pesanan Keranjang`;
-                document.getElementById('summaryKedaiName').textContent = kedaiIdsInCart.length > 1 ? 'Multiple Kedai' : RESTAURANTS[kedaiIdsInCart[0]].name;
+                document.getElementById('summaryKedaiName').textContent = kedaiIdsInCart.length > 1 ? '' : RESTAURANTS[kedaiIdsInCart[0]].name;
                 document.getElementById('orderSummary').style.display = 'block';
                 galleryPreviewContainer.style.display = 'none';
 
@@ -2488,7 +2409,7 @@
                         galleryCarousel.appendChild(item);
                     });
                 } else {
-                    galleryCarousel.innerHTML = `<p style="font-size: 13px; color: #999; padding: 0 15px;">Kedai ini belum memiliki foto galeri yang dipublikasikan.</p>`;
+                    galleryCarousel.innerHTML = `<p style="font-size: 13px; color: #999; padding: 0 15px;">Kedai ini belum memiliki foto galeri.</p>`;
                 }
             }
 
@@ -2501,8 +2422,8 @@
                 geocoder = new google.maps.Geocoder();
                 console.log("Google Maps Geocoder initialized.");
             } else {
-                console.warn("Google Maps API (Geocoder) belum dimuat. Pastikan Anda telah menambahkan script Google Maps dengan API Key yang benar di bagian <head>.");
-                ADDRESS_STATUS_EL().textContent = "Gagal memuat fitur Google Maps. Silakan isi alamat secara manual.";
+                console.warn("Google Maps Error<head>.");
+                ADDRESS_STATUS_EL().textContent = "Gagal memuat. Silakan isi alamat secara manual.";
                 ADDRESS_STATUS_EL().style.color = 'var(--price-color)';
             }
         };
